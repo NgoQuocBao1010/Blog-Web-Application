@@ -10,7 +10,7 @@
 
 * {
     /* font-family: "Times New Roman", Times, serif; */
-    font-family: "Raleway", sans-serif !important;
+    font-family: "Raleway", sans-serif;
 }
 
 .row[title="logo"] .logo {
@@ -28,26 +28,10 @@
     margin-top: 0.4rem;
 }
 
-.container .row .col-3 {
-    border: #a2acab 0.08rem solid;
-    border-right: none;
-    padding-left: 0%;
-}
-
-.container .row .col-5 {
-    border: #a2acab 0.08rem solid;
-    border-left: none;
-}
-
 .container .row h3 {
-    margin-top: 2.5rem;
+    margin-top: 1rem;
     color: #5e5e5e;
-    margin-bottom: 1.5rem;
-}
-
-.container .row img {
-    height: 25rem;
-    width: 16rem;
+    margin-bottom: 0.5rem;
 }
 
 .container .row form .btn {
@@ -56,15 +40,15 @@
     margin-right: 1rem;
 }
 
-.container .row form {
-    margin-left: 2rem;
-    margin-right: 3.5rem;
-}
-
 /* New */
 .container .row form label,
-.container .row form input {
+.container .row form input[type="email"] {
     font-weight: 600 !important;
+}
+
+.container .row form {
+    margin-left: 5rem;
+    margin-right: 5rem;
 }
 
 .container .row form .btn:hover {
@@ -77,6 +61,12 @@
 
 .container .row form a:hover {
     color: #93c0bb;
+}
+
+.container .row .col-6 {
+    border-top: #8fa5a1 0.2rem double;
+    border-bottom: #8fa5a1 0.2rem double;
+    background-color: rgb(218, 236, 234, 0.2);
 }
 
 /* validate */

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,9 +6,171 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Home</title>
+
+        <!-- Font awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        />
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="{% static './css/blog.css' %}" />
     </head>
     <body>
-        <h1>This is a home page, {{ request.user }}</h1>
-        <a href="{% url 'logout' %}">Logout</a>
+        <!--  header  -->
+        <header class="header">
+            <!-- Link den trang quan ly -->
+            <a href="{% url 'home' %}" class="logo"><span>Blog</span>ger</a>
+
+            <nav class="navbar">
+                <!-- <a href="#banner">banner</a> -->
+                <a href="#aboutme">about me</a>
+                <a href="#posts">posts</a>
+                <a href="admin.html">customize</a>
+                <a href="{% url 'logout' %}">logout</a>
+            </nav>
+        </header>
+
+        <!-- banner  -->
+        <section class="banner" id="banner">
+            <div class="content">
+                <h3>Hello</h3>
+                <p>Welcome to my blog</p>
+            </div>
+        </section>
+
+        <!-- posts  -->
+        <section class="container" id="posts">
+            <div class="posts-container">
+                <div class="post">
+                    <a href="post.html">
+                        <img src="{% static './images/blog1.jpg' %}" alt="" class="image" />
+                    </a>
+                    <div class="date">
+                        <i class="far fa-clock"></i>
+                        <span>26 Oct, 2021</span>
+                    </div>
+                    <h3 class="title">Place to travel</h3>
+                    <p class="text">
+                        The hill town of Da Lat has long been the most popular
+                        location in the region for getaway holidays since French
+                        colonial times. Many people call it ‘Le Petit Paris’ and
+                        the town even features a mini-replica Eiffel Tower in
+                        its centre!
+                    </p>
+                    <div class="links">
+                        <a href="#" class="user">
+                            <i class="far fa-user"></i>
+                            <span>by admin</span>
+                        </a>
+                        <a href="#" class="icon">
+                            <i class="far fa-comment"></i>
+                            <span>(1)</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="post">
+                    <a href="post.html">
+                        <img src="{% static './images/blog2.jpg' %}" alt="" class="image" />
+                    </a>
+                    <div class="date">
+                        <i class="far fa-clock"></i>
+                        <span>26 Oct, 2021</span>
+                    </div>
+                    <h3 class="title">Macaron Recipe</h3>
+                    <p class="text">
+                        Make the macarons: In the bowl of a food processor,
+                        combine the powdered sugar, almond flour, and ½ teaspoon
+                        of salt, and process on low speed, until extra fine.
+                        Sift the almond flour mixture through a fine-mesh sieve
+                        into a large bowl
+                    </p>
+                    <div class="links">
+                        <a href="#" class="user">
+                            <i class="far fa-user"></i>
+                            <span>by admin</span>
+                        </a>
+                        <a href="#" class="icon">
+                            <i class="far fa-comment"></i>
+                            <span>(1)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- sidebar -->
+            <div class="sidebar">
+                <div class="box">
+                    <h3 class="title">about me</h3>
+                    <div class="about">
+                        <img src="{% static './images/user.png' %}" alt="" />
+                        <h3>User's name</h3>
+                        <p>User's Email</p>
+
+                        <div class="follow">
+                            <a href="#" class="fab fa-facebook-f"></a>
+                            <a href="#" class="fab fa-twitter"></a>
+                            <a href="#" class="fab fa-instagram"></a>
+                            <a href="#" class="fab fa-youtube"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- categories -->
+                <div class="box">
+                    <h3 class="title">categories</h3>
+                    <div class="category">
+                        <a href="#"> Travel <span>1</span></a>
+                        <a href="#"> Food <span>1</span></a>
+                        <a href="#"> Music <span>0</span></a>
+                    </div>
+                </div>
+
+                <!-- posts -->
+                <div class="box">
+                    <h3 class="title">popular posts</h3>
+                    <div class="p-post">
+                        <a href="#">
+                            <h3>01. Place to travel</h3>
+                            <span></span>
+                                <i class="far fa-clock"></i> 28th Oct, 2021
+                            </span>
+                        </a>
+                        <a href="#">
+                            <h3>02. Food</h3>
+                            <span> <i class="far fa-clock"></i> 28th Oct,
+                                2021 </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- contact  -->
+        <section class="contact" id="contact">
+            <form action="">
+                <h3>contact me</h3>
+                <div class="inputBox">
+                    <input type="email" placeholder="Your email" />
+                </div>
+                <input type="submit" value="Send" class="btn" />
+            </form>
+        </section>
+
+        <!-- footer -->
+        <section class="footer">
+            <div class="follow">
+                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-youtube"></a>
+            </div>
+
+            <div class="credit">All rights reserved</div>
+        </section>
+
+        <!-- custom js file link  -->
+        <!-- <script src="js/script.js"></script>    -->
     </body>
 </html>

@@ -26,19 +26,28 @@
     </head>
     <body>
         <div class="container">
+            <!-- Page Title -->
             <div class="row" title="logo">
                 <a href="admin.html" class="logo"><span>Blog</span>ger</a>
             </div>
 
+            <!-- Login Form Container -->
             <div class="row mt-4" title="form">
+                <!-- Left form -->
                 <div class="col-3 offset-2">
-                    <img src="./images/banner_login.png" alt="" />
+                    <img
+                        src="{% static './images/banner_login.png' %}"
+                        alt=""
+                    />
                 </div>
+
+                <!-- Right Form -->
                 <div class="col-5">
                     <h3 class="text-center text-uppercase font-weight-bold">
                         Login
                     </h3>
                     <form method="POST" id="loginForm">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label for="email">Email address *</label>
                             <input
