@@ -46,73 +46,34 @@
             <!-- Posts container -->
             <div class="posts-container">
                 {% for post in posts %}
-                <p>{{ post.title }} by {{ post.user }}</p>
-                <p>{{ post.content }}</p>
-                <p>{{ post.dateCreated }}</p>
-                {% endfor %}
+
                 <div class="post">
-                    <a href="post.html">
+                    <a href="#">
                         <img
-                            src="{% static './images/blog1.jpg' %}"
-                            alt=""
+                            src="{{ post.coverImage.url }}"
+                            alt="Cover Image"
                             class="image"
                         />
                     </a>
                     <div class="date">
                         <i class="far fa-clock"></i>
-                        <span>26 Oct, 2021</span>
+                        <span>{{ post.dateCreated }}</span>
                     </div>
-                    <h3 class="title">Place to travel</h3>
-                    <p class="text">
-                        The hill town of Da Lat has long been the most popular
-                        location in the region for getaway holidays since French
-                        colonial times. Many people call it ‘Le Petit Paris’ and
-                        the town even features a mini-replica Eiffel Tower in
-                        its centre!
-                    </p>
+                    <h3 class="title">{{ post.title }}</h3>
+                    <p class="text">{{ post.content }}</p>
                     <div class="links">
                         <a href="#" class="user">
                             <i class="far fa-user"></i>
-                            <span>by admin</span>
+                            <span>by {{ post.user }}</span>
                         </a>
                         <a href="#" class="icon">
                             <i class="far fa-comment"></i>
-                            <span>(1)</span>
+                            <span>{{ post.comments }}</span>
                         </a>
                     </div>
                 </div>
 
-                <div class="post">
-                    <a href="post.html">
-                        <img
-                            src="{% static './images/blog2.jpg' %}"
-                            alt=""
-                            class="image"
-                        />
-                    </a>
-                    <div class="date">
-                        <i class="far fa-clock"></i>
-                        <span>26 Oct, 2021</span>
-                    </div>
-                    <h3 class="title">Macaron Recipe</h3>
-                    <p class="text">
-                        Make the macarons: In the bowl of a food processor,
-                        combine the powdered sugar, almond flour, and ½ teaspoon
-                        of salt, and process on low speed, until extra fine.
-                        Sift the almond flour mixture through a fine-mesh sieve
-                        into a large bowl
-                    </p>
-                    <div class="links">
-                        <a href="#" class="user">
-                            <i class="far fa-user"></i>
-                            <span>by admin</span>
-                        </a>
-                        <a href="#" class="icon">
-                            <i class="far fa-comment"></i>
-                            <span>(1)</span>
-                        </a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
 
             <!-- sidebar -->
@@ -138,9 +99,15 @@
                 <div class="box">
                     <h3 class="title">categories</h3>
                     <div class="category">
-                        <a href="#"> Travel <span>1</span></a>
+                        {% for category in categories %}
+                        <a href="#">
+                            {{ category.name }}
+                            <span>{{ category.numberOfPosts }}</span></a
+                        >
+                        {% endfor %}
+                        <!-- <a href="#"> Travel <span>1</span></a>
                         <a href="#"> Food <span>1</span></a>
-                        <a href="#"> Music <span>0</span></a>
+                        <a href="#"> Music <span>0</span></a> -->
                     </div>
                 </div>
 
