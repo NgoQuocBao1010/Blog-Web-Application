@@ -61,23 +61,21 @@
                             />
                         </div>
                         <div class="form-group">
-                            <label for="password">Password *</label>
+                            <label for="password1">Password *</label>
                             <input
                                 name="password1"
                                 type="password"
                                 class="form-control"
-                                id="password"
+                                id="password1"
                             />
                         </div>
                         <div class="form-group">
-                            <label for="password_confirm">
-                                Confirm Password *
-                            </label>
+                            <label for="password2"> Confirm Password * </label>
                             <input
                                 name="password2"
                                 type="password"
                                 class="form-control"
-                                id="password_confirm"
+                                id="password2"
                             />
                         </div>
 
@@ -109,14 +107,14 @@
                             required: true,
                             email: true,
                         },
-                        password: {
+                        password1: {
                             required: true,
                             minlength: 5,
                         },
-                        password_confirm: {
+                        password2: {
                             required: true,
                             minlength: 5,
-                            equalTo: "#password",
+                            equalTo: "#password1",
                         },
                     },
 
@@ -125,12 +123,12 @@
                             required: "Please input your email",
                             email: "Please pick the valid email",
                         },
-                        password: {
+                        password1: {
                             required: "Please provide a password",
                             minlength:
                                 "Your password must be at least 5 characters",
                         },
-                        password_confirm: {
+                        password2: {
                             required: "Please provide a password",
                             minlength:
                                 "Your password must be at least 5 characters",
@@ -158,6 +156,19 @@
                     },
                 });
             });
+        </script>
+
+        <!-- Django data -->
+        <script>
+            const errors = JSON.parse("{{ error | escapejs }}");
+
+            if (errors) {
+                for (let field in errors) {
+                    const messageError = errors[field][0].message;
+
+                    console.log(`${field}: ${messageError}`);
+                }
+            }
         </script>
     </body>
 </html>

@@ -16,6 +16,7 @@
         <!-- CSS -->
         <link rel="stylesheet" href="{% static './css/blog.css' %}" />
     </head>
+
     <body>
         <!--  header  -->
         <header class="header">
@@ -25,6 +26,7 @@
             <nav class="navbar">
                 <!-- <a href="#banner">banner</a> -->
                 <a href="#aboutme">about me</a>
+                <a href="{% url 'createPost' %}">Create Post</a>
                 <a href="#posts">posts</a>
                 <a href="admin.html">customize</a>
                 <a href="{% url 'logout' %}">logout</a>
@@ -43,6 +45,11 @@
         <section class="container" id="posts">
             <!-- Posts container -->
             <div class="posts-container">
+                {% for post in posts %}
+                <p>{{ post.title }} by {{ post.user }}</p>
+                <p>{{ post.content }}</p>
+                <p>{{ post.dateCreated }}</p>
+                {% endfor %}
                 <div class="post">
                     <a href="post.html">
                         <img
