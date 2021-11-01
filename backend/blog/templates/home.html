@@ -39,12 +39,17 @@
             </div>
         </section>
 
-        <!-- posts  -->
+        <!-- Main content  -->
         <section class="container" id="posts">
+            <!-- Posts container -->
             <div class="posts-container">
                 <div class="post">
                     <a href="post.html">
-                        <img src="{% static './images/blog1.jpg' %}" alt="" class="image" />
+                        <img
+                            src="{% static './images/blog1.jpg' %}"
+                            alt=""
+                            class="image"
+                        />
                     </a>
                     <div class="date">
                         <i class="far fa-clock"></i>
@@ -72,7 +77,11 @@
 
                 <div class="post">
                     <a href="post.html">
-                        <img src="{% static './images/blog2.jpg' %}" alt="" class="image" />
+                        <img
+                            src="{% static './images/blog2.jpg' %}"
+                            alt=""
+                            class="image"
+                        />
                     </a>
                     <div class="date">
                         <i class="far fa-clock"></i>
@@ -101,12 +110,13 @@
 
             <!-- sidebar -->
             <div class="sidebar">
+                <!-- User box -->
                 <div class="box">
                     <h3 class="title">about me</h3>
                     <div class="about">
                         <img src="{% static './images/user.png' %}" alt="" />
-                        <h3>User's name</h3>
-                        <p>User's Email</p>
+                        <h3>{{ request.user }}</h3>
+                        <p>{{ request.user }}</p>
 
                         <div class="follow">
                             <a href="#" class="fab fa-facebook-f"></a>
@@ -133,14 +143,15 @@
                     <div class="p-post">
                         <a href="#">
                             <h3>01. Place to travel</h3>
-                            <span></span>
+                            <span>
                                 <i class="far fa-clock"></i> 28th Oct, 2021
                             </span>
                         </a>
                         <a href="#">
                             <h3>02. Food</h3>
-                            <span> <i class="far fa-clock"></i> 28th Oct,
-                                2021 </span>
+                            <span>
+                                <i class="far fa-clock"></i> 28th Oct, 2021
+                            </span>
                         </a>
                     </div>
                 </div>
