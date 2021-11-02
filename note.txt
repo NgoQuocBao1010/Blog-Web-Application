@@ -1,0 +1,14 @@
+- Font ?
+- Login, Register form error ?
+- Register - Name ?
+- Create post ?
+- Home category not equal
+
+
+
+
+** Todo
+- Catch non exist obj err XXX
+- Del, edit comment
+- Rich text editor
+- Reply to comments

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
 :root {
     --black: #333333;
@@ -17,7 +17,7 @@
     outline: none;
     border: none;
     text-decoration: none;
-    font-family: "Raleway", sans-serif;
+    font-family: "Quicksand", sans-serif;
     font-weight: 600;
 }
 

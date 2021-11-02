@@ -1,10 +1,28 @@
 from django.forms import ModelForm
-
-from .models import Post
+from django import forms
+from .models import Post, Comment
 
 
 class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = "__all__"
-        exclude = ["user"]
+        exclude = [
+            "author",
+        ]
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            "content",
+        ]
+        widgets = {
+            "content": forms.TextInput(
+                attrs={"placeholder": "Leave your comment here ..."}
+            )
+        }
+        labels = {
+            "content": "",
+        }
