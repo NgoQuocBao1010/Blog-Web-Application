@@ -17,6 +17,7 @@
     outline: none;
     border: none;
     text-decoration: none;
+    /* new */
     font-family: "Quicksand", sans-serif;
     font-weight: 600;
 }
@@ -270,6 +271,9 @@ section {
     color: #fff;
     border-radius: 0.3rem;
     padding: 0.5rem;
+    /* new */
+    width: 30px;
+    text-align: center;
 }
 
 .container .sidebar .box .category a:hover {

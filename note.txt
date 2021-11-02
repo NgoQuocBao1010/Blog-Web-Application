@@ -8,7 +8,7 @@
 
 
 ** Todo
-- Catch non exist obj err XXX
+- Catch non exist obj err
 - Del, edit comment
 - Rich text editor
 - Reply to comments

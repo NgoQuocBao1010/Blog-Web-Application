@@ -9,7 +9,7 @@ from .decorators import unauthenticated_user
 
 @unauthenticated_user
 def loginView(request):
-    """ Login handler """
+    """Login handler"""
     errorLogin = ""
 
     if request.method == "POST":
@@ -24,6 +24,7 @@ def loginView(request):
 
         else:
             errorLogin = "Invalid email or password"
+            print(errorLogin)
 
     context = {"error": errorLogin}
     return render(request, "login.html", context)
@@ -50,6 +51,6 @@ def register(request):
 
 
 def logoutView(request):
-    """ Logout user """
+    """Logout user"""
     logout(request)
     return redirect("login")

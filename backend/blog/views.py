@@ -7,7 +7,6 @@ from .models import Post, Category
 from .forms import PostForm, CommentForm
 
 
-@login_required(login_url="login")
 def home(request):
     """Home page, where user can view all the posts"""
     posts = Post.objects.all()
@@ -106,3 +105,9 @@ def postDelete(request, id):
 
     post.delete()
     return redirect("home")
+
+
+# AJAX connection
+def testingAjax(request):
+
+    return

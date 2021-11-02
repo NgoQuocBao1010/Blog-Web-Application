@@ -23,6 +23,14 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="{% static './css/login.css' %}" />
+
+        <style>
+            .span-error {
+                color: red;
+                font-style: italic;
+                font-weight: 600;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -67,7 +75,10 @@
                                 id="password"
                             />
                         </div>
+                        <div class="span-error">{{ error }}</div>
                         <br />
+
+                        <!-- Button -->
                         <button type="submit" class="btn">Login</button>
                         <a
                             href="{% url 'register' %}"
