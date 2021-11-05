@@ -1,0 +1,589 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700;900&display=swap");
+
+:root {
+    --black: #333333;
+    --grey: #999999;
+    --light-green: #93c0bb;
+    --dark-green: #84b6b0;
+    --light-pink: #eeacb6;
+    --light-pink2: #ebccd1;
+    --light-color: #999999;
+    --border: 0.1rem solid #00000033;
+    --box-shadow: 0 0.5rem 1rem #0000001a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    /* font-weight: lighter; */
+}
+
+html {
+    font-family: "Quicksand", sans-serif;
+    font-size: 62.5%;
+    font-weight: 500;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+}
+
+section {
+    padding: 2rem 7%;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    padding: 1.2rem 7%;
+}
+
+.header .logo {
+    color: var(--black);
+    font-size: 3.3rem;
+    margin-right: auto;
+}
+
+.header .logo span {
+    color: var(--light-green);
+    font-weight: bold;
+}
+
+.header .navbar a {
+    color: #292929;
+    margin-right: 2rem;
+    font-size: 1.8rem;
+    text-transform: capitalize;
+}
+
+.header .navbar a:hover {
+    color: var(--dark-green);
+}
+
+.header .icons i {
+    height: 3.5rem;
+    line-height: 3.5rem;
+    width: 3.5rem;
+    text-align: center;
+    color: var(--black);
+    font-size: 1.7rem;
+    cursor: pointer;
+}
+
+.header .icons i:hover {
+    color: var(--light-pink2);
+}
+
+.header .search-form {
+    position: absolute;
+    background: #fff;
+    border-radius: 0.5rem;
+    align-items: center;
+    box-shadow: var(--box-shadow);
+    top: 120%;
+    right: 7%;
+    height: 6rem;
+    width: 35rem;
+    padding: 1.5rem;
+    display: none;
+}
+
+.header .search-form.active {
+    display: flex;
+}
+
+.header .search-form #search-box {
+    width: 100%;
+    border: var(--border);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    font-size: 1.7rem;
+    color: var(--black);
+    height: 100%;
+}
+
+.header .search-form button {
+    font-size: 2rem;
+    padding: 0.4rem;
+    border-radius: 0.5rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    color: var(--black);
+    font-size: 1.7rem;
+}
+
+.header .search-form button:hover {
+    background-color: var(--light-pink2);
+}
+
+#menu-bars {
+    display: none;
+}
+
+.container {
+    padding-top: 8rem;
+    display: grid;
+    grid-template-columns: 2fr 0.8fr;
+    gap: 4.5rem;
+    /* background: #fff; */
+    background: #f0f0f0;
+}
+
+.container .posts-container .post {
+    width: 100%;
+    padding: 2rem;
+    background: #fff;
+    border: var(--border);
+    margin-bottom: 1.5rem;
+    padding-bottom: 5rem;
+}
+
+.container .posts-container .post .path {
+    font-size: 1.8rem;
+    background-color: #f0e0e3;
+    padding: 0.8rem;
+    margin-bottom: 2.2rem;
+}
+
+.container .posts-container .post .path span {
+    color: #414040;
+    font-weight: bold;
+}
+
+.container .posts-container .post .path span[title="home_path"] {
+    color: #747474;
+    font-weight: bold;
+}
+
+.container .posts-container .post .image {
+    height: 40rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    margin-top: 3.5rem;
+}
+
+.container .posts-container .post .date {
+    padding-top: 1.8rem;
+    font-size: 2rem;
+    color: var(--light-pink);
+    text-align: center;
+}
+
+.container .posts-container .post .title {
+    padding-top: 1.5rem;
+    font-size: 4.5rem;
+    color: var(--black);
+    font-weight: bold;
+    text-align: center;
+}
+
+.container .posts-container .post .text {
+    color: #5a5a5a;
+    font-size: 1.6rem;
+    line-height: 1.7;
+    padding: 1rem 0;
+}
+
+.container .posts-container .post hr {
+    height: 0.18rem;
+    width: 15%;
+    background-color: #616060;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2.5rem;
+}
+
+.container .posts-container .comments-list {
+    border-top: var(--border);
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+}
+
+.container .posts-container .comments-list {
+    font-size: 2.1rem;
+    color: var(--light-pink);
+    font-weight: bold;
+}
+
+.container .posts-container .leave_comment {
+    font-size: 2.1rem;
+    color: var(--light-pink);
+    font-weight: bold;
+}
+
+.container .posts-container .comments-list .commented {
+    font-size: 1.8rem;
+    color: #464646;
+    padding: 1.7rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: #f5f5f5;
+    border-radius: 1.2rem;
+}
+
+.container .posts-container .comments-list .commented p {
+    margin-top: 0.8rem;
+    margin-left: 2.3rem;
+    font-size: 1.5rem;
+    color: #525252;
+}
+
+.container .posts-container .comment-block textarea {
+    margin-top: 1.3rem;
+    border: 0.1rem var(--grey) solid;
+    width: 100%;
+    height: 10rem;
+    padding: 0.6rem;
+}
+
+.container .posts-container .comment-block button {
+    padding: 0.8rem;
+    border-radius: 1.7rem;
+    margin-top: 0.1rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    color: var(--black);
+    font-size: 1.5rem;
+    float: right;
+    background-color: #ebebeb;
+}
+
+.container .posts-container .comment-block button:hover {
+    background-color: var(--light-pink2);
+}
+
+/* sidebar */
+.container .sidebar .box {
+    overflow: hidden;
+    margin-bottom: 4rem;
+    background: #fff;
+}
+
+.container .sidebar .box .title {
+    padding: 1.5rem;
+    font-size: 2rem;
+    color: #ffffff;
+    background: #a1c9c5;
+    text-transform: capitalize;
+}
+
+.container .sidebar .box .about {
+    text-align: center;
+    padding: 1rem 1.5rem;
+}
+
+.container .sidebar .box .about img {
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 1rem 0;
+}
+
+.container .sidebar .box .about h3 {
+    color: #505050;
+    font-size: 2rem;
+}
+
+.container .sidebar .box .about p {
+    color: var(--light-color);
+    font-size: 1.5rem;
+    line-height: 1.5;
+    padding: 1rem;
+}
+
+.container .sidebar .box .about .follow {
+    padding: 1rem 0;
+}
+
+.container .sidebar .box .about .follow a {
+    height: 4rem;
+    line-height: 4rem;
+    width: 4rem;
+    color: #505050;
+    font-size: 1.7rem;
+    margin: 0 0.1rem;
+}
+
+.container .sidebar .box .about .follow a:hover {
+    color: var(--dark-green);
+}
+
+/* category */
+.container .sidebar .box .category {
+    padding: 1rem 1.5rem;
+}
+
+.container .sidebar .box .category a {
+    padding: 0.4rem 0;
+    font-size: 1.5rem;
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container .sidebar .box .category a span {
+    background: var(--light-color);
+    color: #fff;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    width: 30px;
+    text-align: center;
+}
+
+.container .sidebar .box .category a:hover {
+    color: var(--dark-green);
+}
+
+.container .sidebar .box .category a:hover span {
+    background-color: var(--dark-green);
+}
+
+/* post */
+.container .sidebar .box .p-post {
+    padding: 1rem 2rem;
+}
+
+.container .sidebar .box .p-post a {
+    padding: 1rem 0;
+    display: block;
+}
+
+.container .sidebar .box .p-post a h3 {
+    color: var(--black);
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.container .sidebar .box .p-post a span {
+    color: var(--light-color);
+    font-size: 1.3rem;
+}
+
+.container .sidebar .box .p-post a span i {
+    padding-right: 0.2rem;
+    font-size: 1.5rem;
+}
+
+.container .sidebar .box .p-post a:hover h3 {
+    color: var(--dark-green);
+}
+
+/* multi-posts */
+.multi-posts {
+    background: url(../images/flower.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 4.5rem;
+}
+
+.multi-posts h3.title {
+    text-align: center;
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: var(--light-pink);
+    margin-bottom: 2.5rem;
+}
+
+.multi-posts button#left {
+    float: left;
+    background: none;
+    margin-left: 55.5rem;
+    color: #6d6d6d;
+}
+
+.multi-posts button#right {
+    float: right;
+    background: none;
+    margin-right: 55.5rem;
+    color: #6d6d6d;
+}
+
+.multi-posts button#left:hover {
+    cursor: pointer;
+    color: var(--black);
+}
+
+.multi-posts button#right:hover {
+    cursor: pointer;
+    color: var(--black);
+}
+
+.multi-posts div.single_post {
+    width: 100%;
+    height: 30rem;
+    /* border: red 1px solid; */
+    display: none;
+}
+
+.multi-posts div.single_post table {
+    /* border: 1px solid blue;  */
+    table-layout: fixed;
+    width: 100%;
+}
+
+.multi-posts div.single_post table td {
+    padding: 1.3rem;
+    border: 1px solid #a1a1a1;
+    height: 28.4rem;
+    background-color: white;
+}
+
+.multi-posts div.single_post table td a img {
+    height: 20rem;
+    width: 100%;
+    object-fit: cover;
+    margin-top: 0px;
+}
+
+.multi-posts div.single_post table h3 {
+    font-size: 2.2rem;
+    margin-top: 0.5rem;
+}
+
+.btn {
+    margin-top: 1rem;
+    display: inline-block;
+    background: var(--black);
+    color: #fff;
+    border-radius: 0.5rem;
+    padding: 0.9rem 3rem;
+    cursor: pointer;
+    font-size: 1.7rem;
+}
+
+.btn:hover {
+    background: var(--light-green);
+}
+
+/* footer */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer .credit {
+    text-transform: capitalize;
+    font-size: 1.5rem;
+    color: var(--black);
+    padding: 1rem 0;
+}
+
+.footer .credit span {
+    color: var(--pink);
+}
+
+.footer .follow {
+    padding: 1rem 0;
+}
+
+.footer .follow a {
+    height: 4.5rem;
+    line-height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 50%;
+    font-size: 1.7rem;
+    background: grey;
+    color: #fff;
+    margin: 0 0.1rem;
+    text-align: center;
+}
+
+.footer .follow a:hover {
+    background: var(--light-green);
+}
+
+/* media queries  */
+
+@media (max-width: 991px) {
+    html {
+        font-size: 55%;
+    }
+
+    .header {
+        padding: 1.5rem;
+    }
+
+    section {
+        padding: 2rem;
+    }
+
+    .container {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+@media (max-width: 768px) {
+    #menu-bars {
+        display: inline-block;
+    }
+
+    .header .search-form {
+        top: 100%;
+        left: 0;
+        right: 0;
+        border-top: var(--border);
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .header .navbar {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        border-top: var(--border);
+        border-bottom: var(--border);
+        background: #fff;
+        display: none;
+    }
+
+    .header .navbar.active {
+        display: block;
+    }
+
+    .header .navbar a {
+        display: block;
+        background: #f7f7f7;
+        padding: 1.5rem;
+        margin: 1.5rem;
+        border-radius: 0.5rem;
+        border: var(--border);
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .container .posts-container .post .image {
+        height: 30rem;
+    }
+
+    .footer {
+        flex-flow: column;
+        text-align: center;
+    }
+}
+@media (max-width: 450px) {
+    html {
+        font-size: 50%;
+    }
+
+    .multi-posts form .inputBox input {
+        width: 100%;
+    }
+}

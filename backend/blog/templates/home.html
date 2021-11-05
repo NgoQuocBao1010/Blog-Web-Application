@@ -24,19 +24,26 @@
             <a href="{% url 'home' %}" class="logo"><span>Blog</span>ger</a>
 
             <nav class="navbar">
-                <!-- <a href="#banner">banner</a> -->
+                {% if request.user.is_authenticated %}
                 <a href="#aboutme">about me</a>
                 <a href="#posts">posts</a>
                 <a href="{% url 'createPost' %}">Create Post</a>
                 <a href="{% url 'logout' %}">logout</a>
+                {% else %}
+                <a href="{% url 'login' %}">became a blogger</a>
+                {% endif %}
             </nav>
         </header>
 
         <!-- banner  -->
         <section class="banner" id="banner">
             <div class="content">
+                {% if request.user.is_authenticated %}
                 <h3>Hello</h3>
                 <p>Welcome to my blog</p>
+                {% else %}
+                <h3>Welcome to Blogger</h3>
+                {% endif %}
             </div>
         </section>
 
@@ -65,7 +72,7 @@
                             <i class="far fa-user"></i>
                             <span>by {{ post.author }}</span>
                         </a>
-                        <a href="#" class="icon">
+                        <a href="{% url 'postDetail' post.id  %}" class="icon">
                             <i class="far fa-comment"></i>
                             <span>{{ post.comment_set.all|length }}</span>
                         </a>
@@ -78,11 +85,15 @@
             <!-- sidebar -->
             <div class="sidebar">
                 <!-- User box -->
+                {% if request.user.is_authenticated %}
                 <div class="box">
                     <h3 class="title">about me</h3>
                     <div class="about">
-                        <img src="{% static './images/user.png' %}" alt="" />
-                        <h3>{{ request.user }}</h3>
+                        <img
+                            src="{{ request.user.profile.avatar.url }}"
+                            alt=""
+                        />
+                        <h3>{{ request.user.profile.name }}</h3>
                         <p>{{ request.user }}</p>
 
                         <div class="follow">
@@ -93,6 +104,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
 
                 <!-- categories -->
                 <div class="box">

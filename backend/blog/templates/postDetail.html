@@ -1,0 +1,333 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Posts</title>
+
+        <!-- Font awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        />
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="{% static './css/post.css' %}" />
+    </head>
+    <body>
+        <!--  header  -->
+        <header class="header">
+            <a href="{% url 'home' %}" class="logo"><span>Blog</span>ger</a>
+            <nav class="navbar">
+                <a href="#aboutme">about me</a>
+                <a href="#post">post</a>
+                <a href="{% url 'createPost' %}">add posts</a>
+            </nav>
+
+            <div class="icons">
+                <i class="fas fa-bars" id="menu-bars"></i>
+                <i class="fas fa-search" id="search-icon"></i>
+            </div>
+
+            <!-- search form -->
+            <form class="search-form">
+                <input
+                    type="search"
+                    name="search"
+                    placeholder="Searching.."
+                    id="search-box"
+                />
+                <!-- <label for="search-box" class="fas fa-search"></label> -->
+                <button type="submit" class="">Search</button>
+            </form>
+        </header>
+
+        <!-- posts  -->
+        <section class="container" id="posts">
+            <div class="posts-container">
+                <!-- Post content -->
+                <div class="post">
+                    <p class="path">
+                        <a href="{% url 'home' %}">
+                            <span title="home_path">Home /</span>
+                        </a>
+                        <span>{{ post.title }}</span>
+                    </p>
+
+                    <!-- post block -->
+                    <h3 class="title">{{ post.title }}</h3>
+                    <div class="date">
+                        <span>By {{ post.author }} /</span>
+                        <span>{{ post.dateCreated }} /</span>
+                        <span>{{ post.comment_set.all|length }}</span>
+                        <i class="far fa-comment"></i>
+                    </div>
+                    <hr />
+                    <a href="#">
+                        <img
+                            src="{{ post.coverImage.url }}"
+                            alt=""
+                            class="image"
+                        />
+                    </a>
+
+                    <p class="text">{{ post.content }}</p>
+
+                    <!-- Comments block -->
+                    <div class="comments-list">
+                        <span>{{ post.comment_set.all|length }} Comments</span>
+
+                        <!-- specific commented -->
+                        {% for comment in post.comment_set.all %}
+                        <div class="commented">
+                            <i class="far fa-comment"></i>
+                            <span> By {{ comment.commentor }} /</span>
+                            <span>{{ comment.dateCreated }}</span>
+                            <p id="comment-{{ comment.id }}">
+                                {{ comment.content }}
+                            </p>
+                        </div>
+                        {% empty %}
+                        <p>No comments yet.</p>
+                        {% endfor %}
+                    </div>
+
+                    <span class="leave_comment">Comment here</span>
+
+                    <div class="comment-block">
+                        <!-- Comment form -->
+                        <form
+                            action=""
+                            method="POST"
+                            class="comment-form"
+                            id="comment-form"
+                        >
+                            <textarea
+                                id="content"
+                                name="content"
+                                class="comment"
+                                placeholder="Type your comment here."
+                            ></textarea>
+                            <button id="comment_submit" type="submit" class="">
+                                Post comment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- sidebar -->
+            <div class="sidebar">
+                <!-- User box -->
+                {% if request.user.is_authenticated %}
+                <div class="box">
+                    <h3 class="title">about me</h3>
+                    <div class="about">
+                        <img
+                            src="{{ request.user.profile.avatar.url }}"
+                            alt=""
+                        />
+                        <h3>{{ request.user.profile.name }}</h3>
+                        <p>{{ request.user }}</p>
+
+                        <div class="follow">
+                            <a href="#" class="fab fa-facebook-f"></a>
+                            <a href="#" class="fab fa-twitter"></a>
+                            <a href="#" class="fab fa-instagram"></a>
+                            <a href="#" class="fab fa-youtube"></a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- categories -->
+                <div class="box">
+                    <h3 class="title">categories</h3>
+                    <div class="category">
+                        {% for category in categories %}
+                        <a href="#">
+                            {{ category.name }}
+                            <span>{{ category.post_set.all|length }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Popular posts -->
+                <div class="box">
+                    <h3 class="title">popular posts</h3>
+                    <div class="p-post">
+                        {% for post in popularPosts %}
+                        <a href="{% url 'postDetail' post.id %}">
+                            <h3>{{ forloop.counter }}. {{ post.title }}</h3>
+                            <span>
+                                <i class="far fa-clock"></i>
+                                {{ post.dateCreated }}
+                            </span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- posts have same category  -->
+        <section class="multi-posts" id="multi-posts">
+            <h3 class="title">RELATED POSTS</h3>
+
+            <!-- 1 slide has 3 posts -->
+            <!-- 1st slide -->
+            <div class="single_post">
+                <table cellspacing="7">
+                    <tr>
+                        <td>
+                            <a href="">
+                                <img
+                                    src="{% static './images/posts/blog1.jpg' %}"
+                                />
+                            </a>
+                            <h3>Place to travel</h3>
+                        </td>
+                        <td>
+                            <a href="">
+                                <img
+                                    src="{% static './images/posts/blog2.jpg' %}"
+                                />
+                            </a>
+                            <h3>Recipe</h3>
+                        </td>
+                        <td>
+                            <a href="">
+                                <img
+                                    src="{% static './images/posts/blog1.jpg' %}"
+                                />
+                            </a>
+                            <h3>Place to travel</h3>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- 2nd slide -->
+            <div class="single_post">
+                <table cellspacing="7">
+                    <tr>
+                        <td>
+                            <a href="">
+                                <img
+                                    src="{% static './images/posts/blog1.jpg' %}"
+                                />
+                            </a>
+                            <h3>Place to travel</h3>
+                        </td>
+                        <td>
+                            <a href="">
+                                <img
+                                    src="{% static './images/posts/blog1.jpg' %}"
+                                />
+                            </a>
+                            <h3>Recipe</h3>
+                        </td>
+                        <td>
+                            <a href="">
+                                <img
+                                    src="{% static './images/posts/blog1.jpg' %}"
+                                />
+                            </a>
+                            <h3>Place to travel</h3>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <button id="left" onclick="plusDivs(-1)">
+                <i class="fas fa-chevron-left fa-2x"></i>
+            </button>
+            <button id="right" onclick="plusDivs(1)">
+                <i class="fas fa-chevron-right fa-2x"></i>
+            </button>
+        </section>
+
+        <!-- footer -->
+        <section class="footer">
+            <div class="follow">
+                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-youtube"></a>
+            </div>
+
+            <div class="credit">All rights reserved</div>
+        </section>
+
+        <!-- Javascript  -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{% static './js/slideshow.js' %}"></script>
+        <script src="{% static './js/dropdown.js' %}"></script>
+
+        <script>
+            const postId = JSON.parse("{{ post.id }}");
+
+            $(document).ready(function () {
+                // using ajax
+                $("#comment-form").submit(function (e) {
+                    // preventing from page reload
+                    e.preventDefault();
+
+                    const content = $("#content").val();
+                    const serializedData = {
+                        content,
+                        postId,
+                    };
+
+                    // make POST ajax call
+                    $.ajax({
+                        type: "POST",
+                        url: "http://127.0.0.1:8000/post/ajax/comment",
+                        data: serializedData,
+
+                        success: function (response) {
+                            console.log(response);
+                            const { commentor, dateCreated, content } =
+                                response;
+                            // clear the form.
+                            $("#comment-form").trigger("reset");
+
+                            // append new comment
+                            $("div.comments-list > div:nth-child(1)").after(
+                                `
+                            <div class="commented">
+                                    <i class="far fa-comment"></i>
+                                    <span> By ${commentor} /</span>
+                                    <span>${dateCreated}</span>
+                                    <p id="comment">${content}</p>
+                            </div>
+                        `
+                            );
+                        },
+                        error: function (data) {
+                            // alert the error
+                            alert(data["responseJSON"]["error"]);
+                        },
+                    });
+                });
+
+                // testing append
+                // $("#comment_submit").click(function(){
+                //     alert(comment);
+                //     $("#comment-form").trigger('reset');
+                //     $("div.comments-list").append
+                //         (`
+                //             <div class="commented">
+                //                     <i class="far fa-comment"></i>
+                //                     <span> By someone /</span>
+                //                     <span>12 Nov, 2021</span>
+                //                     <p id="comment">So good</p>
+                //             </div>
+                //         `);
+                // });
+            });
+        </script>
+    </body>
+</html>

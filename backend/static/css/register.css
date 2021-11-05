@@ -42,7 +42,8 @@
 
 /* New */
 .container .row form label,
-.container .row form input[type="email"] {
+.container .row form input[type="email"],
+.container .row form input[type="text"] {
     font-weight: 600 !important;
 }
 

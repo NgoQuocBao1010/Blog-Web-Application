@@ -113,7 +113,13 @@
                 </div>
 
                 <!-- Add new comments -->
-                <h3>Comment as {{ request.user }}</h3>
+                <h3>
+                    Comment as
+                    <span>
+                        {% if request.user.is_authenticated %} {{ request.user}}
+                        {% else %} Guest user {% endif %}
+                    </span>
+                </h3>
                 <form method="post">
                     {% csrf_token %} {{ form.as_table }}
                     <input type="submit" value="Submit" />

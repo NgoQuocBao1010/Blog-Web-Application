@@ -18,11 +18,3 @@ class CommentForm(ModelForm):
         fields = [
             "content",
         ]
-        widgets = {
-            "content": forms.TextInput(
-                attrs={"placeholder": "Leave your comment here ..."}
-            )
-        }
-        labels = {
-            "content": "",
-        }

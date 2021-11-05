@@ -41,7 +41,7 @@
                     <!-- Form -->
                     <form method="POST" class="pb-3" id="registerForm">
                         {% csrf_token %}
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <label for="name">Name</label>
                             <input
                                 name="name"
@@ -49,7 +49,7 @@
                                 class="form-control"
                                 id="name"
                             />
-                        </div> -->
+                        </div>
                         <div class="form-group">
                             <label for="email">Email address *</label>
                             <input
@@ -159,16 +159,6 @@
         </script>
 
         <!-- Django data -->
-        <script>
-            const errors = JSON.parse("{{ error | escapejs }}");
-
-            if (errors) {
-                for (let field in errors) {
-                    const messageError = errors[field][0].message;
-
-                    console.log(`${field}: ${messageError}`);
-                }
-            }
-        </script>
+        <script></script>
     </body>
 </html>

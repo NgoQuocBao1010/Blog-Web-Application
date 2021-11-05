@@ -5,6 +5,7 @@ import json
 
 from .forms import CreateUserForm
 from .decorators import unauthenticated_user
+from .models import Profile
 
 
 @unauthenticated_user
@@ -32,21 +33,22 @@ def loginView(request):
 
 @unauthenticated_user
 def register(request):
-    errorMsg = None
-
     if request.method == "POST":
-        print(request.POST)
         form = CreateUserForm(request.POST)
 
         if form.is_valid():
             user = form.save()
+
+            name = request.POST.get("name")
+            Profile.objects.create(user=user, name=name)
+            
             login(request, user)
             return redirect("home")
 
         else:
-            errorMsg = form.errors.as_json()
+            print(form.errors.as_text())
 
-    context = {"error": errorMsg}
+    context = {}
     return render(request, "register.html", context)
 
 

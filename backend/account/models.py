@@ -62,3 +62,14 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.staff
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    avatar = models.ImageField(default="users/user.png", upload_to="users/")
+    facebook = models.URLField(null=True, blank=True)
+    instagram = models.URLField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Profile of user {self.user}"
