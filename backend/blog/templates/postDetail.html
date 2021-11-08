@@ -86,7 +86,7 @@
                             <a href=""></a>
                         </div>
                         {% empty %}
-                        <p>No comments yet.</p>
+                        <p id="no-comment">No comments yet.</p>
                         {% endfor %}
                     </div>
 
@@ -266,6 +266,9 @@
                 /* Count number of comments */
                 const numberOfComments = $('.commented').length;
                 $("#total-comment").html(`${numberOfComments} Comments`);
+
+                if (!numberOfComments) $("#no-comment").show();
+                else $("#no-comment").hide();
             }
 
             $(document).ready(function () {
