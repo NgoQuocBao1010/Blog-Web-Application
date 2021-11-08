@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
-import json
 
 from .forms import CreateUserForm
 from .decorators import unauthenticated_user
@@ -21,11 +19,10 @@ def loginView(request):
 
         if user is not None:
             login(request, user)
-            return redirect("home")
+            return redirect("bloggerHome", email=email)
 
         else:
             errorLogin = "Invalid email or password"
-            print(errorLogin)
 
     context = {"error": errorLogin}
     return render(request, "login.html", context)
@@ -41,9 +38,9 @@ def register(request):
 
             name = request.POST.get("name")
             Profile.objects.create(user=user, name=name)
-            
+
             login(request, user)
-            return redirect("home")
+            return redirect("bloggerHome", kwargs={"email": user.email})
 
         else:
             print(form.errors.as_text())

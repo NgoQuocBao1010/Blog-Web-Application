@@ -1,0 +1,172 @@
+<style>
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: #fff;
+        box-shadow: var(--box-shadow);
+        display: flex;
+        align-items: center;
+        padding: 1.2rem 7%;
+    }
+
+    .header .logo {
+        color: var(--black);
+        font-size: 3.3rem;
+        margin-right: auto;
+    }
+
+    .header .logo span {
+        color: var(--light-green);
+        font-weight: bold;
+    }
+
+    .header .navbar a {
+        color: #292929;
+        margin-right: 2rem;
+        font-size: 1.8rem;
+        text-transform: capitalize;
+    }
+
+    .header .navbar a:hover {
+        color: var(--dark-green);
+    }
+
+    .header .icons i {
+        height: 3.5rem;
+        line-height: 3.5rem;
+        width: 3.5rem;
+        text-align: center;
+        color: var(--black);
+        font-size: 1.7rem;
+        cursor: pointer;
+    }
+
+    .header .icons i:hover {
+        color: var(--light-pink2);
+    }
+
+    .header .search-form {
+        position: absolute;
+        background: #fff;
+        border-radius: 0.5rem;
+        align-items: center;
+        box-shadow: var(--box-shadow);
+        top: 120%;
+        right: 7%;
+        height: 6rem;
+        width: 40rem;
+        padding: 1.5rem;
+        display: none;
+    }
+
+    .header .search-form.active {
+        display: flex;
+    }
+
+    .header .search-form #search-box {
+        width: 100%;
+        border: var(--border);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        font-size: 1.7rem;
+        color: var(--black);
+        height: 100%;
+    }
+
+    .header .search-form button {
+        font-size: 2rem;
+        padding: 0.4rem;
+        border-radius: 0.5rem;
+        margin-left: 0.5rem;
+        cursor: pointer;
+        color: var(--black);
+        font-size: 1.7rem;
+    }
+
+    .header .search-form button:hover {
+        background-color: var(--light-pink2);
+    }
+
+    #menu-bars {
+        display: none;
+    }
+
+    @media (max-width: 991px) {
+        .header {
+            padding: 1.5rem;
+        }
+    }
+    @media (max-width: 768px) {
+        #menu-bars {
+            display: inline-block;
+        }
+
+        .header .search-form {
+            top: 100%;
+            left: 0;
+            right: 0;
+            border-top: var(--border);
+            width: 100%;
+            border-radius: 0;
+        }
+
+        .header .navbar {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border-top: var(--border);
+            border-bottom: var(--border);
+            background: #fff;
+            display: none;
+        }
+
+        .header .navbar.active {
+            display: block;
+        }
+
+        .header .navbar a {
+            display: block;
+            background: #f7f7f7;
+            padding: 1.5rem;
+            margin: 1.5rem;
+            border-radius: 0.5rem;
+            border: var(--border);
+        }
+    }
+</style>
+
+<header class="header">
+    <a href="{% url 'home' %}" class="logo"><span>Blog</span>ger</a>
+    <nav class="navbar">
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'home' %}">Community</a>
+        <a href="#aboutme">about me</a>
+        <a href="{% url 'bloggerHome' request.user.email %}#posts">my posts</a>
+        <a href="{% url 'createPost' %}">add posts</a>
+        <a href="{% url 'logout' %}">logout</a>
+        {% else %}
+        <a href="{% url 'login' %}">become a blogger</a>
+        {% endif %}
+    </nav>
+
+    <div class="icons">
+        <i class="fas fa-bars" id="menu-bars"></i>
+        <i class="fas fa-search" id="search-icon"></i>
+    </div>
+
+    <!-- search form -->
+    <form class="search-form">
+        <input
+            type="search"
+            name="search"
+            placeholder="Find your favorite blogger ..."
+            id="search-box"
+        />
+
+        <button type="submit" class="">Search</button>
+    </form>
+</header>

@@ -93,7 +93,7 @@ section {
     top: 120%;
     right: 7%;
     height: 6rem;
-    width: 35rem;
+    width: 40rem;
     padding: 1.5rem;
     display: none;
 }
@@ -237,6 +237,12 @@ section {
     margin-left: 2.3rem;
     font-size: 1.5rem;
     color: #525252;
+}
+
+/* New */
+.container .posts-container .comments-list .commented span a {
+    text-decoration: none;
+    color: var(--dark-green);
 }
 
 .container .posts-container .comment-block textarea {

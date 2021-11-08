@@ -1,11 +1,13 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.db.models import Count
 from django.http import JsonResponse
-from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
+import pytz
+from datetime import timezone
 
 from .models import Post, Category
 from .forms import PostForm, CommentForm
@@ -14,24 +16,44 @@ User = get_user_model()
 
 
 def home(request):
-    """Home page, where user can view all the posts"""
-    print(request.user.profile.name)
+    """Home page, where user and unauth user can view all the posts"""
     posts = Post.objects.all()
-    categories = Category.objects.all()
-
+    posts = filterPosts(request, posts)
     popularPosts = Post.objects.annotate(num_comment=Count("comment")).order_by(
         "-num_comment"
     )[:5]
+
+    categories = Category.objects.all()
 
     context = {"posts": posts, "categories": categories, "popularPosts": popularPosts}
     return render(request, "home.html", context)
 
 
-@login_required(login_url="login")
 def bloggerHome(request, email):
+    """Home of individual blogger"""
 
-    context = {}
-    return render(request, "home.html", context)
+    try:
+        blogger = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return HttpResponse("Not exist")
+
+    posts = Post.objects.filter(author=blogger)
+    posts = filterPosts(request, posts)
+    popularPosts = posts.annotate(num_comment=Count("comment")).order_by(
+        "-num_comment"
+    )[:5]
+
+    categories = Category.objects.filter(post__author=blogger).annotate(
+        total=Count("post")
+    )
+
+    context = {
+        "blogger": blogger,
+        "posts": posts,
+        "categories": categories,
+        "popularPosts": popularPosts,
+    }
+    return render(request, "my-blog.html", context)
 
 
 @login_required(login_url="login")
@@ -41,14 +63,12 @@ def createPost(request):
 
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
-
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
 
             post.save()
             return redirect("postDetail", id=post.id)
-
         else:
             print(form.errors.as_text())
 
@@ -67,14 +87,12 @@ def postEdit(request, id):
         return render(request, "unauthorized.html", {})
 
     form = PostForm(instance=post)
-
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES, instance=post)
 
         if form.is_valid():
             post = form.save()
             return redirect("postDetail", id=id)
-
         else:
             print(form.errors.as_text())
 
@@ -91,22 +109,6 @@ def postDetail(request, id):
     popularPosts = Post.objects.annotate(num_comment=Count("comment")).order_by(
         "-num_comment"
     )[:5]
-
-    # Make comments
-    # form = CommentForm()
-    # if request.method == "POST":
-    #     form = CommentForm(request.POST)
-
-    #     if form.is_valid():
-    #         newComment = form.save(commit=False)
-    #         newComment.commentor = request.user if request.user.is_authenticated else None
-    #         newComment.post = post
-
-    #         newComment.save()
-    #         return redirect("postDetail", id=id)
-
-    #     else:
-    #         print(form.errors.as_text())
 
     context = {
         "post": post,
@@ -130,7 +132,8 @@ def postDelete(request, id):
 
 # AJAX connection
 @csrf_exempt
-def testingAjax(request):
+def newComment(request):
+    """Handle ajax request to create new comment"""
     if request.is_ajax and request.method == "POST":
         responseData = {}
 
@@ -146,14 +149,26 @@ def testingAjax(request):
             newComment.post = post
             newComment.save()
 
+            # Response data
             commentor = (
                 "Guest" if not newComment.commentor else newComment.commentor.email
+            )
+
+            localDatetime = newComment.dateCreated.replace(tzinfo=timezone.utc)
+            local_tz = "Asia/Ho_Chi_Minh"
+            localDatetime = localDatetime.astimezone(pytz.timezone(local_tz))
+            formatDate = (
+                localDatetime.strftime("%b. %d, %Y, %I:%M %p")
+                .replace("AM", "a.m.")
+                .replace("PM", "p.m.")
+                .replace(". 0", ". ")
+                .replace(", 0", ", ")
             )
 
             responseData.update(
                 {
                     "commentor": commentor,
-                    "dateCreated": newComment.dateCreated,
+                    "dateCreated": formatDate,
                     "content": request.POST.get("content"),
                 }
             )
@@ -162,3 +177,15 @@ def testingAjax(request):
             print(form.errors.as_text())
 
     return JsonResponse(responseData, status=200)
+
+
+def filterPosts(request, posts):
+    """Filter post on get request"""
+    category = request.GET.get("category")
+    if category:
+        posts = posts.filter(category__name__icontains=category)
+
+    return posts
+
+
+# print(request.resolver_match.view_name)

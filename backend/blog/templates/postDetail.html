@@ -18,31 +18,7 @@
     </head>
     <body>
         <!--  header  -->
-        <header class="header">
-            <a href="{% url 'home' %}" class="logo"><span>Blog</span>ger</a>
-            <nav class="navbar">
-                <a href="#aboutme">about me</a>
-                <a href="#post">post</a>
-                <a href="{% url 'createPost' %}">add posts</a>
-            </nav>
-
-            <div class="icons">
-                <i class="fas fa-bars" id="menu-bars"></i>
-                <i class="fas fa-search" id="search-icon"></i>
-            </div>
-
-            <!-- search form -->
-            <form class="search-form">
-                <input
-                    type="search"
-                    name="search"
-                    placeholder="Searching.."
-                    id="search-box"
-                />
-                <!-- <label for="search-box" class="fas fa-search"></label> -->
-                <button type="submit" class="">Search</button>
-            </form>
-        </header>
+        {% include "navbar.html" %}
 
         <!-- posts  -->
         <section class="container" id="posts">
@@ -83,7 +59,20 @@
                         {% for comment in post.comment_set.all %}
                         <div class="commented">
                             <i class="far fa-comment"></i>
-                            <span> By {{ comment.commentor }} /</span>
+                            {% if comment.commentor %}
+                            <span>
+                                By
+                                <a
+                                    href="{% url 'bloggerHome' comment.commentor.email  %}"
+                                >
+                                    {{ comment.commentor }}
+                                </a>
+                                /
+                            </span>
+                            {% else %}
+                            <span> By Guest /</span>
+                            {% endif %}
+
                             <span>{{ comment.dateCreated }}</span>
                             <p id="comment-{{ comment.id }}">
                                 {{ comment.content }}
@@ -94,10 +83,9 @@
                         {% endfor %}
                     </div>
 
+                    <!-- Comment form -->
                     <span class="leave_comment">Comment here</span>
-
                     <div class="comment-block">
-                        <!-- Comment form -->
                         <form
                             action=""
                             method="POST"
@@ -310,20 +298,6 @@
                         },
                     });
                 });
-
-                // testing append
-                // $("#comment_submit").click(function () {
-                //     alert(comment);
-                //     $("#comment-form").trigger("reset");
-                //     $("div.comments-list").append(`
-                //             <div class="commented">
-                //                     <i class="far fa-comment"></i>
-                //                     <span> By someone /</span>
-                //                     <span>12 Nov, 2021</span>
-                //                     <p id="comment">So good</p>
-                //             </div>
-                //         `);
-                // });
             });
         </script>
     </body>

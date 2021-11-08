@@ -33,59 +33,6 @@ section {
     padding: 2rem 7%;
 }
 
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background: #fff;
-    box-shadow: var(--box-shadow);
-    display: flex;
-    align-items: center;
-    padding: 1.2rem 7%;
-}
-
-.header .logo {
-    color: var(--black);
-    font-size: 3.3rem;
-    margin-right: auto;
-}
-
-.header .logo span {
-    color: var(--light-green);
-    font-weight: bold;
-}
-
-.header .navbar a {
-    color: #292929;
-    margin-right: 2rem;
-    font-size: 1.8rem;
-    text-transform: capitalize;
-}
-
-.header .navbar a:hover {
-    color: var(--dark-green);
-}
-
-.header .icons i {
-    height: 4.5rem;
-    line-height: 4.5rem;
-    width: 4.5rem;
-    text-align: center;
-    color: var(--black);
-    background: #eee;
-    border-radius: 50%;
-    margin-left: 0.7rem;
-    font-size: 1.7rem;
-    cursor: pointer;
-}
-
-.header .icons i:hover {
-    color: #fff;
-    background: var(--pink);
-}
-
 .banner {
     min-height: 65vh;
     background: url(../images/banner_header.png) no-repeat;
@@ -428,10 +375,6 @@ section {
         font-size: 55%;
     }
 
-    .header {
-        padding: 1.5rem;
-    }
-
     section {
         padding: 2rem;
     }
@@ -441,43 +384,6 @@ section {
     }
 }
 @media (max-width: 768px) {
-    #menu-bars {
-        display: inline-block;
-    }
-
-    .header .search-form {
-        top: 100%;
-        left: 0;
-        right: 0;
-        border-top: var(--border);
-        width: 100%;
-        border-radius: 0;
-    }
-
-    .header .navbar {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        border-top: var(--border);
-        border-bottom: var(--border);
-        background: #fff;
-        display: none;
-    }
-
-    .header .navbar.active {
-        display: block;
-    }
-
-    .header .navbar a {
-        display: block;
-        background: #f7f7f7;
-        padding: 1.5rem;
-        margin: 1.5rem;
-        border-radius: 0.5rem;
-        border: var(--border);
-    }
-
     .container {
         grid-template-columns: 1fr;
         gap: 0;

@@ -24,12 +24,8 @@
         <!-- banner  -->
         <section class="banner" id="banner">
             <div class="content">
-                {% if request.user.is_authenticated %}
                 <h3>Hello</h3>
                 <p>Welcome to my blog</p>
-                {% else %}
-                <h3>Welcome to Blogger</h3>
-                {% endif %}
             </div>
         </section>
 
@@ -54,10 +50,7 @@
                     <h3 class="title">{{ post.title }}</h3>
                     <p class="text">{{ post.content }}</p>
                     <div class="links">
-                        <a
-                            href="{% url 'bloggerHome' post.author.email %}"
-                            class="user"
-                        >
+                        <a href="#" class="user">
                             <i class="far fa-user"></i>
                             <span>by {{ post.author }}</span>
                         </a>
@@ -73,14 +66,38 @@
 
             <!-- sidebar -->
             <div class="sidebar">
+                <!-- User box -->
+                <div class="box">
+                    {% if request.user == blogger %}
+                    <h3 class="title">about me</h3>
+                    {% else %}
+                    <h3 class="title">about this blogger</h3>
+                    {% endif %}
+
+                    <div class="about">
+                        <img src="{{ blogger.profile.avatar.url }}" alt="" />
+                        <h3>{{ blogger.profile.name }}</h3>
+                        <p>{{ blogger }}</p>
+
+                        <div class="follow">
+                            <a href="#" class="fab fa-facebook-f"></a>
+                            <a href="#" class="fab fa-twitter"></a>
+                            <a href="#" class="fab fa-instagram"></a>
+                            <a href="#" class="fab fa-youtube"></a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- categories -->
                 <div class="box">
                     <h3 class="title">categories</h3>
                     <div class="category">
                         {% for category in categories %}
-                        <a href="{% url 'home' %}?category={{ category.name }}">
+                        <a
+                            href="{% url 'bloggerHome' blogger.email %}?category={{ category.name }}"
+                        >
                             {{ category.name }}
-                            <span>{{ category.post_set.all|length }}</span>
+                            <span>{{ category.total }}</span>
                         </a>
                         {% endfor %}
                     </div>
