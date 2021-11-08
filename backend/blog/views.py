@@ -5,11 +5,12 @@ from django.contrib.auth import get_user_model
 from django.db.models import Count
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
 
 import pytz
 from datetime import timezone
 
-from .models import Post, Category
+from .models import Post, Category, Comment
 from .forms import PostForm, CommentForm
 
 User = get_user_model()
@@ -150,33 +151,29 @@ def newComment(request):
             newComment.save()
 
             # Response data
-            commentor = (
-                "Guest" if not newComment.commentor else newComment.commentor.email
-            )
-
-            localDatetime = newComment.dateCreated.replace(tzinfo=timezone.utc)
-            local_tz = "Asia/Ho_Chi_Minh"
-            localDatetime = localDatetime.astimezone(pytz.timezone(local_tz))
-            formatDate = (
-                localDatetime.strftime("%b. %d, %Y, %I:%M %p")
-                .replace("AM", "a.m.")
-                .replace("PM", "p.m.")
-                .replace(". 0", ". ")
-                .replace(", 0", ", ")
-            )
-
-            responseData.update(
-                {
-                    "commentor": commentor,
-                    "dateCreated": formatDate,
-                    "content": request.POST.get("content"),
-                }
-            )
+            responseData = commentResponseData(newComment, request)
 
         else:
             print(form.errors.as_text())
 
     return JsonResponse(responseData, status=200)
+
+
+@csrf_exempt
+def deleteComment(request, id):
+    """Delete comment"""
+    try:
+        comment = Comment.objects.get(id=id)
+    except Comment.DoesNotExist:
+        return JsonResponse(data={"error": "not success"}, status=404)
+
+    if request.is_ajax and request.method == "DELETE":
+        comment.delete()
+
+    return JsonResponse(data={"message": "success"}, status=200)
+
+
+""" Utility functions """
 
 
 def filterPosts(request, posts):
@@ -186,6 +183,42 @@ def filterPosts(request, posts):
         posts = posts.filter(category__name__icontains=category)
 
     return posts
+
+
+def commentResponseData(newComment, request):
+    """generate response data for new comment"""
+    responseData = {}
+
+    if newComment.commentor:
+        commentor = newComment.commentor.email
+        bloggerUrl = request.build_absolute_uri(
+            reverse("bloggerHome", kwargs={"email": commentor})
+        )
+    else:
+        commentor = "Guest"
+        bloggerUrl = None
+
+    localDatetime = newComment.dateCreated.replace(tzinfo=timezone.utc)
+    local_tz = "Asia/Ho_Chi_Minh"
+    localDatetime = localDatetime.astimezone(pytz.timezone(local_tz))
+    formatDate = (
+        localDatetime.strftime("%b. %d, %Y, %I:%M %p")
+        .replace("AM", "a.m.")
+        .replace("PM", "p.m.")
+        .replace(". 0", ". ")
+        .replace(", 0", ", ")
+    )
+
+    responseData.update(
+        {
+            "commentId": newComment.id,
+            "commentor": commentor,
+            "dateCreated": formatDate,
+            "content": request.POST.get("content"),
+            "bloggerUrl": bloggerUrl,
+        }
+    )
+    return responseData
 
 
 # print(request.resolver_match.view_name)

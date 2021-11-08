@@ -53,12 +53,17 @@
 
                     <!-- Comments block -->
                     <div class="comments-list">
-                        <span>{{ post.comment_set.all|length }} Comments</span>
+                        <span id="total-comment">{{ post.comment_set.all|length }} Comments</span>
 
                         <!-- specific commented -->
                         {% for comment in post.comment_set.all %}
-                        <div class="commented">
+                        <div class="commented" id="comment-{{ comment.id }}">
                             <i class="far fa-comment"></i>
+
+                            {% if request.user == comment.commentor or request.user == post.author %}
+                            <i class="fas fa-trash delete-comment" data-id="{{ comment.id }}"></i>
+                            {% endif %} 
+                            
                             {% if comment.commentor %}
                             <span>
                                 By
@@ -77,6 +82,8 @@
                             <p id="comment-{{ comment.id }}">
                                 {{ comment.content }}
                             </p>
+
+                            <a href=""></a>
                         </div>
                         {% empty %}
                         <p>No comments yet.</p>
@@ -255,6 +262,12 @@
         <script>
             const postId = JSON.parse("{{ post.id }}");
 
+            const countComments = () => {
+                /* Count number of comments */
+                const numberOfComments = $('.commented').length;
+                $("#total-comment").html(`${numberOfComments} Comments`);
+            }
+
             $(document).ready(function () {
                 // using ajax
                 $("#comment-form").submit(function (e) {
@@ -274,29 +287,91 @@
                         data: serializedData,
 
                         success: function (response) {
-                            console.log(response);
-                            const { commentor, dateCreated, content } =
-                                response;
+                            // console.log(response);
+                            const {
+                                commentor,
+                                commentId,
+                                content,
+                                dateCreated,
+                                bloggerUrl,
+                            } = response;
                             // clear the form.
                             $("#comment-form").trigger("reset");
+
+                            // url link
+                            const urlLink = bloggerUrl
+                                ? `<span> By <a href="${bloggerUrl}">${commentor}</a> /</span>`
+                                : `<span> By Guest /</span>`;
+
+                            // delete icon 
+                            const delIcon = bloggerUrl ? `<i class="fas fa-trash delete-comment" data-id="${commentId}"></i>` : ``;
 
                             // append new comment
                             $("div.comments-list > span:nth-child(1)").after(
                                 `
-                            <div class="commented">
+                            <div class="commented" id="comment-${commentId}">
                                     <i class="far fa-comment"></i>
-                                    <span> By ${commentor} /</span>
+                                    ${delIcon}
+                                    ${urlLink}
                                     <span>${dateCreated}</span>
                                     <p id="comment">${content}</p>
                             </div>
                         `
                             );
+
+                            countComments();
+
+                            $('html, body').animate({
+                                scrollTop: $(`#comment-${commentId}`).offset().top - 120
+                            });
+                            
+                            // Rehydrate the page
+                            $(".delete-comment").on('click', function()  {
+                                const commentId = $(this).attr("data-id");
+
+                                const userConfirm = confirm("Are you sure to delete this comment?");
+
+                                if (!userConfirm) return;
+
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: `http://127.0.0.1:8000/post/ajax/comment/${commentId}/delete`,
+                                    success: (response) => {
+                                        $(`#comment-${commentId}`).remove();
+                                        countComments();
+                                    },
+                                    error: ({error}) => {
+                                        alert(data);
+                                    }
+                                })
+                            });
                         },
                         error: function (data) {
                             // alert the error
                             alert(data["responseJSON"]["error"]);
                         },
                     });
+                });
+
+                $(".delete-comment").on('click', function()  {
+                    const commentId = $(this).attr("data-id");
+
+                    const userConfirm = confirm("Are you sure to delete this comment?");
+
+                    if (!userConfirm) return;
+
+                    $.ajax({
+                        type: "DELETE",
+                        url: `http://127.0.0.1:8000/post/ajax/comment/${commentId}/delete`,
+                        success: (response) => {
+                            $(`#comment-${commentId}`).remove();
+
+                            countComments();
+                        },
+                        error: ({error}) => {
+                            alert(data);
+                        }
+                    })
                 });
             });
         </script>

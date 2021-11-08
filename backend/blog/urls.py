@@ -10,4 +10,7 @@ urlpatterns = [
     path("post/<str:id>/edit", views.postEdit, name="postEdit"),
     # AJAX request
     path("post/ajax/comment", views.newComment, name="postComment"),
+    path(
+        "post/ajax/comment/<str:id>/delete", views.deleteComment, name="deleteComment"
+    ),
 ]
