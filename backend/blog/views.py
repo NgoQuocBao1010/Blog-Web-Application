@@ -107,9 +107,11 @@ def postDetail(request, id):
     """Post detail view, user can post comment to post here"""
     post = get_object_or_404(Post, id=id)
     categories = Category.objects.all()
-    popularPosts = Post.objects.annotate(num_comment=Count("comment")).order_by(
-        "-num_comment"
-    )[:5]
+    popularPosts = (
+        Post.objects.filter(author=post.author)
+        .annotate(num_comment=Count("comment"))
+        .order_by("-num_comment")[:5]
+    )
 
     context = {
         "post": post,

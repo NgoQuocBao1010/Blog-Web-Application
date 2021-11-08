@@ -5,7 +5,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Posts</title>
+        <title>{{ post.title }} | Blogger</title>
 
         <!-- Font awesome -->
         <link
@@ -53,7 +53,9 @@
 
                     <!-- Comments block -->
                     <div class="comments-list">
-                        <span id="total-comment">{{ post.comment_set.all|length }} Comments</span>
+                        <span id="total-comment"
+                            >{{ post.comment_set.all|length }} Comments</span
+                        >
 
                         <!-- specific commented -->
                         {% for comment in post.comment_set.all %}
@@ -61,9 +63,11 @@
                             <i class="far fa-comment"></i>
 
                             {% if request.user == comment.commentor or request.user == post.author %}
-                            <i class="fas fa-trash delete-comment" data-id="{{ comment.id }}"></i>
+                            <i
+                                class="fas fa-trash delete-comment"
+                                data-id="{{ comment.id }}"
+                            ></i>
                             {% endif %} 
-                            
                             {% if comment.commentor %}
                             <span>
                                 By
@@ -150,7 +154,7 @@
 
                 <!-- Popular posts -->
                 <div class="box">
-                    <h3 class="title">popular posts</h3>
+                    <h3 class="title">popular posts from <span style="text-transform: initial;">{{ post.author }}</span></h3>
                     <div class="p-post">
                         {% for post in popularPosts %}
                         <a href="{% url 'postDetail' post.id %}">
@@ -264,12 +268,12 @@
 
             const countComments = () => {
                 /* Count number of comments */
-                const numberOfComments = $('.commented').length;
+                const numberOfComments = $(".commented").length;
                 $("#total-comment").html(`${numberOfComments} Comments`);
 
                 if (!numberOfComments) $("#no-comment").show();
                 else $("#no-comment").hide();
-            }
+            };
 
             $(document).ready(function () {
                 // using ajax
@@ -306,8 +310,10 @@
                                 ? `<span> By <a href="${bloggerUrl}">${commentor}</a> /</span>`
                                 : `<span> By Guest /</span>`;
 
-                            // delete icon 
-                            const delIcon = bloggerUrl ? `<i class="fas fa-trash delete-comment" data-id="${commentId}"></i>` : ``;
+                            // delete icon
+                            const delIcon = bloggerUrl
+                                ? `<i class="fas fa-trash delete-comment" data-id="${commentId}"></i>`
+                                : ``;
 
                             // append new comment
                             $("div.comments-list > span:nth-child(1)").after(
@@ -324,15 +330,19 @@
 
                             countComments();
 
-                            $('html, body').animate({
-                                scrollTop: $(`#comment-${commentId}`).offset().top - 120
+                            $("html, body").animate({
+                                scrollTop:
+                                    $(`#comment-${commentId}`).offset().top -
+                                    120,
                             });
-                            
+
                             // Rehydrate the page
-                            $(".delete-comment").on('click', function()  {
+                            $(".delete-comment").on("click", function () {
                                 const commentId = $(this).attr("data-id");
 
-                                const userConfirm = confirm("Are you sure to delete this comment?");
+                                const userConfirm = confirm(
+                                    "Are you sure to delete this comment?"
+                                );
 
                                 if (!userConfirm) return;
 
@@ -343,10 +353,10 @@
                                         $(`#comment-${commentId}`).remove();
                                         countComments();
                                     },
-                                    error: ({error}) => {
+                                    error: ({ error }) => {
                                         alert(data);
-                                    }
-                                })
+                                    },
+                                });
                             });
                         },
                         error: function (data) {
@@ -356,10 +366,12 @@
                     });
                 });
 
-                $(".delete-comment").on('click', function()  {
+                $(".delete-comment").on("click", function () {
                     const commentId = $(this).attr("data-id");
 
-                    const userConfirm = confirm("Are you sure to delete this comment?");
+                    const userConfirm = confirm(
+                        "Are you sure to delete this comment?"
+                    );
 
                     if (!userConfirm) return;
 
@@ -371,10 +383,10 @@
 
                             countComments();
                         },
-                        error: ({error}) => {
+                        error: ({ error }) => {
                             alert(data);
-                        }
-                    })
+                        },
+                    });
                 });
             });
         </script>

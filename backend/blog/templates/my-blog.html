@@ -105,7 +105,12 @@
 
                 <!-- Popular posts -->
                 <div class="box">
-                    <h3 class="title">popular posts</h3>
+                    {% if request.user == blogger %}
+                    <h3 class="title">My popular posts</h3>
+                    {% else %}
+                    <h3 class="title">popular posts from <span style="font-style: normal;">{{ post.author }}</span> </h3>
+                    {% endif %}
+
                     <div class="p-post">
                         {% for post in popularPosts %}
                         <a href="{% url 'postDetail' post.id %}">
