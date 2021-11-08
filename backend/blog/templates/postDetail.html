@@ -121,16 +121,15 @@
             <!-- sidebar -->
             <div class="sidebar">
                 <!-- User box -->
-                {% if request.user.is_authenticated %}
                 <div class="box">
-                    <h3 class="title">about me</h3>
+                    <h3 class="title">Author</h3>
                     <div class="about">
                         <img
-                            src="{{ request.user.profile.avatar.url }}"
+                            src="{{ post.author.profile.avatar.url }}"
                             alt=""
                         />
-                        <h3>{{ request.user.profile.name }}</h3>
-                        <p>{{ request.user }}</p>
+                        <h3>{{ post.author.profile.name }}</h3>
+                        <p>{{ post.author }}</p>
 
                         <div class="follow">
                             <a href="#" class="fab fa-facebook-f"></a>
@@ -140,7 +139,6 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}
 
                 <!-- categories -->
                 <div class="box">
@@ -295,7 +293,7 @@
                             $("#comment-form").trigger("reset");
 
                             // append new comment
-                            $("div.comments-list > div:nth-child(1)").after(
+                            $("div.comments-list > span:nth-child(1)").after(
                                 `
                             <div class="commented">
                                     <i class="far fa-comment"></i>
@@ -314,11 +312,10 @@
                 });
 
                 // testing append
-                // $("#comment_submit").click(function(){
+                // $("#comment_submit").click(function () {
                 //     alert(comment);
-                //     $("#comment-form").trigger('reset');
-                //     $("div.comments-list").append
-                //         (`
+                //     $("#comment-form").trigger("reset");
+                //     $("div.comments-list").append(`
                 //             <div class="commented">
                 //                     <i class="far fa-comment"></i>
                 //                     <span> By someone /</span>
