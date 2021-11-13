@@ -49,7 +49,11 @@
                         />
                     </a>
 
-                    <p class="text">{{ post.content }}</p>
+                    <p class="text">
+                        {% autoescape off %} 
+                        {{ post.content }}
+                        {% endautoescape %}
+                    </p>
 
                     <!-- Comments block -->
                     <div class="comments-list">
@@ -61,13 +65,16 @@
                         {% for comment in post.comment_set.all %}
                         <div class="commented" id="comment-{{ comment.id }}">
                             <i class="far fa-comment"></i>
-
+                            
+                            <!-- Comment delete icon -->
                             {% if request.user == comment.commentor or request.user == post.author %}
                             <i
                                 class="fas fa-trash delete-comment"
                                 data-id="{{ comment.id }}"
                             ></i>
                             {% endif %} 
+
+                            <!-- Commentor display -->
                             {% if comment.commentor %}
                             <span>
                                 By
@@ -81,10 +88,11 @@
                             {% else %}
                             <span> By Guest /</span>
                             {% endif %}
-
+                            
+                            <!-- Date created -->
                             <span>{{ comment.dateCreated }}</span>
                             <p id="comment-{{ comment.id }}">
-                                {{ comment.content }}
+                                {{ comment.content }} 
                             </p>
 
                             <a href=""></a>

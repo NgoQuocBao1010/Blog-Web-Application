@@ -1,0 +1,327 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700;900&display=swap");
+
+:root{
+    --black:#333333;
+    --light-back: #464646;
+    --grey:#bbbaba;
+    --light-green: #93c0bb;
+    --dark-green: #5c948d;
+}
+
+body {
+    /* background-color: #616160; */
+    background-color: white;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 600;
+}
+
+.container-fluid{
+    padding-left: 0;
+}
+
+ /* sidebar */
+.sidebar{
+    border-right: .08rem eaf3f3 solid;
+    height: 100%;
+    position: fixed;
+    width: 20%;
+    background-color: #e7f3f3;
+
+    box-shadow: 0 0 1.2rem 0 rgba(0, 0, 0, 0.19);;
+}
+
+.sidebar .admin{
+    margin-top: 1.2rem;
+    padding-left: 1.4rem;
+}
+
+.sidebar .admin .logo{
+    font-size: 1.8rem;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    color: var(--black);
+    text-decoration: none;
+}
+
+.sidebar .admin .logo span{
+    color: var(--dark-green);
+}
+
+.sidebar .options{
+    margin-top: 1.5rem;
+}
+
+.sidebar .options a{
+    color: #383737;
+}
+
+.sidebar .options a:hover{
+    color: var(--dark-green);
+}
+
+.sidebar .admin img{
+    width: 18%;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: .7rem;
+    background-color: #f5f5f3;
+}
+
+.sidebar .options a{
+    text-decoration: none;
+    font-size: 1.05rem;
+}
+
+.sidebar .options a[title="currentOption"]{
+    color: var(--dark-green);
+    border-top: #bbc2c1 1px solid; 
+    border-bottom: #bbc2c1 1px solid; 
+    background-color: rgb(160, 168, 167, 0.2);
+}
+
+ /* right panel */
+.myMain{
+    display: inline;
+    /* margin-left: 0; */
+    width: 78.5%;
+    float: right;
+}
+
+.myMain .banner{
+    /* border: red 1px solid; */
+    height: 4.3rem;
+    border-bottom: .09rem #dddddd solid;
+}
+
+.myMain .banner span.mr-5{
+    float: right;
+    color: var(--light-back);
+    margin-top: 2%;
+    /* border: red solid 1px; */
+}
+
+.myMain .banner span.mr-5 a{
+    margin-left: .8rem;
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: var(--light-back);
+}
+
+.myMain .banner span.mr-5 a:hover{
+    color: var(--dark-green);
+}
+
+.myMain .banner span.ml-5{
+    float: left;
+    color: var(--light-back);
+    margin-top: 2.5%;
+    font-size: 1.1rem;
+}
+
+.myMain .banner span.ml-5 a{
+    margin-left: .1rem;
+    text-decoration: none;
+    color: var(--light-back);
+}
+
+.myMain .banner span.ml-5 a[title="current_path"]{
+    color: var(--dark-green);
+}
+
+.myMain .banner span.ml-5 a[title="other_path"]{
+    color: var(--light-back);
+}
+
+.myMain .banner span.ml-5 a:hover{
+    color: var(--dark-green);
+}
+
+/* for USER PROFILE PAGE */
+.myMain .profile{
+    padding-top: 2.5rem;
+} 
+
+.myMain .profile input{
+    color: #555454;
+}
+
+button.update-profile{
+    background-color: var(--light-green);
+    border: var(--light-green) solid .1rem;
+    color: white;
+    border-radius: .6rem;
+    /* width: 5.5rem; */
+    margin-left: 41%;
+}
+
+button.update-profile:hover{
+    border: var(--dark-green) solid .1rem; 
+    background-color: var(--dark-green);
+}
+
+.profile-img{
+    text-align: center;
+}
+
+.profile-img img{
+    height: 7rem;
+    width: 7rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 40%;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.profile-img label{
+    /* display: block; */
+    cursor: pointer;
+}
+
+.profile-img label:hover{
+    color: var(--dark-green);
+}
+
+/* for POST PAGE */
+div table[title="postPage"] td div.action{
+    /* width: 10rem; */
+    width: 100%;
+    /* ! new */
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+div table[title="postPage"] td button[name="update"]{
+    background-color: #84b7b9;
+    border: .1rem solid #84b7b9;
+    color: white;
+}
+
+div table[title="postPage"] td button[name="update"]:hover{
+    background-color: #278a8f;
+    border: .1rem solid #278a8f;
+}
+
+div table[title="postPage"] td button[name="delete"] a,
+div table[title="postPage"] td button[name="update"] a{
+    text-decoration: none;
+    color: white;
+}
+
+div table[title="postPage"] td button[name="delete"]{
+    background-color: #eb7c7c;
+    border: .1rem solid #eb7c7c;
+    color: white;
+}
+
+div table[title="postPage"] td button[name="delete"]:hover{
+    background-color: #f14d4d;
+    border: .1rem solid #f14d4d;
+}
+
+div table[title="postPage"] td img{
+    width: 5.5rem;
+    object-fit: cover;
+    /* ! new */
+    aspect-ratio: 3 / 2;
+}
+
+div.posts{
+    padding-left: 3rem;
+    padding-top: 2.5rem;
+}
+
+div.posts a{
+    text-decoration: none;
+    color: var(--black);
+    border: #eed7db solid .1rem; 
+    padding: .5rem; 
+    background-color: #eed7db; 
+    border-radius: .3rem;
+}
+
+div.posts a:hover{
+    color: var(--black);
+    border: #e7c1c8 solid .1rem; 
+    background-color: #e7c1c8;
+}
+
+/* for ADD POST PAGE */
+.myMain .addPost{
+    margin-left: 3rem;
+    margin-right: 3rem;
+    padding-top: 2.5rem;
+}
+
+.myMain #addPost-Form .post-img label:hover{
+    cursor: pointer;
+    color: var(--dark-green);
+}
+
+#addPost-Form .post-img input#but_upload{
+    height: 2rem;
+}
+
+#addPost-Form #post-img{
+    width: 9.6rem;
+    object-fit: cover;
+    margin-left: 1.2%;
+    border: #bebebe .05rem solid;
+}
+
+#addPost-submit{
+    margin-left: 40%;
+    background-color: #e0acb6;
+    border: .1rem solid #e0acb6;
+}
+
+#addPost-submit:hover{
+    margin-left: 40%;
+    background-color: #e09aa7;
+    border: .1rem solid #e09aa7;
+}
+
+/* for UPDATE POST PAGE */
+.myMain .updatePost{
+    margin-left: 3rem;
+    margin-right: 3rem;
+    padding-top: 2.5rem;
+}
+
+.myMain #updatePost-Form .post-img label:hover{
+    cursor: pointer;
+    color: var(--dark-green);
+}
+
+#updatePost-Form .post-img input#but_upload{
+    height: 2rem;
+}
+
+#updatePost-Form #post-img{
+    width: 9.3rem;
+    object-fit: cover;
+    margin-left: 1.2%;
+    border: #bebebe .05rem solid;
+}
+
+#updatePost-submit{
+    margin-left: 40%;
+    background-color: #e0acb6;
+    border: .1rem solid #e0acb6;
+}
+
+#updatePost-submit:hover{
+    margin-left: 40%;
+    background-color: #e09aa7;
+    border: .1rem solid #e09aa7;
+}
+
+/* validate */
+.help-block{
+    color: #ec6277; 
+    font-size: 90%; 
+    font-style: italic;
+    margin-left: 1%;
+}

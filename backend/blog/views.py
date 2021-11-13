@@ -58,9 +58,18 @@ def bloggerHome(request, email):
 
 
 @login_required(login_url="login")
-def createPost(request):
+def postCustomize(request):
     """Create a new post"""
-    form = PostForm()
+    posts = Post.objects.filter(author=request.user)
+
+    context = {"posts": posts}
+    return render(request, "postCustom.html", context)
+
+
+@login_required(login_url="login")
+def postCreate(request):
+    """Create a new post"""
+    categories = Category.objects.all()
 
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
@@ -68,20 +77,22 @@ def createPost(request):
             post = form.save(commit=False)
             post.author = request.user
 
+            category = categoryHandler(request)
+            post.category = category
+
             post.save()
             return redirect("postDetail", id=post.id)
         else:
             print(form.errors.as_text())
 
-    context = {
-        "form": form,
-    }
-    return render(request, "postEdit.html", context)
+    context = {"categories": categories}
+    return render(request, "postCreate.html", context)
 
 
 @login_required(login_url="login")
 def postEdit(request, id):
     """Edit a post, only if user is the author"""
+    categories = Category.objects.all()
     post = Post.objects.get(id=id)
 
     if request.user != post.author:
@@ -93,13 +104,15 @@ def postEdit(request, id):
 
         if form.is_valid():
             post = form.save()
+            category = categoryHandler(request)
+            post.category = category
+
+            post.save()
             return redirect("postDetail", id=id)
         else:
             print(form.errors.as_text())
 
-    context = {
-        "form": form,
-    }
+    context = {"post": post, "categories": categories}
     return render(request, "postEdit.html", context)
 
 
@@ -221,6 +234,18 @@ def commentResponseData(newComment, request):
         }
     )
     return responseData
+
+
+def categoryHandler(request):
+    name = request.POST.get("category")
+    print(request.POST)
+    categories = Category.objects.filter(name__icontains=name)
+
+    if not categories.exists():
+        newCategory = Category.objects.create(name=name)
+        return newCategory
+
+    return categories[0]
 
 
 # print(request.resolver_match.view_name)

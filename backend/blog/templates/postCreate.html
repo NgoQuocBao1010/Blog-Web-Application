@@ -65,13 +65,13 @@
                         <input type="file" id="file" name="coverImage" hidden onchange="imageUploaded(event)"/>
                         <label type="file" for="file" class="col-2">Choose image <i class="fas fa-pencil-alt"></i></label>
                         <!-- <input type="button" class="button" value="Upload" id="but_upload"> -->
-                        <img src="{{ post.coverImage.url }}" id="post-img" alt="Image of post"  >
+                        <img src="#" id="post-img" alt="Image of post" style="display:none" >
                     </div>
 
                     <!-- Title -->
                     <div class="form-group row">
                         <label for="title" class="col-2">Title :</label>
-                        <input name="title" class="col-3" class="form-control" id="title" value="{{ post.title }}">
+                        <input name="title" class="col-3" class="form-control" id="title">
                     </div>
 
                     <!-- Category -->
@@ -80,14 +80,9 @@
                         <input name="category" class="col-3" class="form-control" id="category">
                         <label class="col-3 text-center" for="post-Select">Or existed category :</label>
                         <select class="custom-select col-3" id="category">
+                            <option selected value=""></option>
                             {% for category in categories %}
-                            
-                            {% if category == post.category %}
-                            <option value="{{ category.name }}">{{ category.name }}</option>
-                            {% else %}
-                            <option value="{{ category.name }}" selected>{{ category.name }}</option>
-                            {% endif %}
-
+                            <option value="{{ category.id }}">{{ category.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -96,9 +91,6 @@
                     <label class="">Content :</label>
                     <textarea name="content" id="editor">
                         <!-- Post's content located here -->
-                        {% autoescape off %} 
-                        {{ post.content }}
-                        {% endautoescape %}
                     </textarea>
                     <button type="submit" class="btn btn-primary mt-4 mb-4" id="addPost-submit">Add post</button>
                 </form>

@@ -6,10 +6,16 @@ from .models import Post
 
 def deleteConverImage(sender, instance=None, **kwargs):
     """Delete cover image from directory when a post is deleted"""
-    imgPath = instance.coverImage.path
-    os.remove(imgPath)
+    try:
+        imgPath = instance.coverImage.path
 
-    print(f"{instance} and all its related files are deleted successfully")
+        if "blog2" not in imgPath:
+            os.remove(imgPath)
+
+        print(f"{instance} and all its related files are deleted successfully")
+
+    except Exception as e:
+        print(e)
 
 
 post_delete.connect(deleteConverImage, sender=Post)
