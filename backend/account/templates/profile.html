@@ -19,26 +19,7 @@
 <body>
 
     <div class="container-fluid">
-        <!-- Sidebar -->
-        <div class="sidebar">
-
-            <!-- Logo -->
-            <div class="admin">
-                <a href="{% url 'bloggerHome' request.user.email %}" class="logo"><span>Blog</span>ger</a>
-            </div>
-
-            <!-- Options -->
-            <div class="options p-2">
-                <a title="currentOption" class="d-block p-3" href="{% url 'profile' %}">
-                    <i class="far fa-user"></i>&nbsp&nbsp User Profile
-                </a>
-                <a  class="d-block p-3" href="{% url 'postCustomize' %}"> 
-                    <i class="far fa-file-alt"></i>&nbsp&nbsp&nbsp Posts
-                    <i style="margin-left: 60%" class="fas fa-caret-left"></i>
-                </a>
-            </div>
-
-        </div>
+        {% include "customizeSidebar.html" %}
 
         <!-- Main panel -->
         <div class="myMain">
@@ -69,43 +50,12 @@
                             <!-- <input type="button" class="button" value="Upload" id="but_upload" style="display: inline;"> -->
                         </div>
 
-                        <!-- Name -->
-                        <div class="form-group mt-4 row">
-                            <label for="name" class="col-4 offset-1">Account name :</label>
-                            <input name="name" class="col-5" type="text" class="form-control" id="name" value="{{ profile.name }}">
-                        </div>
-
-                        <!-- Twitter -->
-                        <div class="form-group mt-4 row">
-                            <label for="twitter" class="col-4 offset-1">Your twitter account :</label>
-                            <input name="twitter" class="col-5" type="text" class="form-control" id="twitter" value="{{ profile.twitter|default_if_none:'' }}">
-                        </div>
-
-
-                        <!-- Facebook -->
-                        <div class="form-group mt-4 row">
-                            <label for="facebook" class="col-4 offset-1">Your facebook account :</label>
-                            <input name="facebook" class="col-5" type="text" class="form-control" id="facebook" value="{{ profile.facebook|default_if_none:'' }}">
-                        </div>
-
-                        <!-- Instagram -->
-                        <div class="form-group mt-4 row">
-                            <label for="instagram" class="col-4 offset-1">Your instagram account :</label>
-                            <input name="instagram" class="col-5" type="text" class="form-control" id="instagram" value="{{ profile.instagram|default_if_none:'' }}">
-                        </div>
-
-                        <!-- Youtube -->
-                        <div class="form-group mt-4 row">
-                            <label for="youtube" class="col-4 offset-1">Your youtube account :</label>
-                            <input name="youtube" class="col-5" type="text" class="form-control" id="youtube" value="{{ profile.youtube|default_if_none:'' }}">
-                        </div>
-
-                        <!-- ! Email should not be change -->
-                        <div class="form-group row">
+                        <!-- Email should not be change -->
+                        <div class="form-group row mt-3">
                             <label for="email" class="col-4 offset-1">Email address :</label>
                             <input 
                                 name="email" 
-                                class="col-5" 
+                                class="col-7" 
                                 type="email" 
                                 class="form-control" 
                                 id="email" 
@@ -113,6 +63,37 @@
                                 value="{{ profile.user.email }}"
                                 disabled
                             >
+                        </div>
+
+                        <!-- Name -->
+                        <div class="form-group mt-4 row">
+                            <label for="name" class="col-4 offset-1">Account name :</label>
+                            <input name="name" class="col-7" type="text" class="form-control" id="name" value="{{ profile.name }}">
+                        </div>
+
+                        <!-- Twitter -->
+                        <div class="form-group mt-4 row">
+                            <label for="twitter" class="col-4 offset-1">Your twitter account :</label>
+                            <input name="twitter" class="col-7" type="text" class="form-control" id="twitter" value="{{ profile.twitter|default_if_none:'' }}">
+                        </div>
+
+
+                        <!-- Facebook -->
+                        <div class="form-group mt-4 row">
+                            <label for="facebook" class="col-4 offset-1">Your facebook account :</label>
+                            <input name="facebook" class="col-7" type="text" class="form-control" id="facebook" value="{{ profile.facebook|default_if_none:'' }}">
+                        </div>
+
+                        <!-- Instagram -->
+                        <div class="form-group mt-4 row">
+                            <label for="instagram" class="col-4 offset-1">Your instagram account :</label>
+                            <input name="instagram" class="col-7" type="text" class="form-control" id="instagram" value="{{ profile.instagram|default_if_none:'' }}">
+                        </div>
+
+                        <!-- Youtube -->
+                        <div class="form-group mt-4 row">
+                            <label for="youtube" class="col-4 offset-1">Your youtube account :</label>
+                            <input name="youtube" class="col-7" type="text" class="form-control" id="youtube" value="{{ profile.youtube|default_if_none:'' }}">
                         </div>
                         <button type="submit" class="btn btn-primary update-profile">Update profile</button>
                     </form>

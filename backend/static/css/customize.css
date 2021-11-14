@@ -77,6 +77,12 @@ body {
     border-top: #bbc2c1 1px solid; 
     border-bottom: #bbc2c1 1px solid; 
     background-color: rgb(160, 168, 167, 0.2);
+    position: relative;
+}
+
+.sidebar .options a[title="currentOption"] i.fa-caret-left {
+    position: absolute;
+    right: 10px;
 }
 
  /* right panel */
@@ -143,6 +149,7 @@ body {
 
 .myMain .profile input{
     color: #555454;
+    font-weight: 600;
 }
 
 button.update-profile{

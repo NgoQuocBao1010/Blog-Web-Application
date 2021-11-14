@@ -19,26 +19,7 @@
 <body>
 
     <div class="container-fluid">
-        <!-- Sidebar -->
-        <div class="sidebar">
-
-            <!-- Logo -->
-            <div class="admin">
-                <a href="{% url 'bloggerHome' request.user.email %}" class="logo"><span>Blog</span>ger</a>
-            </div>
-
-            <!-- Options -->
-            <div class="options p-2">
-                <a class="d-block p-3" href="./updateProfile.html">
-                    <i class="far fa-user"></i>&nbsp&nbsp User Profile
-                </a>
-                <a title="currentOption" class="d-block p-3" href="#"> 
-                    <i class="far fa-file-alt"></i>&nbsp&nbsp&nbsp Posts
-                    <i style="margin-left: 60%" class="fas fa-caret-left"></i>
-                </a>
-            </div>
-
-        </div>
+        {% include "customizeSidebar.html" %}
 
         <!-- Right panel -->
         <div class="myMain">

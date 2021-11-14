@@ -19,26 +19,7 @@
 <body>
 
     <div class="container-fluid">
-        <!-- Sidebar -->
-        <div class="sidebar">
-
-            <!-- Logo -->
-            <div class="admin">
-                <a href="{% url 'bloggerHome' request.user.email %}" class="logo"><span>Blog</span>ger</a>
-            </div>
-
-            <!-- Options -->
-            <div class="options p-2">
-                <a class="d-block p-3" href="./updateProfile.html">
-                    <i class="far fa-user"></i>&nbsp&nbsp User Profile
-                </a>
-                <a title="currentOption" class="d-block p-3" href="#"> 
-                    <i class="far fa-file-alt"></i>&nbsp&nbsp&nbsp Posts
-                    <i style="margin-left: 60%" class="fas fa-caret-left"></i>
-                </a>
-            </div>
-
-        </div>
+        {% include "customizeSidebar.html" %}
 
         <!-- Right panel -->
         <div class="myMain">
@@ -49,7 +30,7 @@
                     <!-- <h4 class="font-weight-light">Home / Posts</h4> -->
                     <a title="other_path" href=""><i class="fas fa-home"></i> Home </a>\
                     <a title="other_path" href="{% url 'postCustomize' %}"> Post </a>\
-                    <a  title="current_path" href="{% url 'postCreate' %}">Add Post</a>
+                    <a  title="current_path" href="{% url 'postCreate' %}">Update Post</a>
                 </span>
                 <span class="mr-5">
                     <a href=""><i class="fas fa-sign-out-alt"></i> Sign Out</a>
@@ -84,9 +65,9 @@
                             {% for category in categories %}
                             
                             {% if category == post.category %}
-                            <option value="{{ category.name }}">{{ category.name }}</option>
-                            {% else %}
                             <option value="{{ category.name }}" selected>{{ category.name }}</option>
+                            {% else %}
+                            <option value="{{ category.name }}">{{ category.name }}</option>
                             {% endif %}
 
                             {% endfor %}
@@ -101,7 +82,7 @@
                         {{ post.content }}
                         {% endautoescape %}
                     </textarea>
-                    <button type="submit" class="btn btn-primary mt-4 mb-4" id="addPost-submit">Add post</button>
+                    <button type="submit" class="btn btn-primary mt-4 mb-4" id="addPost-submit">Update post</button>
                 </form>
             </div>
            
