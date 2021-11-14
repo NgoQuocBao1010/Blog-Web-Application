@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
-from .forms import CreateUserForm
+from .forms import CreateUserForm, ProfileForm
 from .decorators import unauthenticated_user
 from .models import Profile
 
@@ -40,7 +41,7 @@ def register(request):
             Profile.objects.create(user=user, name=name)
 
             login(request, user)
-            return redirect("bloggerHome", kwargs={"email": user.email})
+            return redirect("bloggerHome", user.email)
 
         else:
             print(form.errors.as_text())
@@ -49,7 +50,26 @@ def register(request):
     return render(request, "register.html", context)
 
 
+@login_required(login_url="login")
 def logoutView(request):
     """Logout user"""
     logout(request)
     return redirect("login")
+
+
+@login_required(login_url="login")
+def profile(request):
+    """Profile"""
+    profile = Profile.objects.get(user=request.user)
+
+    if request.method == "POST":
+        print(request.POST, request.FILES)
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors.as_text())
+
+    context = {"profile": profile}
+    return render(request, "profile.html", context)

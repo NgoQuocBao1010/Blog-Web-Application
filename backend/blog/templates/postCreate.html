@@ -47,7 +47,7 @@
             <div class="banner">
                 <span class="ml-5">
                     <!-- <h4 class="font-weight-light">Home / Posts</h4> -->
-                    <a title="other_path" href=""><i class="fas fa-home"></i> Home </a>\
+                    <a title="other_path" href="{% url 'bloggerHome' request.user.email %}"><i class="fas fa-home"></i> Home </a>\
                     <a title="other_path" href="{% url 'postCustomize' %}"> Post </a>\
                     <a  title="current_path" href="{% url 'postCreate' %}">Add Post</a>
                 </span>
@@ -76,13 +76,13 @@
 
                     <!-- Category -->
                     <div class="form-group row">
-                        <label for="category" class="col-2">New category :</label>
-                        <input name="category" class="col-3" class="form-control" id="category">
+                        <label for="new-category" class="col-2">New category :</label>
+                        <input name="new-category" class="col-3" class="form-control" id="new-category">
                         <label class="col-3 text-center" for="post-Select">Or existed category :</label>
                         <select class="custom-select col-3" id="category">
                             <option selected value=""></option>
                             {% for category in categories %}
-                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            <option value="{{ category.name }}">{{ category.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -136,9 +136,8 @@
                 
             
                 $("#addPost-Form").submit(function(eventObj) {
-                    const selectedCategory = $('#post-Select').val();
-
-                    if (selectCategory) $(this).append(`<input type="hidden" name="category" value="${selectedCategory}">`);
+                    const selectedCategory = $('#category').val() || "";
+                    $(this).append(`<input type="hidden" name="category" value="${selectedCategory}">`);
                     return true;
                 });
             } );

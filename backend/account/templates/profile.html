@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static './css/customize.css' %}">
+</head>
+<body>
+
+    <div class="container-fluid">
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+            <!-- Logo -->
+            <div class="admin">
+                <a href="{% url 'bloggerHome' request.user.email %}" class="logo"><span>Blog</span>ger</a>
+            </div>
+
+            <!-- Options -->
+            <div class="options p-2">
+                <a title="currentOption" class="d-block p-3" href="{% url 'profile' %}">
+                    <i class="far fa-user"></i>&nbsp&nbsp User Profile
+                </a>
+                <a  class="d-block p-3" href="{% url 'postCustomize' %}"> 
+                    <i class="far fa-file-alt"></i>&nbsp&nbsp&nbsp Posts
+                    <i style="margin-left: 60%" class="fas fa-caret-left"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Main panel -->
+        <div class="myMain">
+
+            <!-- Banner -->
+            <div class="banner">
+                <span class="ml-5">
+                    <!-- <h4 class="font-weight-light">Home / Posts</h4> -->
+                    <a title="other_path" href="{% url 'bloggerHome' request.user.email %}"><i class="fas fa-home"></i> Home </a>\
+                    <a  title="current_path" href="{% url 'profile' %}">Profile</a>
+                </span>
+                <span class="mr-5">
+                    <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                </span>
+            </div>
+
+            <!-- Profile form-->
+            <div class="profile row">
+                <div class="col-6 offset-3">
+                    <form id="profileForm" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Profile image -->
+                        <div class="profile-img">                            
+                            <img src="{{ profile.avatar.url }}" id="user-img" >
+                            <input type="file" id="file" name="avatar" hidden onchange="imageUploaded(event)"/>
+                            <label type="file" class="text-center" for="file"><i class="fas fa-pencil-alt"></i> Choose image</label>
+                            <!-- <input type="button" class="button" value="Upload" id="but_upload" style="display: inline;"> -->
+                        </div>
+
+                        <!-- Name -->
+                        <div class="form-group mt-4 row">
+                            <label for="name" class="col-4 offset-1">Account name :</label>
+                            <input name="name" class="col-5" type="text" class="form-control" id="name" value="{{ profile.name }}">
+                        </div>
+
+                        <!-- Twitter -->
+                        <div class="form-group mt-4 row">
+                            <label for="twitter" class="col-4 offset-1">Your twitter account :</label>
+                            <input name="twitter" class="col-5" type="text" class="form-control" id="twitter" value="{{ profile.twitter|default_if_none:'' }}">
+                        </div>
+
+
+                        <!-- Facebook -->
+                        <div class="form-group mt-4 row">
+                            <label for="facebook" class="col-4 offset-1">Your facebook account :</label>
+                            <input name="facebook" class="col-5" type="text" class="form-control" id="facebook" value="{{ profile.facebook|default_if_none:'' }}">
+                        </div>
+
+                        <!-- Instagram -->
+                        <div class="form-group mt-4 row">
+                            <label for="instagram" class="col-4 offset-1">Your instagram account :</label>
+                            <input name="instagram" class="col-5" type="text" class="form-control" id="instagram" value="{{ profile.instagram|default_if_none:'' }}">
+                        </div>
+
+                        <!-- Youtube -->
+                        <div class="form-group mt-4 row">
+                            <label for="youtube" class="col-4 offset-1">Your youtube account :</label>
+                            <input name="youtube" class="col-5" type="text" class="form-control" id="youtube" value="{{ profile.youtube|default_if_none:'' }}">
+                        </div>
+
+                        <!-- ! Email should not be change -->
+                        <div class="form-group row">
+                            <label for="email" class="col-4 offset-1">Email address :</label>
+                            <input 
+                                name="email" 
+                                class="col-5" 
+                                type="email" 
+                                class="form-control" 
+                                id="email" 
+                                aria-describedby="emailHelp" 
+                                value="{{ profile.user.email }}"
+                                disabled
+                            >
+                        </div>
+                        <button type="submit" class="btn btn-primary update-profile">Update profile</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    
+    
+    <!-- Javascript  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static './js/jquery.validate.js' %}"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            // show image directly
+            // $("#but_upload").click(function(){ 
+            //     const file = $('#file')[0].files[0]; 
+            //     $("#user-img").attr("src","./images/" + file.name); 
+            //     $(".profile-img img").show();
+            // });
+
+            // Using ajax
+            $("#profileForm").on('submit', function (e) {
+                // preventing from page reload
+                // e.preventDefault();
+
+                // const imageName = $('#file')[0].files[0].name;
+                // const name = $("#name").val();
+                // const email = $("email").val();
+                // const serializedData = {
+                //     imageName,
+                //     name,
+                //     email,
+                // };
+
+                // let formData = new FormData(this);
+                // const imgFiles = $("#file")[0].files;
+
+                // if(imgFiles.length > 0) {
+                //     console.log(imgFiles)
+                //     formData.append('file', imgFiles[0])
+                // }
+
+                // console.log(formData.values())
+
+                // add image
+                // $("#user-img").attr("src",`./images/${imageName}`); 
+
+                // make POST ajax call
+                // $.ajax({
+                //     type: "POST",
+                //     url: "",
+                //     data: serializedData,
+
+                //     success: function (response) {
+                //         // console.log(response);
+                //         const {
+                //             imageName,
+                //             name,
+                //             email,
+                //         } = response;
+                        
+
+                //     },
+                //     error: function (response) {
+                //         // alert the error
+                //         alert(data["responseJSON"]["error"]);
+                //     },
+                // });
+                
+            });
+
+            // Validation
+			$("#profileForm").validate({			
+				rules:{ 
+                    name: {
+						required: true,
+					},
+					email: {
+						required: true,
+						email: true
+					}
+				},				
+				messages:{
+                    name: {
+						required: "Please enter your name",
+					},
+					email: {
+						required: "Please enter your email",
+						email: "Please pick the valid email"
+					}
+				},
+				errorElement: "p", //error report placed in <p>
+				// errorClass: "errors",
+				errorPlacement: function(error, element){ //error: <p> contains errors | element: <input> has errors
+					error.addClass("help-block");
+					error.insertAfter(element);
+				},
+				errorClass: "has-error",
+				highlight: function(element, errorClass){
+					$(element).parent().addClass(errorClass);
+				},
+				validClass: "has-success",
+				unhighlight: function(element, errorClass, validClass){
+					$(element).parent().removeClass(errorClass);
+					$(element).parent().addClass(validClass);
+				}
+			});
+
+		});
+    </script>
+    <script>
+        const imageUploaded = (event) => {
+            // Show image when upload
+            const imgFile = event.target.files[0];
+            const reader = new FileReader();
+
+            const userImg = document.getElementById("user-img");
+            userImg.style.display = "block";
+            userImg.title = imgFile.name;
+
+            reader.onload = (event) => {
+                userImg.src = event.target.result;
+            };
+
+            reader.readAsDataURL(imgFile);
+        }
+    </script>
+</body>
+</html>

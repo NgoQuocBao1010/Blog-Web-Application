@@ -49,11 +49,13 @@
                         />
                     </a>
 
-                    <p class="text">
-                        {% autoescape off %} 
-                        {{ post.content }}
+                    
+                    <div class="text">
+                        {% autoescape off %}
+                            {{ post.content }}
                         {% endautoescape %}
-                    </p>
+                    </div>
+                    
 
                     <!-- Comments block -->
                     <div class="comments-list">

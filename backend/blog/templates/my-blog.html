@@ -48,7 +48,7 @@
                         <span>{{ post.dateCreated }}</span>
                     </div>
                     <h3 class="title">{{ post.title }}</h3>
-                    <p class="text">{{ post.content }}</p>
+                    <p class="text">{{ post.content|striptags }}</p>
                     <div class="links">
                         <a href="#" class="user">
                             <i class="far fa-user"></i>
@@ -80,10 +80,21 @@
                         <p>{{ blogger }}</p>
 
                         <div class="follow">
-                            <a href="#" class="fab fa-facebook-f"></a>
-                            <a href="#" class="fab fa-twitter"></a>
-                            <a href="#" class="fab fa-instagram"></a>
-                            <a href="#" class="fab fa-youtube"></a>
+                            {% if blogger.profile.facebook %}
+                            <a href="{{ blogger.profile.facebook }}" target="_blank" class="fab fa-facebook-f"></a>
+                            {% endif %}
+
+                            {% if blogger.profile.twitter %}
+                            <a href="{{ blogger.profile.twitter }}" target="_blank" class="fab fa-twitter"></a>
+                            {% endif %}
+
+                            {% if blogger.profile.instagram %}
+                            <a href="{{ blogger.profile.instagram }}" target="_blank" class="fab fa-instagram"></a>
+                            {% endif %}
+
+                            {% if blogger.profile.youtube %}
+                            <a href="{{ blogger.profile.youtube }}" target="_blank" class="fab fa-youtube"></a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

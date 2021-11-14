@@ -143,7 +143,7 @@ def postDelete(request, id):
         return render(request, "unauthorized.html", {})
 
     post.delete()
-    return redirect("home")
+    return redirect("postCustomize")
 
 
 # AJAX connection
@@ -239,10 +239,11 @@ def commentResponseData(newComment, request):
 def categoryHandler(request):
     name = request.POST.get("category")
     print(request.POST)
+
     categories = Category.objects.filter(name__icontains=name)
 
-    if not categories.exists():
-        newCategory = Category.objects.create(name=name)
+    if not categories.exists() or name == "":
+        newCategory = Category.objects.create(name=request.POST.get("new-category"))
         return newCategory
 
     return categories[0]

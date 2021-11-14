@@ -76,10 +76,11 @@
 
                     <!-- Category -->
                     <div class="form-group row">
-                        <label for="category" class="col-2">New category :</label>
-                        <input name="category" class="col-3" class="form-control" id="category">
+                        <label for="new-category" class="col-2">New category :</label>
+                        <input name="new-category" class="col-3" class="form-control" id="new-category">
                         <label class="col-3 text-center" for="post-Select">Or existed category :</label>
                         <select class="custom-select col-3" id="category">
+                            <option value=""></option>
                             {% for category in categories %}
                             
                             {% if category == post.category %}
@@ -144,9 +145,8 @@
                 
             
                 $("#addPost-Form").submit(function(eventObj) {
-                    const selectedCategory = $('#post-Select').val();
-
-                    if (selectCategory) $(this).append(`<input type="hidden" name="category" value="${selectedCategory}">`);
+                    const selectedCategory = $('#category').val() || "";
+                    $(this).append(`<input type="hidden" name="category" value="${selectedCategory}">`);
                     return true;
                 });
             } );

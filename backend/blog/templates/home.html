@@ -25,8 +25,7 @@
         <section class="banner" id="banner">
             <div class="content">
                 {% if request.user.is_authenticated %}
-                <h3>Hello</h3>
-                <p>Welcome to my blog</p>
+                <h3>Blogger Community</h3>
                 {% else %}
                 <h3>Welcome to Blogger</h3>
                 {% endif %}
@@ -52,7 +51,7 @@
                         <span>{{ post.dateCreated }}</span>
                     </div>
                     <h3 class="title">{{ post.title }}</h3>
-                    <p class="text">{{ post.content }}</p>
+                    <p class="text">{{ post.content|striptags }}</p>
                     <div class="links">
                         <a
                             href="{% url 'bloggerHome' post.author.email %}"

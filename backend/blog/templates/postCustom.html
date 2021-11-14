@@ -29,7 +29,7 @@
 
             <!-- Options -->
             <div class="options p-2">
-                <a class="d-block p-3" href="./updateProfile.html">
+                <a class="d-block p-3" href="{% url 'profile' %}">
                     <i class="far fa-user"></i>&nbsp&nbsp User Profile
                 </a>
                 <a title="currentOption" class="d-block p-3" href="#"> 
@@ -49,7 +49,7 @@
                 <span class="ml-5">
                     <!-- <h4 class="font-weight-light">Home / Posts</h4> -->
                     <a title="other_path" href="{% url 'bloggerHome' request.user.email %}"><i class="fas fa-home"></i> Home </a>\
-                    <a  title="current_path" href="./postCustom.html">Post</a>
+                    <a  title="current_path" href="{% url 'postCustomize' %}">Post</a>
                 </span>
                 <span class="mr-5">
                     <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
@@ -93,13 +93,13 @@
                                 </td>
                                 <td>
                                     <p>
-                                        {{ post.content }}
+                                        {{ post.content|striptags  }}
                                     </p>
                                 </td>
                                 <td>
                                     <div class="action">
                                         <button type="submit" class="btn" name="update"><a href="{% url 'postEdit' post.id %}">Update</a></button>
-                                        <button type="submit" class="btn" name="delete"><a href="">Delete</a></button>
+                                        <button type="submit" class="btn" name="delete"><a class="delete" href="{% url 'postDelete' post.id %}">Delete</a></button>
                                     </div>
                                 </td>
                             </tr>
@@ -118,8 +118,11 @@
 
     <script>
         $(document).ready(function(){
-
+            $('.btn a.delete').click(function(){return confirm("are you sure?");});
         });
+    </script>
+    <script>
+
     </script>
 
 </body>
