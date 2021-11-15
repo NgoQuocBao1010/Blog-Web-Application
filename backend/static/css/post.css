@@ -193,6 +193,8 @@ section {
     font-size: 1.6rem;
     line-height: 1.7;
     padding: 1rem 0;
+    /* New */
+    list-style-position: inside;
 }
 
 .container .posts-container .post hr {
@@ -208,6 +210,13 @@ section {
     border-top: var(--border);
     margin-top: 2.5rem;
     padding-top: 1.5rem;
+}
+
+/* New */
+.container .posts-container .comments-list #no-comment {
+    font-size: 1.6rem;
+    color: #505050;
+    margin-bottom: 2rem;
 }
 
 .container .posts-container .comments-list {

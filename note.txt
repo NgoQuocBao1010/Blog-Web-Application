@@ -1,3 +1,3 @@
 ** Todo
 - Add post description
-- Fix post content in post detail
+- Fix post content in post detail (i fixed it, u can check if it ok or not)
