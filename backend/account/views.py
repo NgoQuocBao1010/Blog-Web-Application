@@ -54,7 +54,7 @@ def register(request):
 def logoutView(request):
     """Logout user"""
     logout(request)
-    return redirect("login")
+    return redirect("home")
 
 
 @login_required(login_url="login")

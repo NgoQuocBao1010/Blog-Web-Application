@@ -1,3 +1,4 @@
+{% load static %}
 <style>
     .header {
         position: fixed;
@@ -153,17 +154,21 @@
     </nav>
 
     <div class="icons">
-        <i class="fas fa-bars" id="menu-bars"></i>
         <i class="fas fa-search" id="search-icon"></i>
     </div>
 
     <!-- search form -->
-    <form class="search-form">
+    <form class="search-form" method="get">
         <input
             type="search"
             name="search"
-            placeholder="Find your favorite blogger ..."
             id="search-box"
+
+            {% if 'blogger' in request.path %}
+            placeholder="Search blogs from blogger"
+            {% else %}
+            placeholder="Search blogs from community"
+            {% endif %}
         />
 
         <button type="submit" class="">Search</button>

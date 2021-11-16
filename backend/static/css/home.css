@@ -232,6 +232,12 @@ section {
 }
 
 /* post */
+#no-post {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
 .container .sidebar .box .p-post {
     padding: 1rem 2rem;
 }

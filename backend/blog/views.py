@@ -9,7 +9,6 @@ from django.urls import reverse
 
 import pytz
 from datetime import timezone
-import random
 
 from .models import Post, Category, Comment
 from .forms import PostForm, CommentForm
@@ -20,14 +19,19 @@ User = get_user_model()
 def home(request):
     """Home page, where user and unauth user can view all the posts"""
     posts = Post.objects.all()
-    posts = filterPosts(request, posts)
+    posts, tags = filterPosts(request, posts)
     popularPosts = Post.objects.annotate(num_comment=Count("comment")).order_by(
         "-num_comment"
     )[:5]
 
     categories = Category.objects.all()
 
-    context = {"posts": posts, "categories": categories, "popularPosts": popularPosts}
+    context = {
+        "posts": posts,
+        "categories": categories,
+        "tags": tags,
+        "popularPosts": popularPosts,
+    }
     return render(request, "home.html", context)
 
 
@@ -39,7 +43,7 @@ def bloggerHome(request, email):
         return HttpResponse("Not exist")
 
     posts = Post.objects.filter(author=blogger)
-    posts = filterPosts(request, posts)
+    posts, tags = filterPosts(request, posts)
 
     # Query 5 most popular posts depends on the number of comments
     popularPosts = posts.annotate(num_comment=Count("comment")).order_by(
@@ -54,6 +58,7 @@ def bloggerHome(request, email):
     context = {
         "blogger": blogger,
         "posts": posts,
+        "tags": tags,
         "categories": categories,
         "popularPosts": popularPosts,
     }
@@ -62,6 +67,9 @@ def bloggerHome(request, email):
 
 def postDetail(request, id):
     """Post detail view, user can post comment to post here"""
+    if request.method == "GET" and request.GET.get("search"):
+        return home(request)
+
     try:
         post = Post.objects.get(id=id)
     except Post.DoesNotExist:
@@ -210,11 +218,24 @@ Fucntions that do not handle view directly
 
 def filterPosts(request, posts):
     """Filter post on get request"""
+    tags = []
+
     category = request.GET.get("category")
     if category:
         posts = posts.filter(category__name__icontains=category)
+        tags.append(category)
 
-    return posts
+    search = request.GET.get("search")
+    if search:
+        posts = posts.filter(
+            Q(content__icontains=search)
+            | Q(description__icontains=search)
+            | Q(title__icontains=search)
+            | Q(category__name__icontains=search)
+        )
+        tags.append(f"'{search}'")
+
+    return posts, tags
 
 
 def getRelatedPost(post):
