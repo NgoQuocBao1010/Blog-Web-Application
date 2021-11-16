@@ -2,13 +2,14 @@ from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 
 import pytz
 from datetime import timezone
+import random
 
 from .models import Post, Category, Comment
 from .forms import PostForm, CommentForm
@@ -32,7 +33,6 @@ def home(request):
 
 def bloggerHome(request, email):
     """Home of individual blogger"""
-
     try:
         blogger = User.objects.get(email=email)
     except User.DoesNotExist:
@@ -40,10 +40,13 @@ def bloggerHome(request, email):
 
     posts = Post.objects.filter(author=blogger)
     posts = filterPosts(request, posts)
+
+    # Query 5 most popular posts depends on the number of comments
     popularPosts = posts.annotate(num_comment=Count("comment")).order_by(
         "-num_comment"
     )[:5]
 
+    # Query and counts the number of post per category
     categories = Category.objects.filter(post__author=blogger).annotate(
         total=Count("post")
     )
@@ -55,6 +58,33 @@ def bloggerHome(request, email):
         "popularPosts": popularPosts,
     }
     return render(request, "my-blog.html", context)
+
+
+def postDetail(request, id):
+    """Post detail view, user can post comment to post here"""
+    try:
+        post = Post.objects.get(id=id)
+    except Post.DoesNotExist:
+        return HttpResponse("This page does not exist")
+
+    blogger = post.author
+    categories = Category.objects.all()
+    popularPosts = (
+        Post.objects.filter(author=post.author)
+        .annotate(num_comment=Count("comment"))
+        .order_by("-num_comment")[:5]
+    )
+
+    relatedPosts = getRelatedPost(post)
+
+    context = {
+        "blogger": blogger,
+        "post": post,
+        "categories": categories,
+        "popularPosts": popularPosts,
+        "relatedPosts": relatedPosts,
+    }
+    return render(request, "postDetail.html", context)
 
 
 @login_required(login_url="login")
@@ -116,24 +146,6 @@ def postEdit(request, id):
     return render(request, "postEdit.html", context)
 
 
-def postDetail(request, id):
-    """Post detail view, user can post comment to post here"""
-    post = get_object_or_404(Post, id=id)
-    categories = Category.objects.all()
-    popularPosts = (
-        Post.objects.filter(author=post.author)
-        .annotate(num_comment=Count("comment"))
-        .order_by("-num_comment")[:5]
-    )
-
-    context = {
-        "post": post,
-        "categories": categories,
-        "popularPosts": popularPosts,
-    }
-    return render(request, "postDetail.html", context)
-
-
 @login_required(login_url="login")
 def postDelete(request, id):
     """Delete a post, only if user is the author"""
@@ -146,7 +158,9 @@ def postDelete(request, id):
     return redirect("postCustomize")
 
 
-# AJAX connection
+""" AJAX connection """
+
+
 @csrf_exempt
 def newComment(request):
     """Handle ajax request to create new comment"""
@@ -188,7 +202,10 @@ def deleteComment(request, id):
     return JsonResponse(data={"message": "success"}, status=200)
 
 
-""" Utility functions """
+""" 
+Utility functions 
+Fucntions that do not handle view directly
+"""
 
 
 def filterPosts(request, posts):
@@ -198,6 +215,19 @@ def filterPosts(request, posts):
         posts = posts.filter(category__name__icontains=category)
 
     return posts
+
+
+def getRelatedPost(post):
+    """Get 6 posts that related to the post arg in terms of author or category"""
+    authorRelatedPosts = Post.objects.filter(author=post.author).exclude(id=post.id)[:3]
+    categoryRelatedPosts = Post.objects.filter(category=post.category).exclude(
+        Q(id=post.id) | Q(author=post.author)
+    )[:3]
+
+    return {
+        "author": authorRelatedPosts,
+        "category": categoryRelatedPosts,
+    }
 
 
 def commentResponseData(newComment, request):
@@ -237,6 +267,7 @@ def commentResponseData(newComment, request):
 
 
 def categoryHandler(request):
+    """Handle new category when create or edit a post"""
     name = request.POST.get("category")
     print(request.POST)
 

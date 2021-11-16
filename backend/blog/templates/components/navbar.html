@@ -144,7 +144,6 @@
     <nav class="navbar">
         {% if request.user.is_authenticated %}
         <a href="{% url 'home' %}">Community</a>
-        <!-- <a href="#aboutme">about me</a> -->
         <a href="{% url 'bloggerHome' request.user.email %}#posts">my posts</a>
         <a href="{% url 'postCustomize' %}">Customize</a>
         <a href="{% url 'logout' %}">logout</a>

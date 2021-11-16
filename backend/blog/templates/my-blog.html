@@ -19,100 +19,28 @@
 
     <body>
         <!--  header  -->
-        {% include "navbar.html" %}
+        {% include "components/navbar.html" %}
 
         <!-- banner  -->
         <section class="banner" id="banner">
             <div class="content">
-                <h3>Hello</h3>
-                <p>Welcome to my blog</p>
+                <h3>Welcome</h3>
+                <p>{{ request.user.email }} blogs</p>
             </div>
         </section>
 
         <!-- Main content  -->
         <section class="container" id="posts">
             <!-- Posts container -->
-            <div class="posts-container">
-                {% for post in posts %}
-
-                <div class="post">
-                    <a href="{% url 'postDetail' post.id %}">
-                        <img
-                            src="{{ post.coverImage.url }}"
-                            alt="Cover Image"
-                            class="image"
-                        />
-                    </a>
-                    <div class="date">
-                        <i class="far fa-clock"></i>
-                        <span>{{ post.dateCreated }}</span>
-                    </div>
-                    <h3 class="title">{{ post.title }}</h3>
-                    <p class="text">{{ post.content|striptags }}</p>
-                    <div class="links">
-                        <a href="#" class="user">
-                            <i class="far fa-user"></i>
-                            <span>by {{ post.author }}</span>
-                        </a>
-                        <a href="{% url 'postDetail' post.id  %}" class="icon">
-                            <i class="far fa-comment"></i>
-                            <span>{{ post.comment_set.all|length }}</span>
-                        </a>
-                    </div>
-                </div>
-
-                {% endfor %}
-            </div>
+            {% include "components/postsContainer.html" %}
 
             <!-- sidebar -->
             <div class="sidebar">
                 <!-- User box -->
-                <div class="box">
-                    {% if request.user == blogger %}
-                    <h3 class="title">about me</h3>
-                    {% else %}
-                    <h3 class="title">about this blogger</h3>
-                    {% endif %}
-
-                    <div class="about">
-                        <img src="{{ blogger.profile.avatar.url }}" alt="" />
-                        <h3>{{ blogger.profile.name }}</h3>
-                        <p>{{ blogger }}</p>
-
-                        <div class="follow">
-                            {% if blogger.profile.facebook %}
-                            <a href="{{ blogger.profile.facebook }}" target="_blank" class="fab fa-facebook-f"></a>
-                            {% endif %}
-
-                            {% if blogger.profile.twitter %}
-                            <a href="{{ blogger.profile.twitter }}" target="_blank" class="fab fa-twitter"></a>
-                            {% endif %}
-
-                            {% if blogger.profile.instagram %}
-                            <a href="{{ blogger.profile.instagram }}" target="_blank" class="fab fa-instagram"></a>
-                            {% endif %}
-
-                            {% if blogger.profile.youtube %}
-                            <a href="{{ blogger.profile.youtube }}" target="_blank" class="fab fa-youtube"></a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
+                {% include "components/user-box.html" %}
 
                 <!-- categories -->
-                <div class="box">
-                    <h3 class="title">categories</h3>
-                    <div class="category">
-                        {% for category in categories %}
-                        <a
-                            href="{% url 'bloggerHome' blogger.email %}?category={{ category.name }}"
-                        >
-                            {{ category.name }}
-                            <span>{{ category.total }}</span>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% include "components/categories.html" %}
 
                 <!-- Popular posts -->
                 <div class="box">

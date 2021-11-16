@@ -19,7 +19,7 @@
 
     <body>
         <!--  header  -->
-        {% include "navbar.html" %}
+        {% include "components/navbar.html" %}
 
         <!-- banner  -->
         <section class="banner" id="banner">
@@ -35,55 +35,12 @@
         <!-- Main content  -->
         <section class="container" id="posts">
             <!-- Posts container -->
-            <div class="posts-container">
-                {% for post in posts %}
-
-                <div class="post">
-                    <a href="{% url 'postDetail' post.id %}">
-                        <img
-                            src="{{ post.coverImage.url }}"
-                            alt="Cover Image"
-                            class="image"
-                        />
-                    </a>
-                    <div class="date">
-                        <i class="far fa-clock"></i>
-                        <span>{{ post.dateCreated }}</span>
-                    </div>
-                    <h3 class="title">{{ post.title }}</h3>
-                    <p class="text">{{ post.content|striptags }}</p>
-                    <div class="links">
-                        <a
-                            href="{% url 'bloggerHome' post.author.email %}"
-                            class="user"
-                        >
-                            <i class="far fa-user"></i>
-                            <span>by {{ post.author }}</span>
-                        </a>
-                        <a href="{% url 'postDetail' post.id  %}" class="icon">
-                            <i class="far fa-comment"></i>
-                            <span>{{ post.comment_set.all|length }}</span>
-                        </a>
-                    </div>
-                </div>
-
-                {% endfor %}
-            </div>
+            {% include "components/postsContainer.html" %}
 
             <!-- sidebar -->
             <div class="sidebar">
                 <!-- categories -->
-                <div class="box">
-                    <h3 class="title">categories</h3>
-                    <div class="category">
-                        {% for category in categories %}
-                        <a href="{% url 'home' %}?category={{ category.name }}">
-                            {{ category.name }}
-                            <span>{{ category.post_set.all|length }}</span>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% include "components/categories.html" %}
 
                 <!-- Popular posts -->
                 <div class="box">

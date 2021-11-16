@@ -18,16 +18,20 @@
     </head>
     <body>
         <!--  header  -->
-        {% include "navbar.html" %}
+        {% include "components/navbar.html" %}
 
         <!-- posts  -->
         <section class="container" id="posts">
             <div class="posts-container">
-                <!-- Post content -->
+                <!-- Main content -->
                 <div class="post">
+                    <!-- Path -->
                     <p class="path">
                         <a href="{% url 'home' %}">
                             <span title="home_path">Home /</span>
+                        </a>
+                        <a href="{% url 'home' %}?category={{ post.category.name }}">
+                            <span title="home_path">{{ post.category }} /</span>
                         </a>
                         <span>{{ post.title }}</span>
                     </p>
@@ -49,16 +53,14 @@
                         />
                     </a>
 
-                    
                     <div class="text">
                         {% autoescape off %}
                             {{ post.content }}
                         {% endautoescape %}
                     </div>
-                    
 
                     <!-- Comments block -->
-                    <div class="comments-list">
+                    <div class="comments-list" id="comments">
                         <span id="total-comment"
                             >{{ post.comment_set.all|length }} Comments</span
                         >
@@ -130,37 +132,10 @@
             <!-- sidebar -->
             <div class="sidebar">
                 <!-- User box -->
-                <div class="box">
-                    <h3 class="title">Author</h3>
-                    <div class="about">
-                        <img
-                            src="{{ post.author.profile.avatar.url }}"
-                            alt=""
-                        />
-                        <h3>{{ post.author.profile.name }}</h3>
-                        <p>{{ post.author }}</p>
-
-                        <div class="follow">
-                            <a href="#" class="fab fa-facebook-f"></a>
-                            <a href="#" class="fab fa-twitter"></a>
-                            <a href="#" class="fab fa-instagram"></a>
-                            <a href="#" class="fab fa-youtube"></a>
-                        </div>
-                    </div>
-                </div>
+                {% include "components/user-box.html" %}
 
                 <!-- categories -->
-                <div class="box">
-                    <h3 class="title">categories</h3>
-                    <div class="category">
-                        {% for category in categories %}
-                        <a href="#">
-                            {{ category.name }}
-                            <span>{{ category.post_set.all|length }}</span>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% include "components/categories.html" %}
 
                 <!-- Popular posts -->
                 <div class="box">
@@ -189,61 +164,34 @@
             <div class="single_post">
                 <table cellspacing="7">
                     <tr>
+                        {% for post in relatedPosts.author %}
                         <td>
-                            <a href="">
+                            <a href="{% url 'postDetail' post.id %}">
                                 <img
-                                    src="{% static './images/posts/blog1.jpg' %}"
+                                    src="{{ post.coverImage.url }}"
                                 />
                             </a>
-                            <h3>Place to travel</h3>
+                            <h3>{{ post.title }}</h3>
                         </td>
-                        <td>
-                            <a href="">
-                                <img
-                                    src="{% static './images/posts/blog2.jpg' %}"
-                                />
-                            </a>
-                            <h3>Recipe</h3>
-                        </td>
-                        <td>
-                            <a href="">
-                                <img
-                                    src="{% static './images/posts/blog1.jpg' %}"
-                                />
-                            </a>
-                            <h3>Place to travel</h3>
-                        </td>
+                        {% endfor %}
                     </tr>
                 </table>
             </div>
+
             <!-- 2nd slide -->
             <div class="single_post">
                 <table cellspacing="7">
                     <tr>
+                        {% for post in relatedPosts.category %}
                         <td>
-                            <a href="">
+                            <a href="{% url 'postDetail' post.id %}">
                                 <img
-                                    src="{% static './images/posts/blog1.jpg' %}"
+                                    src="{{ post.coverImage.url }}"
                                 />
                             </a>
-                            <h3>Place to travel</h3>
+                            <h3>{{ post.title }}</h3>
                         </td>
-                        <td>
-                            <a href="">
-                                <img
-                                    src="{% static './images/posts/blog1.jpg' %}"
-                                />
-                            </a>
-                            <h3>Recipe</h3>
-                        </td>
-                        <td>
-                            <a href="">
-                                <img
-                                    src="{% static './images/posts/blog1.jpg' %}"
-                                />
-                            </a>
-                            <h3>Place to travel</h3>
-                        </td>
+                        {% endfor %}
                     </tr>
                 </table>
             </div>

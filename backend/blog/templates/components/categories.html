@@ -1,0 +1,27 @@
+{% load static %}
+<link rel="stylesheet" href="{% static './css/home.css' %}" />
+
+<div class="box">
+    <h3 class="title">categories</h3>
+    <div class="category">
+        {% for category in categories %}
+
+        {% if category.post_set.all|length > 0 %}
+
+            {% if 'blogger' in  request.path %}
+            <a href="{% url 'bloggerHome' blogger.email %}?category={{ category.name }}">
+                {{ category.name }}
+                <span>{{ category.total }}</span>
+            </a>
+            {% else %}
+            <a href="{% url 'home' %}?category={{ category.name }}">
+                {{ category.name }}
+                <span>{{ category.post_set.all|length }}</span>
+            </a>
+            {% endif %}
+            
+        {% endif %}
+
+        {% endfor %}
+    </div>
+</div>

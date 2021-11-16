@@ -19,7 +19,7 @@
 <body>
 
     <div class="container-fluid">
-        {% include "customizeSidebar.html" %}
+        {% include "components/customizeSidebar.html" %}
 
         <!-- Main panel -->
         <div class="myMain">
@@ -27,7 +27,6 @@
             <!-- Banner -->
             <div class="banner">
                 <span class="ml-5">
-                    <!-- <h4 class="font-weight-light">Home / Posts</h4> -->
                     <a title="other_path" href="{% url 'bloggerHome' request.user.email %}"><i class="fas fa-home"></i> Home </a>\
                     <a  title="current_path" href="{% url 'profile' %}">Profile</a>
                 </span>
