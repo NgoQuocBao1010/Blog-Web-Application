@@ -170,7 +170,7 @@ section {
     width: 100%;
     border-radius: 0.5rem;
     object-fit: cover;
-    margin-top: 3.5rem;
+    margin-top: 1.5rem;
 }
 
 .container .posts-container .post .date {
@@ -188,14 +188,13 @@ section {
     text-align: center;
 }
 
-.container .posts-container .post .text {
-    color: #5a5a5a;
+/* New */
+.container .posts-container .post .description {
+    margin: 1rem auto;
+    width: 100%;
     font-size: 1.6rem;
-    line-height: 1.7;
-    padding: 1rem 0;
-    /* New */
-    list-style-position: inside;
-}
+    font-style: italic;
+} 
 
 .container .posts-container .post hr {
     height: 0.18rem;

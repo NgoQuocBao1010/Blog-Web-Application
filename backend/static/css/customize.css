@@ -262,6 +262,10 @@ div.posts a:hover{
     padding-top: 2.5rem;
 }
 
+.myMain #addPost-Form input {
+    font-weight: 500;
+}
+
 .myMain #addPost-Form .post-img label:hover{
     cursor: pointer;
     color: var(--dark-green);

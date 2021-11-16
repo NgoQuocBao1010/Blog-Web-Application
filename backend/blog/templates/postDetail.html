@@ -15,6 +15,7 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="{% static './css/post.css' %}" />
+        <link rel="stylesheet" href="{% static './css/textEditor.css' %}" />
     </head>
     <body>
         <!--  header  -->
@@ -45,6 +46,11 @@
                         <i class="far fa-comment"></i>
                     </div>
                     <hr />
+
+                    <div class="description">
+                        {{ post.description }}
+                    </div>
+                    
                     <a href="#">
                         <img
                             src="{{ post.coverImage.url }}"
@@ -61,9 +67,9 @@
 
                     <!-- Comments block -->
                     <div class="comments-list" id="comments">
-                        <span id="total-comment"
-                            >{{ post.comment_set.all|length }} Comments</span
-                        >
+                        <span id="total-comment"> 
+                            {{ post.comment_set.all|length }} Comments
+                        </span>
 
                         <!-- specific commented -->
                         {% for comment in post.comment_set.all %}
@@ -99,7 +105,7 @@
                                 {{ comment.content }} 
                             </p>
 
-                            <a href=""></a>
+
                         </div>
                         {% empty %}
                         <p id="no-comment">No comments yet.</p>

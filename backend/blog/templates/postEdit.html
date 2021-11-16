@@ -55,13 +55,22 @@
                         <input name="title" class="col-3" class="form-control" id="title" value="{{ post.title }}">
                     </div>
 
+                    <!-- Description -->
+                    <div class="form-group row">
+                        <label for="description" class="col-2">Description :</label>
+                        <textarea name="description" id="description" class="col-5" style="font-weight: 500" >{{ post.description }}</textarea>
+                    </div>
+
                     <!-- Category -->
                     <div class="form-group row">
                         <label for="new-category" class="col-2">New category :</label>
                         <input name="new-category" class="col-3" class="form-control" id="new-category">
                         <label class="col-3 text-center" for="post-Select">Or existed category :</label>
-                        <select class="custom-select col-3" id="category">
-                            <option value=""></option>
+                        <select class="custom-select col-3" id="category" style="font-weight: 600">
+                            <option value="">
+                                <strong>No selection</strong>
+                            </option>
+                            
                             {% for category in categories %}
                             
                             {% if category == post.category %}

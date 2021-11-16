@@ -17,7 +17,7 @@
             <span>{{ post.dateCreated }}</span>
         </div>
         <h3 class="title">{{ post.title }}</h3>
-        <p class="text">{{ post.content|striptags }}</p>
+        <p class="text">{{ post.description }}</p>
         <div class="links">
             <a
                 href="{% url 'bloggerHome' post.author.email %}"
