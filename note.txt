@@ -1,8 +1,0 @@
-** Todo
-- Add post description - Done
-- Fix post content in post detail (i fixed it, u can check if it ok or not) - Done
-- Search functionality - Done
-- Pagination
-- Image upload for text editor
-
-- Can u check the comment please because i cant comment on post

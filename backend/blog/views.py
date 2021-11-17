@@ -1,11 +1,12 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 import pytz
 from datetime import timezone
@@ -25,6 +26,7 @@ def home(request):
     )[:5]
 
     categories = Category.objects.all()
+    posts = pagination(request, posts)
 
     context = {
         "posts": posts,
@@ -54,6 +56,8 @@ def bloggerHome(request, email):
     categories = Category.objects.filter(post__author=blogger).annotate(
         total=Count("post")
     )
+
+    posts = pagination(request, posts)
 
     context = {
         "blogger": blogger,
@@ -214,6 +218,23 @@ def deleteComment(request, id):
 Utility functions 
 Fucntions that do not handle view directly
 """
+
+
+def pagination(request, posts):
+    """Pagination in django"""
+    print("paginate")
+    page = request.GET.get("page", 1)
+
+    paginator = Paginator(posts, 5)
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    return posts
 
 
 def filterPosts(request, posts):

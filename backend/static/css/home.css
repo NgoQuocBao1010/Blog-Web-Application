@@ -272,6 +272,44 @@ section {
     color: var(--dark-green);
 }
 
+/* indicator */
+.posts-container .posts-indicators{
+    text-align:center; 
+    font-size: 1.7rem;
+}
+
+.posts-container .posts-indicators a.indicator-btn{
+    color: #222;
+    cursor: pointer; 
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.posts-container .posts-indicators a:hover{
+    color: #75afa7;
+}
+
+.posts-container .posts-indicators span.number{
+    color: #222;
+    cursor: pointer; 
+    border: .1rem solid #72aca6;
+    padding-left: .9rem; 
+    padding-right: .9rem; 
+    padding-top: .2rem; 
+    padding-bottom: .2rem;
+    border-radius: .2rem;
+    margin: .2rem;
+}
+
+.posts-container .posts-indicators span.number:hover{
+    background-color: #b3d3cf; 
+}
+
+.active{
+    background-color: #b3d3cf; 
+}
+/*  end new */
+
 /* contact */
 .contact {
     background: url(../images/banner_header.png) no-repeat;

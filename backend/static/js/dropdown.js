@@ -13,6 +13,7 @@ searchForm.addEventListener("submit", (e) => {
     const searchVal = document.getElementById("search-box").value;
 
     const urlSearchParams = new URLSearchParams(window.location.search);
+    urlSearchParams.delete("page");
     urlSearchParams.set("search", searchVal);
     window.location.search = urlSearchParams;
 });

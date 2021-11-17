@@ -28,7 +28,7 @@
 </style>
 
 <div class="posts-container">
-
+    <!-- Tags to indicate category or search value -->
     <div class="tags" id="tags">
         {% if tags|length > 0 %}
         <p>
@@ -40,6 +40,7 @@
         {% endif %}
     </div>
 
+    <!-- Posts container -->
     {% for post in posts %}
 
     <div class="post">
@@ -75,6 +76,32 @@
     <h1 id="no-post">No post found</h1>
 
     {% endfor %}
+
+    <!-- Pagination -->
+    {% if posts.has_other_pages %}
+    <div class="posts-indicators">
+        <!-- Previous/Back buttons -->
+        {% if posts.has_previous %}
+        <a href="?page={{ posts.previous_page_number }}" class="indicator-btn"><span>Back</span></a>
+        {% endif %}
+
+        <!-- Other pages -->
+        {% for i in posts.paginator.page_range %}
+
+        {% if posts.number == i %}
+        <a href="?page={{ i }}"><span class="number active">{{ i }}</span></a>
+        {% else %}
+        <a href="?page={{ i }}"><span class="number">{{ i }}</span></a>
+        {% endif %}
+
+        {% endfor %}
+
+        {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}" class="indicator-btn"><span>Next</span></a>
+        {% endif %}
+
+    </div>
+    {% endif %}
 </div>
 
 <script src="{% static './js/tags.js' %}"></script>

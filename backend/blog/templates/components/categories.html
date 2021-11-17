@@ -9,12 +9,12 @@
         {% if category.post_set.all|length > 0 %}
 
             {% if 'blogger' in  request.path %}
-            <a href="{% url 'bloggerHome' blogger.email %}?category={{ category.name }}">
+            <a href="{% url 'bloggerHome' blogger.email %}?category={{ category.name }}#posts">
                 {{ category.name }}
                 <span>{{ category.total }}</span>
             </a>
             {% else %}
-            <a href="{% url 'home' %}?category={{ category.name }}">
+            <a href="{% url 'home' %}?category={{ category.name }}#posts">
                 {{ category.name }}
                 <span>{{ category.post_set.all|length }}</span>
             </a>
