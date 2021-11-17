@@ -7,3 +7,12 @@ searchIcon.onclick = () => {
 
     document.getElementById("search-box").focus(); // focus on input
 };
+
+searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const searchVal = document.getElementById("search-box").value;
+
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    urlSearchParams.set("search", searchVal);
+    window.location.search = urlSearchParams;
+});

@@ -223,7 +223,7 @@ def filterPosts(request, posts):
     category = request.GET.get("category")
     if category:
         posts = posts.filter(category__name__icontains=category)
-        tags.append(category)
+        tags.append({"query": "category", "value": category})
 
     search = request.GET.get("search")
     if search:
@@ -233,7 +233,7 @@ def filterPosts(request, posts):
             | Q(title__icontains=search)
             | Q(category__name__icontains=search)
         )
-        tags.append(f"'{search}'")
+        tags.append({"query": "search", "value": f"'{search}'"})
 
     return posts, tags
 
@@ -290,7 +290,6 @@ def commentResponseData(newComment, request):
 def categoryHandler(request):
     """Handle new category when create or edit a post"""
     name = request.POST.get("category")
-    print(request.POST)
 
     categories = Category.objects.filter(name__icontains=name)
 

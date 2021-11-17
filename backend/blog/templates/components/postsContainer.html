@@ -34,7 +34,7 @@
         <p>
             Tags: 
             {% for tag in tags %}
-            <span class="tag" data-value="{{ tag }}">{{ tag }} <i class="fas fa-backspace"></i></span> 
+            <span class="tag" data-query="{{ tag.query }}">{{ tag.value }} <i class="fas fa-backspace"></i></span> 
             {% endfor %}
         </p>
         {% endif %}

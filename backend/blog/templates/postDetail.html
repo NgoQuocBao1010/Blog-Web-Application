@@ -149,7 +149,11 @@
 
                 <!-- Popular posts -->
                 <div class="box">
-                    <h3 class="title">popular posts from <span style="text-transform: initial;">{{ post.author }}</span></h3>
+                    <h3 class="title">popular posts from 
+                        <span style="text-transform: initial; font-weight: 600;">
+                            {{ post.author }}
+                        </span>
+                    </h3>
                     <div class="p-post">
                         {% for post in popularPosts %}
                         <a href="{% url 'postDetail' post.id %}">
@@ -244,7 +248,7 @@
             };
 
             $(document).ready(function () {
-                // using ajax
+                // Adding comment
                 $("#comment-form").submit(function (e) {
                     // preventing from page reload
                     e.preventDefault();
@@ -258,7 +262,7 @@
                     // make POST ajax call
                     $.ajax({
                         type: "POST",
-                        url: "http://127.0.0.1:8000/post/ajax/comment",
+                        url: "http://127.0.0.1:8000/post/ajax/comment/",
                         data: serializedData,
 
                         success: function (response) {
@@ -333,7 +337,8 @@
                         },
                     });
                 });
-
+                
+                // Delete comment
                 $(".delete-comment").on("click", function () {
                     const commentId = $(this).attr("data-id");
 
@@ -345,7 +350,7 @@
 
                     $.ajax({
                         type: "DELETE",
-                        url: `http://127.0.0.1:8000/post/ajax/comment/${commentId}/delete`,
+                        url: `http://127.0.0.1:8000/post/ajax/comment/${commentId}/delete/`,
                         success: (response) => {
                             $(`#comment-${commentId}`).remove();
 
