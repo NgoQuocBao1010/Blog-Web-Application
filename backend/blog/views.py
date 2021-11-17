@@ -20,7 +20,7 @@ User = get_user_model()
 def home(request):
     """Home page, where user and unauth user can view all the posts"""
     posts = Post.objects.all()
-    posts, tags = filterPosts(request, posts)
+    posts, tags, queryPath = filterPosts(request, posts)
     popularPosts = Post.objects.annotate(num_comment=Count("comment")).order_by(
         "-num_comment"
     )[:5]
@@ -32,6 +32,7 @@ def home(request):
         "posts": posts,
         "categories": categories,
         "tags": tags,
+        "queryPath": queryPath,
         "popularPosts": popularPosts,
     }
     return render(request, "home.html", context)
@@ -45,7 +46,7 @@ def bloggerHome(request, email):
         return HttpResponse("Not exist")
 
     posts = Post.objects.filter(author=blogger)
-    posts, tags = filterPosts(request, posts)
+    posts, tags, queryPath = filterPosts(request, posts)
 
     # Query 5 most popular posts depends on the number of comments
     popularPosts = posts.annotate(num_comment=Count("comment")).order_by(
@@ -63,6 +64,7 @@ def bloggerHome(request, email):
         "blogger": blogger,
         "posts": posts,
         "tags": tags,
+        "queryPath": queryPath,
         "categories": categories,
         "popularPosts": popularPosts,
     }
@@ -222,7 +224,6 @@ Fucntions that do not handle view directly
 
 def pagination(request, posts):
     """Pagination in django"""
-    print("paginate")
     page = request.GET.get("page", 1)
 
     paginator = Paginator(posts, 5)
@@ -240,11 +241,13 @@ def pagination(request, posts):
 def filterPosts(request, posts):
     """Filter post on get request"""
     tags = []
+    queryPath = ""
 
     category = request.GET.get("category")
     if category:
         posts = posts.filter(category__name__icontains=category)
         tags.append({"query": "category", "value": category})
+        queryPath += f"&category={category}"
 
     search = request.GET.get("search")
     if search:
@@ -255,8 +258,12 @@ def filterPosts(request, posts):
             | Q(category__name__icontains=search)
         )
         tags.append({"query": "search", "value": f"'{search}'"})
+        queryPath = (
+            f"&search={search}" if not queryPath else queryPath + f"&search={search}"
+        )
 
-    return posts, tags
+    print(queryPath)
+    return posts, tags, queryPath
 
 
 def getRelatedPost(post):

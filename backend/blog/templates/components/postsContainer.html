@@ -82,26 +82,30 @@
     <div class="posts-indicators">
         <!-- Previous/Back buttons -->
         {% if posts.has_previous %}
-        <a href="?page={{ posts.previous_page_number }}" class="indicator-btn"><span>Back</span></a>
+        <a href="?page={{ posts.previous_page_number }}{{ queryPath }}" class="indicator-btn"><span>Back</span></a>
         {% endif %}
 
         <!-- Other pages -->
         {% for i in posts.paginator.page_range %}
 
         {% if posts.number == i %}
-        <a href="?page={{ i }}"><span class="number active">{{ i }}</span></a>
+        <a href="?page={{ i }}{{ queryPath }}"><span class="number active">{{ i }}</span></a>
         {% else %}
-        <a href="?page={{ i }}"><span class="number">{{ i }}</span></a>
+        <a href="?page={{ i }}{{ queryPath }}"><span class="number">{{ i }}</span></a>
         {% endif %}
 
         {% endfor %}
 
         {% if posts.has_next %}
-        <a href="?page={{ posts.next_page_number }}" class="indicator-btn"><span>Next</span></a>
+        <a href="?page={{ posts.next_page_number }}{{ queryPath }}" class="indicator-btn"><span>Next</span></a>
         {% endif %}
 
     </div>
+
+
     {% endif %}
+
+    <!-- {{ request.build_absolute_uri }} -->
 </div>
 
 <script src="{% static './js/tags.js' %}"></script>
