@@ -31,3 +31,16 @@
 .container .posts-container .post .text ul {
     font-size: 2rem !important;
 }
+
+.container .posts-container .post .text a {
+    color: #84b6b0;
+}
+
+.container .posts-container .post .text .image {
+    max-width: 100%;
+}
+
+.container .posts-container .post .text .image img {
+    max-width: 100%;
+    max-height: 100%;
+}

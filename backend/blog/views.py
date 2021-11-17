@@ -7,9 +7,13 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.conf import settings
 
+import os
 import pytz
 from datetime import timezone
+from PIL import Image
+import shortuuid
 
 from .models import Post, Category, Comment
 from .forms import PostForm, CommentForm
@@ -113,6 +117,7 @@ def postCustomize(request):
 @login_required(login_url="login")
 def postCreate(request):
     """Create a new post"""
+    form = PostForm()
     categories = Category.objects.all()
 
     if request.method == "POST":
@@ -129,7 +134,7 @@ def postCreate(request):
         else:
             print(form.errors.as_text())
 
-    context = {"categories": categories}
+    context = {"categories": categories, "form": form}
     return render(request, "postCreate.html", context)
 
 
@@ -214,6 +219,28 @@ def deleteComment(request, id):
         comment.delete()
 
     return JsonResponse(data={"message": "success"}, status=200)
+
+
+@csrf_exempt
+def uploadAdapter(request):
+    """Uploader to save image"""
+    path = os.path.join(settings.MEDIA_ROOT, "contents")
+
+    try:
+        uploadImg = request.FILES.get("upload")
+        if uploadImg:
+            with Image.open(uploadImg.file.name) as image:
+                imgId = shortuuid.ShortUUID().random(length=5)
+                savePath = os.path.join(path, uploadImg.name + imgId)
+                image.save(savePath, format=image.format)
+
+        url = request.build_absolute_uri(
+            f"{settings.MEDIA_URL}/contents/{uploadImg.name}"
+        )
+        return JsonResponse(data={"message": "success", "url": url}, status=200)
+
+    except Exception as e:
+        return JsonResponse(data={"error": "Internal error"}, status=500)
 
 
 """ 

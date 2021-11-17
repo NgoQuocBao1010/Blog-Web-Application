@@ -79,6 +79,7 @@
                     <textarea name="content" id="editor">
                         <!-- Post's content located here -->
                     </textarea>
+
                     <button type="submit" class="btn btn-primary mt-4 mb-4" id="addPost-submit">Add post</button>
                 </form>
             </div>
@@ -90,23 +91,23 @@
     <!-- Javascript  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- CK Editor  -->
+    <script src="{% static './js/UploadAdapter.js' %}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
+    <!-- Rich text editor initialize -->
     <script>
-        $(document).ready(function(){
+        function MyCustomUploadAdapterPlugin( editor ) {
+            editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+                return new MyUploadAdapter( loader );
+            };
+        }
 
-            // $("#addPost-Form img").hide();
-
-            // show image directly
-            // $("#but_upload").click(function(){ 
-            //     const file = $('#file')[0].files[0]; 
-            //     $("#post-img").attr("src","./images/" + file.name); 
-            //     $("#addPost-Form img").show();
-            // });
-            
+        $(document).ready(function(){            
             let editor = null;
 
             // initialize editor
-            ClassicEditor.create( document.querySelector( '#editor' ) )
+            ClassicEditor.create( document.querySelector( '#editor' ), {
+                extraPlugins: [ MyCustomUploadAdapterPlugin ],
+            } )
             .then( newEditor => {
                 editor = newEditor;
             } )
@@ -131,6 +132,7 @@
             
         });
     </script>
+    <!-- Cover image upload handler -->
     <script>
         const imageUploaded = (event) => {
             // Show image when upload
