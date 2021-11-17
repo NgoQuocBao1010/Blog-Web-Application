@@ -25,7 +25,7 @@
         <section class="container" id="posts">
             <div class="posts-container">
                 <!-- Main content -->
-                <div class="post">
+                <div class="post" style="margin-top: 1rem;">
                     <!-- Path -->
                     <p class="path">
                         <a href="{% url 'home' %}">
@@ -47,7 +47,7 @@
                     </div>
                     <hr />
 
-                    <div class="description">
+                    <div class="description" style="margin-top: 3rem;">
                         {{ post.description }}
                     </div>
                     
@@ -56,6 +56,10 @@
                             src="{{ post.coverImage.url }}"
                             alt=""
                             class="image"
+                            style="height: 35rem;
+                            width: 100%;
+                            border-radius: 0.5rem;
+                            object-fit: cover;"
                         />
                     </a>
 

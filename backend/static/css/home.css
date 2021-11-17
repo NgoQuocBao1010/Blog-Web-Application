@@ -50,6 +50,8 @@ section {
     box-shadow: var(--box-shadow);
     padding: 3rem;
     max-width: 30rem;
+    /* New */
+    overflow: hidden;
 }
 
 .banner .content h3 {
@@ -62,7 +64,8 @@ section {
     font-size: 1.9rem;
     color: var(--light-color);
     padding: 1rem 0;
-    line-height: 1.5;
+    /* New */
+    word-break: break-all;
 }
 
 .container {
@@ -147,6 +150,7 @@ section {
     overflow: hidden;
     background: #fff;
     margin-bottom: 4rem;
+    /* margin-top: 10rem; */
 }
 
 .container .sidebar .box .title {
@@ -160,6 +164,7 @@ section {
 .container .sidebar .box .about {
     text-align: center;
     padding: 1rem 1.5rem;
+    /* margin-top: 1rem; */
 }
 
 .container .sidebar .box .about img {

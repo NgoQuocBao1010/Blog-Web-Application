@@ -80,9 +80,10 @@ body {
     position: relative;
 }
 
-.sidebar .options a[title="currentOption"] i.fa-caret-left {
+.options a[title="currentOption"] i.fa-caret-left {
     position: absolute;
-    right: 10px;
+    margin-top: 1.5%;
+    left: 90%;
 }
 
  /* right panel */
@@ -278,7 +279,6 @@ div.posts a:hover{
 #addPost-Form #post-img{
     width: 9.6rem;
     object-fit: cover;
-    margin-left: 1.2%;
     border: #bebebe .05rem solid;
 }
 
