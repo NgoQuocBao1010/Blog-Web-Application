@@ -2,7 +2,7 @@
 - Add post description - Done
 - Search functionality - Done
 - Pagination - Done
-- Image upload for text editor (not important)
+- Image upload for text editor (not important) - Done
 - Reply comments (not important)
 
 
