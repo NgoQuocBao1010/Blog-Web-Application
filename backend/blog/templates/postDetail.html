@@ -1,0 +1,367 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ post.title }} | Blogger</title>
+
+        <!-- Font awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        />
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="{% static './css/post.css' %}" />
+        <link rel="stylesheet" href="{% static './css/textEditor.css' %}" />
+    </head>
+    <body>
+        <!--  header  -->
+        {% include "components/navbar.html" %}
+
+        <!-- posts  -->
+        <section class="container" id="posts">
+            <div class="posts-container">
+                <!-- Main content -->
+                <div class="post" style="margin-top: 1rem;">
+                    <!-- Path -->
+                    <p class="path">
+                        <a href="{% url 'home' %}">
+                            <span title="home_path">Home /</span>
+                        </a>
+                        <a href="{% url 'home' %}?category={{ post.category.name }}">
+                            <span title="home_path">{{ post.category }} /</span>
+                        </a>
+                        <span>{{ post.title }}</span>
+                    </p>
+
+                    <!-- post block -->
+                    <h3 class="title">{{ post.title }}</h3>
+                    <div class="date">
+                        <span>By {{ post.author }} /</span>
+                        <span>{{ post.dateCreated }} /</span>
+                        <span>{{ post.comment_set.all|length }}</span>
+                        <i class="far fa-comment"></i>
+                    </div>
+                    <hr />
+
+                    <div class="description" style="margin-top: 3rem;">
+                        {{ post.description }}
+                    </div>
+                    
+                    <a href="#">
+                        <img
+                            src="{{ post.coverImage.url }}"
+                            alt=""
+                            class="image"
+                            style="height: 35rem;
+                            width: 100%;
+                            border-radius: 0.5rem;
+                            object-fit: cover;"
+                        />
+                    </a>
+
+                    <div class="text">
+                        {% autoescape off %}
+                            {{ post.content }}
+                        {% endautoescape %}
+                    </div>
+
+                    <!-- Comments block -->
+                    <div class="comments-list" id="comments">
+                        <span id="total-comment"> 
+                            {{ post.comment_set.all|length }} Comments
+                        </span>
+
+                        <!-- specific commented -->
+                        {% for comment in post.comment_set.all %}
+                        <div class="commented" id="comment-{{ comment.id }}">
+                            <i class="far fa-comment"></i>
+                            
+                            <!-- Comment delete icon -->
+                            {% if request.user == comment.commentor or request.user == post.author %}
+                            <i
+                                class="fas fa-trash delete-comment"
+                                data-id="{{ comment.id }}"
+                            ></i>
+                            {% endif %} 
+
+                            <!-- Commentor display -->
+                            {% if comment.commentor %}
+                            <span>
+                                By
+                                <a
+                                    href="{% url 'bloggerHome' comment.commentor.email  %}"
+                                >
+                                    {{ comment.commentor }}
+                                </a>
+                                /
+                            </span>
+                            {% else %}
+                            <span> By Guest /</span>
+                            {% endif %}
+                            
+                            <!-- Date created -->
+                            <span>{{ comment.dateCreated }}</span>
+                            <p id="comment-{{ comment.id }}">
+                                {{ comment.content }} 
+                            </p>
+
+
+                        </div>
+                        {% empty %}
+                        <p id="no-comment">No comments yet.</p>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Comment form -->
+                    <span class="leave_comment">Comment here</span>
+                    <div class="comment-block">
+                        <form
+                            action=""
+                            method="POST"
+                            class="comment-form"
+                            id="comment-form"
+                        >
+                            <textarea
+                                id="content"
+                                name="content"
+                                class="comment"
+                                placeholder="Type your comment here."
+                            ></textarea>
+                            <button id="comment_submit" type="submit" class="">
+                                Post comment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- sidebar -->
+            <div class="sidebar">
+                <!-- User box -->
+                {% include "components/user-box.html" %}
+
+                <!-- categories -->
+                {% include "components/categories.html" %}
+
+                <!-- Popular posts -->
+                <div class="box">
+                    <h3 class="title">popular posts from 
+                        <span style="text-transform: initial; font-weight: 600;">
+                            {{ post.author }}
+                        </span>
+                    </h3>
+                    <div class="p-post">
+                        {% for post in popularPosts %}
+                        <a href="{% url 'postDetail' post.id %}">
+                            <h3>{{ forloop.counter }}. {{ post.title }}</h3>
+                            <span>
+                                <i class="far fa-clock"></i>
+                                {{ post.dateCreated }}
+                            </span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- posts have same category  -->
+        <section class="multi-posts" id="multi-posts">
+            <h3 class="title">RELATED POSTS</h3>
+
+            <!-- 1 slide has 3 posts -->
+            <!-- 1st slide -->
+            <div class="single_post">
+                <table cellspacing="7">
+                    <tr>
+                        {% for post in relatedPosts.author %}
+                        <td>
+                            <a href="{% url 'postDetail' post.id %}">
+                                <img
+                                    src="{{ post.coverImage.url }}"
+                                />
+                            </a>
+                            <h3>{{ post.title }}</h3>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+
+            <!-- 2nd slide -->
+            <div class="single_post">
+                <table cellspacing="7">
+                    <tr>
+                        {% for post in relatedPosts.category %}
+                        <td>
+                            <a href="{% url 'postDetail' post.id %}">
+                                <img
+                                    src="{{ post.coverImage.url }}"
+                                />
+                            </a>
+                            <h3>{{ post.title }}</h3>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                </table>
+            </div>
+
+            <button id="left" onclick="plusDivs(-1)">
+                <i class="fas fa-chevron-left fa-2x"></i>
+            </button>
+            <button id="right" onclick="plusDivs(1)">
+                <i class="fas fa-chevron-right fa-2x"></i>
+            </button>
+        </section>
+
+        <!-- footer -->
+        <section class="footer">
+            <div class="follow">
+                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-youtube"></a>
+            </div>
+
+            <div class="credit">All rights reserved</div>
+        </section>
+
+        <!-- Javascript  -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{% static './js/slideshow.js' %}"></script>
+        <script src="{% static './js/dropdown.js' %}"></script>
+
+        <script>
+            const postId = JSON.parse("{{ post.id }}");
+
+            const countComments = () => {
+                /* Count number of comments */
+                const numberOfComments = $(".commented").length;
+                $("#total-comment").html(`${numberOfComments} Comments`);
+
+                if (!numberOfComments) $("#no-comment").show();
+                else $("#no-comment").hide();
+            };
+
+            $(document).ready(function () {
+                // Adding comment
+                $("#comment-form").submit(function (e) {
+                    // preventing from page reload
+                    e.preventDefault();
+
+                    const content = $("#content").val();
+                    const serializedData = {
+                        content,
+                        postId,
+                    };
+
+                    // make POST ajax call
+                    $.ajax({
+                        type: "POST",
+                        url: "http://127.0.0.1:8000/post/ajax/comment/",
+                        data: serializedData,
+
+                        success: function (response) {
+                            // console.log(response);
+                            const {
+                                commentor,
+                                commentId,
+                                content,
+                                dateCreated,
+                                bloggerUrl,
+                            } = response;
+                            // clear the form.
+                            $("#comment-form").trigger("reset");
+
+                            // url link
+                            const urlLink = bloggerUrl
+                                ? `<span> By <a href="${bloggerUrl}">${commentor}</a> /</span>`
+                                : `<span> By Guest /</span>`;
+
+                            // delete icon
+                            const delIcon = bloggerUrl
+                                ? `<i class="fas fa-trash delete-comment" data-id="${commentId}"></i>`
+                                : ``;
+
+                            // append new comment
+                            $("div.comments-list > span:nth-child(1)").after(
+                                `
+                            <div class="commented" id="comment-${commentId}">
+                                    <i class="far fa-comment"></i>
+                                    ${delIcon}
+                                    ${urlLink}
+                                    <span>${dateCreated}</span>
+                                    <p id="comment">${content}</p>
+                            </div>
+                        `
+                            );
+
+                            countComments();
+
+                            $("html, body").animate({
+                                scrollTop:
+                                    $(`#comment-${commentId}`).offset().top -
+                                    120,
+                            });
+
+                            // Rehydrate the page
+                            $(".delete-comment").on("click", function () {
+                                const commentId = $(this).attr("data-id");
+
+                                const userConfirm = confirm(
+                                    "Are you sure to delete this comment?"
+                                );
+
+                                if (!userConfirm) return;
+
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: `http://127.0.0.1:8000/post/ajax/comment/${commentId}/delete`,
+                                    success: (response) => {
+                                        $(`#comment-${commentId}`).remove();
+                                        countComments();
+                                    },
+                                    error: ({ error }) => {
+                                        alert(data);
+                                    },
+                                });
+                            });
+                        },
+                        error: function (data) {
+                            // alert the error
+                            alert(data["responseJSON"]["error"]);
+                        },
+                    });
+                });
+                
+                // Delete comment
+                $(".delete-comment").on("click", function () {
+                    const commentId = $(this).attr("data-id");
+
+                    const userConfirm = confirm(
+                        "Are you sure to delete this comment?"
+                    );
+
+                    if (!userConfirm) return;
+
+                    $.ajax({
+                        type: "DELETE",
+                        url: `http://127.0.0.1:8000/post/ajax/comment/${commentId}/delete/`,
+                        success: (response) => {
+                            $(`#comment-${commentId}`).remove();
+
+                            countComments();
+                        },
+                        error: ({ error }) => {
+                            alert(data);
+                        },
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>

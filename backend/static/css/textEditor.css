@@ -1,0 +1,46 @@
+/* ** Rich text editor Style */
+
+.container .posts-container .post .text {
+    /* color: #5a5a5a; */
+    line-height: 2 !important;
+    padding: 1rem 0;
+    /* New */
+    list-style-position: inside;
+}
+
+
+.container .posts-container .post .text strong {
+    font-weight: bold;
+}
+
+
+.container .posts-container .post .text h1 {
+    font-size: 4rem;
+}
+
+.container .posts-container .post .text h2 {
+    font-size: 3rem;
+}
+
+
+.container .posts-container .post .text h3 {
+    font-size: 2.2rem;
+}
+
+.container .posts-container .post .text p,
+.container .posts-container .post .text ul {
+    font-size: 2rem !important;
+}
+
+.container .posts-container .post .text a {
+    color: #84b6b0;
+}
+
+.container .posts-container .post .text .image {
+    max-width: 100%;
+}
+
+.container .posts-container .post .text .image img {
+    max-width: 100%;
+    max-height: 100%;
+}

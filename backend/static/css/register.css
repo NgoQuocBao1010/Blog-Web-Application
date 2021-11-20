@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700;900&display=swap");
+
+:root {
+    --black: #333333;
+    --grey: #999999;
+    --light-green: #93c0bb;
+    --dark-green: #84b6b0;
+    --light-color: #999999;
+}
+
+* {
+    /* font-family: "Times New Roman", Times, serif; */
+    font-family: "Quicksand", sans-serif;
+}
+
+.row[title="logo"] .logo {
+    color: var(--black);
+    font-size: 2.08rem;
+    margin-left: 3.36rem;
+}
+
+.row[title="logo"] .logo span {
+    color: var(--light-green);
+    font-weight: bold;
+}
+
+.container .row[title="logo"] {
+    margin-top: 0.4rem;
+}
+
+.container .row h3 {
+    margin-top: 1rem;
+    color: #5e5e5e;
+    margin-bottom: 0.5rem;
+}
+
+.container .row form .btn {
+    background-color: #5e5e5e;
+    color: white;
+    margin-right: 1rem;
+}
+
+/* New */
+.container .row form label,
+.container .row form input[type="email"],
+.container .row form input[type="text"] {
+    font-weight: 600 !important;
+}
+
+.container .row form {
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
+.container .row form .btn:hover {
+    background-color: #98b1ae;
+}
+
+.container .row form a {
+    color: #838383;
+}
+
+.container .row form a:hover {
+    color: #93c0bb;
+}
+
+.container .row .col-6 {
+    border-top: #8fa5a1 0.2rem double;
+    border-bottom: #8fa5a1 0.2rem double;
+    background-color: rgb(218, 236, 234, 0.2);
+}
+
+/* validate */
+.help-block {
+    color: #ec6277;
+    font-size: 90%;
+    font-style: italic;
+}

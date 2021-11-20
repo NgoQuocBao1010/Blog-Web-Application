@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Register</title>
+
+        <!-- Bootstrap -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+            integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+            crossorigin="anonymous"
+        />
+
+        <!-- Font awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        />
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="{% static './css/register.css' %}" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Logo -->
+            <div class="row" title="logo">
+                <a href="{% url 'home' %}" class="logo"><span>Blog</span>ger</a>
+            </div>
+
+            <!-- Register Form container -->
+            <div class="row mt-1" title="form">
+                <div class="col-6 offset-3">
+                    <h3 class="text-center text-uppercase font-weight-bold">
+                        Register
+                    </h3>
+
+                    <!-- Form -->
+                    <form method="POST" class="pb-3" id="registerForm">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input
+                                name="name"
+                                type="text"
+                                class="form-control"
+                                id="name"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address *</label>
+                            <input
+                                name="email"
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                aria-describedby="emailHelp"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="password1">Password *</label>
+                            <input
+                                name="password1"
+                                type="password"
+                                class="form-control"
+                                id="password1"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="password2"> Confirm Password * </label>
+                            <input
+                                name="password2"
+                                type="password"
+                                class="form-control"
+                                id="password2"
+                            />
+                        </div>
+
+                        <!-- Submit btn -->
+                        <button type="submit" class="btn">Register</button>
+                        <a
+                            href="{% url 'login' %}"
+                            class="text-decoration-none"
+                        >
+                            You already had an account?
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript  -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+            type="text/javascript"
+            src="{% static '/js/jquery.validate.js' %}"
+        ></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#registerForm").validate({
+                    rules: {
+                        email: {
+                            required: true,
+                            email: true,
+                        },
+                        password1: {
+                            required: true,
+                            minlength: 5,
+                        },
+                        password2: {
+                            required: true,
+                            minlength: 5,
+                            equalTo: "#password1",
+                        },
+                    },
+
+                    messages: {
+                        email: {
+                            required: "Please input your email",
+                            email: "Please pick the valid email",
+                        },
+                        password1: {
+                            required: "Please provide a password",
+                            minlength:
+                                "Your password must be at least 5 characters",
+                        },
+                        password2: {
+                            required: "Please provide a password",
+                            minlength:
+                                "Your password must be at least 5 characters",
+                            equalTo: "Please enter the same password as above",
+                        },
+                    },
+
+                    errorElement: "p", //error report placed in <p>
+                    // errorClass: "errors",
+                    errorPlacement: function (error, element) {
+                        //error: <p> contains errors | element: <input> has errors
+                        error.addClass("help-block");
+                        error.insertAfter(element);
+                    },
+
+                    errorClass: "has-error",
+                    highlight: function (element, errorClass) {
+                        $(element).parent().addClass(errorClass);
+                    },
+
+                    validClass: "has-success",
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).parent().removeClass(errorClass);
+                        $(element).parent().addClass(validClass);
+                    },
+                });
+            });
+        </script>
+
+        <!-- Django data -->
+        <script></script>
+    </body>
+</html>

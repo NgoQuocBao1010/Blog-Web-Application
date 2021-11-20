@@ -1,0 +1,458 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+:root {
+    --black: #333333;
+    --grey: #999999;
+    --light-green: rgb(147, 192, 187);
+    --dark-green: #84b6b0;
+    --light-color: #999999;
+    --border: 0.1rem solid #00000033;
+    --box-shadow: 0 0.5rem 1rem #0000001a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    /* new */
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+}
+
+section {
+    padding: 2rem 7%;
+}
+
+.banner {
+    min-height: 65vh;
+    background: url(../images/banner_header.png) no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: grid;
+    place-items: center;
+    padding-top: 8rem;
+}
+
+.banner .content {
+    text-align: center;
+    background: #fff;
+    border-radius: 2rem;
+    box-shadow: var(--box-shadow);
+    padding: 3rem;
+    max-width: 30rem;
+    /* New */
+    overflow: hidden;
+}
+
+.banner .content h3 {
+    font-size: 3rem;
+    color: var(--black);
+    text-transform: uppercase;
+}
+
+.banner .content p {
+    font-size: 1.9rem;
+    color: var(--light-color);
+    padding: 1rem 0;
+    /* New */
+    word-break: break-all;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 2fr 0.8fr;
+    gap: 4.5rem;
+    background: #f0f0f0;
+}
+
+.container .posts-container .post {
+    width: 100%;
+    padding: 2rem;
+    background: #fff;
+    border: var(--border);
+    margin-bottom: 1.5rem;
+}
+
+.container .posts-container .post .image {
+    height: 40rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+
+.container .posts-container .post .date {
+    padding-top: 2rem;
+    font-size: 1.5rem;
+    color: var(--grey);
+}
+
+.container .posts-container .post .title {
+    padding-top: 1.5rem;
+    font-size: 2.5rem;
+    color: var(--black);
+    font-weight: bold;
+}
+
+.container .posts-container .post .text {
+    color: #5a5a5a;
+    font-size: 1.6rem;
+    line-height: 1.7;
+    padding: 1rem 0;
+}
+
+.container .posts-container .links {
+    border-top: var(--border);
+    margin-top: 0.5rem;
+    padding-top: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.container .posts-container .links .user {
+    margin-right: auto;
+}
+
+.container .posts-container .links .icon {
+    padding-right: 1rem;
+}
+
+.container .posts-container .links a {
+    font-size: 1.5rem;
+    color: var(--light-color);
+}
+
+.container .posts-container .links a i {
+    padding-right: 0.2rem;
+    color: var(--black);
+}
+
+.container .posts-container .links a:hover {
+    color: var(--black);
+}
+
+.container .posts-container .links a:hover i {
+    color: var(--black);
+}
+
+/* sidebar */
+.container .sidebar .box {
+    /* border: .1rem rgb(201, 201, 201) solid; */
+    overflow: hidden;
+    background: #fff;
+    margin-bottom: 4rem;
+    /* margin-top: 10rem; */
+}
+
+.container .sidebar .box .title {
+    padding: 1.5rem;
+    font-size: 2rem;
+    color: #ffffff;
+    background: #a1c9c5;
+    text-transform: capitalize;
+}
+
+.container .sidebar .box .about {
+    text-align: center;
+    padding: 1rem 1.5rem;
+    /* margin-top: 1rem; */
+}
+
+.container .sidebar .box .about img {
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 1rem 0;
+}
+
+.container .sidebar .box .about h3 {
+    color: #505050;
+    font-size: 2rem;
+}
+
+.container .sidebar .box .about p {
+    color: var(--light-color);
+    font-size: 1.5rem;
+    line-height: 1.5;
+    padding: 1rem;
+}
+
+.container .sidebar .box .about .follow {
+    padding: 1rem 0;
+}
+
+.container .sidebar .box .about .follow a {
+    height: 4rem;
+    line-height: 4rem;
+    width: 4rem;
+    color: #505050;
+    font-size: 1.7rem;
+    margin: 0 0.1rem;
+}
+
+.container .sidebar .box .about .follow a:hover {
+    color: var(--dark-green);
+}
+
+/* category */
+.container .sidebar .box .category {
+    padding: 1rem 1.5rem;
+}
+
+.container .sidebar .box .category a {
+    padding: 0.4rem 0;
+    font-size: 1.5rem;
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container .sidebar .box .category a span {
+    background: var(--light-color);
+    color: #fff;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    /* new */
+    width: 30px;
+    text-align: center;
+}
+
+.container .sidebar .box .category a:hover {
+    color: var(--dark-green);
+}
+
+.container .sidebar .box .category a:hover span {
+    background-color: var(--dark-green);
+}
+
+/* post */
+#no-post {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.container .sidebar .box .p-post {
+    padding: 1rem 2rem;
+}
+
+.container .sidebar .box .p-post a {
+    padding: 1rem 0;
+    display: block;
+}
+
+.container .sidebar .box .p-post a h3 {
+    color: var(--black);
+    font-size: 1.5rem;
+    padding-bottom: 1rem;
+}
+
+.container .sidebar .box .p-post a span {
+    color: var(--light-color);
+    font-size: 1.3rem;
+}
+
+.container .sidebar .box .p-post a span i {
+    padding-right: 0.2rem;
+    font-size: 1.5rem;
+}
+
+.container .sidebar .box .p-post a:hover h3 {
+    color: var(--dark-green);
+}
+
+/* indicator */
+.posts-container .posts-indicators{
+    text-align:center; 
+    font-size: 1.7rem;
+}
+
+.posts-container .posts-indicators a.indicator-btn{
+    color: #222;
+    cursor: pointer; 
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.posts-container .posts-indicators a:hover{
+    color: #75afa7;
+}
+
+.posts-container .posts-indicators span.number{
+    color: #222;
+    cursor: pointer; 
+    border: .1rem solid #72aca6;
+    padding-left: .9rem; 
+    padding-right: .9rem; 
+    padding-top: .2rem; 
+    padding-bottom: .2rem;
+    border-radius: .2rem;
+    margin: .2rem;
+}
+
+.posts-container .posts-indicators span.number:hover{
+    background-color: #b3d3cf; 
+}
+
+.active{
+    background-color: #b3d3cf; 
+}
+/*  end new */
+
+/* contact */
+.contact {
+    background: url(../images/banner_header.png) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 4.5rem;
+}
+
+.contact form {
+    background: #fff;
+    box-shadow: var(--box-shadow);
+    border-radius: 0.5rem;
+    margin: 2rem auto;
+    max-width: 50rem;
+    padding: 2rem;
+}
+
+.contact form h3 {
+    color: var(--black);
+    text-align: center;
+    padding-bottom: 1.5rem;
+    font-size: 3rem;
+    text-transform: capitalize;
+}
+
+.contact form .inputBox {
+    /* display: flex; */
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.contact form .inputBox input {
+    width: 100%;
+    background: #eee;
+    padding: 1rem;
+    margin: 0.7rem 0;
+    border-radius: 0.5rem;
+    color: var(--black);
+    font-size: 1.7rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.contact form .inputBox input {
+    width: 90%;
+}
+
+.contact form input {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.btn {
+    margin-top: 1rem;
+    display: inline-block;
+    background: var(--black);
+    color: #fff;
+    border-radius: 0.5rem;
+    padding: 0.9rem 3rem;
+    cursor: pointer;
+    font-size: 1.7rem;
+}
+
+.btn:hover {
+    background: var(--light-green);
+}
+
+/* footer */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer .credit {
+    text-transform: capitalize;
+    font-size: 1.5rem;
+    color: var(--black);
+    padding: 1rem 0;
+}
+
+.footer .credit span {
+    color: var(--pink);
+}
+
+.footer .follow {
+    padding: 1rem 0;
+}
+
+.footer .follow a {
+    height: 4.5rem;
+    line-height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 50%;
+    font-size: 1.7rem;
+    background: grey;
+    color: #fff;
+    margin: 0 0.1rem;
+    text-align: center;
+}
+
+.footer .follow a:hover {
+    background: var(--light-green);
+}
+
+/* media queries  */
+
+@media (max-width: 991px) {
+    html {
+        font-size: 55%;
+    }
+
+    section {
+        padding: 2rem;
+    }
+
+    .container {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .container .posts-container .post .image {
+        height: 30rem;
+    }
+
+    .footer {
+        flex-flow: column;
+        text-align: center;
+    }
+}
+@media (max-width: 450px) {
+    html {
+        font-size: 50%;
+    }
+
+    .contact form .inputBox input {
+        width: 100%;
+    }
+}

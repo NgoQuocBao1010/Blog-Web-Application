@@ -1,0 +1,108 @@
+{% load static %}
+<link rel="stylesheet" href="{% static './css/home.css' %}" />
+
+<style>
+    .tags {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .tags p {
+        font-size: 2rem;
+    }
+
+    .tags .tag {
+        padding: 3px 8px;
+        border-radius: 5px;
+        background: rgb(147, 192, 187);
+        margin: 0 .5rem;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .tags .tag i {
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+</style>
+
+<div class="posts-container">
+    <!-- Tags to indicate category or search value -->
+    <div class="tags" id="tags">
+        {% if tags|length > 0 %}
+        <p>
+            Tags: 
+            {% for tag in tags %}
+            <span class="tag" data-query="{{ tag.query }}">{{ tag.value }} <i class="fas fa-backspace"></i></span> 
+            {% endfor %}
+        </p>
+        {% endif %}
+    </div>
+
+    <!-- Posts container -->
+    {% for post in posts %}
+
+    <div class="post">
+        <a href="{% url 'postDetail' post.id %}">
+            <img
+                src="{{ post.coverImage.url }}"
+                alt="Cover Image"
+                class="image"
+            />
+        </a>
+        <div class="date">
+            <i class="far fa-clock"></i>
+            <span>{{ post.dateCreated }}</span>
+        </div>
+        <h3 class="title">{{ post.title }}</h3>
+        <p class="text">{{ post.description }}</p>
+        <div class="links">
+            <a
+                href="{% url 'bloggerHome' post.author.email %}"
+                class="user"
+            >
+                <i class="far fa-user"></i>
+                <span>by {{ post.author }}</span>
+            </a>
+            <a href="{% url 'postDetail' post.id  %}#comments" class="icon">
+                <i class="far fa-comment"></i>
+                <span>{{ post.comment_set.all|length }}</span>
+            </a>
+        </div>
+    </div>
+
+    {% empty %}
+    <h1 id="no-post">No post found</h1>
+
+    {% endfor %}
+
+    <!-- Pagination -->
+    
+    <div class="posts-indicators">
+        <!-- Previous/Back buttons -->
+        {% if posts.has_previous %}
+        <a href="?page={{ posts.previous_page_number }}{{ queryPath }}" class="indicator-btn"><span>Back</span></a>
+        {% endif %}
+
+        <!-- Other pages -->
+        {% for i in posts.paginator.page_range %}
+
+        {% if posts.number == i %}
+        <a href="?page={{ i }}{{ queryPath }}"><span class="number active">{{ i }}</span></a>
+        {% else %}
+        <a href="?page={{ i }}{{ queryPath }}"><span class="number">{{ i }}</span></a>
+        {% endif %}
+
+        {% endfor %}
+
+        {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}{{ queryPath }}" class="indicator-btn"><span>Next</span></a>
+        {% endif %}
+
+    </div>
+
+    <!-- {{ request.build_absolute_uri }} -->
+</div>
+
+<script src="{% static './js/tags.js' %}"></script>

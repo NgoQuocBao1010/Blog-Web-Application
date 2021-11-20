@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Post</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static './css/customize.css' %}">
+</head>
+<body>
+
+    <div class="container-fluid">
+        {% include "components/customizeSidebar.html" %}
+
+        <!-- Right panel -->
+        <div class="myMain">
+
+            <!-- Banner -->
+            <div class="banner">
+                <span class="ml-5">
+                    <!-- <h4 class="font-weight-light">Home / Posts</h4> -->
+                    <a title="other_path" href="{% url 'bloggerHome' request.user.email %}"><i class="fas fa-home"></i> Home </a>\
+                    <a title="other_path" href="{% url 'postCustomize' %}"> Post </a>\
+                    <a  title="current_path" href="{% url 'postCreate' %}">Add Post</a>
+                </span>
+                <span class="mr-5">
+                    <a href=""><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                </span>
+            </div>
+
+            <!-- Add post form-->
+            <div class="addPost">
+                <form id="addPost-Form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!-- Image -->
+                    <div class="form-group row post-img">                            
+                        <input type="file" id="file" name="coverImage" hidden onchange="imageUploaded(event)"/>
+                        <label type="file" for="file" class="col-3">Choose image <i class="fas fa-pencil-alt"></i></label>
+                        <!-- <input type="button" class="button" value="Upload" id="but_upload"> -->
+                        <img src="#" id="post-img" alt="Image of post" style="display:none" >
+                    </div>
+
+                    <!-- Title -->
+                    <div class="form-group row">
+                        <label for="title" class="col-2">Title :</label>
+                        <input name="title" class="col-3" class="form-control" id="title">
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group row">
+                        <label for="description" class="col-2">Description :</label>
+                        <textarea name="description" id="description" class="col-5" ></textarea>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group row">
+                        <label for="new-category" class="col-2">New category :</label>
+                        <input name="new-category" class="col-3" class="form-control" id="new-category">
+                        <label class="col-3 text-center" for="post-Select">Or existed category :</label>
+                        <select class="custom-select col-3" id="category" style="font-weight: 600">
+                            <option selected value="">Choose a category for your post</option>
+                            {% for category in categories %}
+                            <option value="{{ category.name }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Content -->
+                    <label class="">Content :</label>
+                    <textarea name="content" id="editor">
+                        <!-- Post's content located here -->
+                    </textarea>
+
+                    <button type="submit" class="btn btn-primary mt-4 mb-4" id="addPost-submit">Add post</button>
+                </form>
+            </div>
+           
+        </div>
+
+    </div>
+    
+    <!-- Javascript  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- CK Editor  -->
+    <script src="{% static './js/UploadAdapter.js' %}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
+    <!-- Rich text editor initialize -->
+    <script>
+        function MyCustomUploadAdapterPlugin( editor ) {
+            editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+                return new MyUploadAdapter( loader );
+            };
+        }
+
+        $(document).ready(function(){            
+            let editor = null;
+
+            // initialize editor
+            ClassicEditor.create( document.querySelector( '#editor' ), {
+                extraPlugins: [ MyCustomUploadAdapterPlugin ],
+            } )
+            .then( newEditor => {
+                editor = newEditor;
+            } )
+            .catch( error => {
+                console.error( error );
+            });
+
+            // get value from post's content editor
+            const editorData = editor ? editor.getData() : null;
+
+            // // testing editor s value
+            $("#addPost-submit").click(function(){ 
+                const editorData = editor.getData();    
+                
+            
+                $("#addPost-Form").submit(function(eventObj) {
+                    const selectedCategory = $('#category').val() || "";
+                    $(this).append(`<input type="hidden" name="category" value="${selectedCategory}">`);
+                    return true;
+                });
+            } );
+            
+        });
+    </script>
+    <!-- Cover image upload handler -->
+    <script>
+        const imageUploaded = (event) => {
+            // Show image when upload
+            const imgFile = event.target.files[0];
+            const reader = new FileReader();
+
+            const postImg = document.getElementById("post-img");
+            postImg.style.display = "block";
+            postImg.title = imgFile.name;
+
+            reader.onload = (event) => {
+                postImg.src = event.target.result;
+            };
+
+            reader.readAsDataURL(imgFile);
+        }
+    </script>
+
+</body>
+</html>

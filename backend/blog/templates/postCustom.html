@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Customize</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static './css/customize.css' %}">
+</head>
+<body>
+
+    <div class="container-fluid">
+        {% include "components/customizeSidebar.html" %}
+
+        <!-- Right panel -->
+        <div class="myMain">
+
+            <!-- Banner -->
+            <div class="banner">
+                <span class="ml-5">
+                    <!-- <h4 class="font-weight-light">Home / Posts</h4> -->
+                    <a title="other_path" href="{% url 'bloggerHome' request.user.email %}"><i class="fas fa-home"></i> Home </a>\
+                    <a  title="current_path" href="{% url 'postCustomize' %}">Post</a>
+                </span>
+                <span class="mr-5">
+                    <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                </span>
+            </div>
+
+            <!-- Content block-->
+            <div class="row posts">
+                <div class="col">
+                    <a href="{% url 'postCreate' %}"><i class="far fa-edit"></i>&nbsp Add a post here</a>
+                </div>
+            </div>
+
+            <!-- Showing posts -->
+            <div class="row pl-5 pr-5 pt-4" title="postPage">
+                <div class="col">
+                    <table class="table table-bordered" title="postPage">
+                        <!-- Table headers -->
+                        <thead class="text-center">
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Category</th>
+                                <th scope="col" >Description</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        
+                        <!-- Table body -->
+                        <tbody>
+                            {% for post in posts %}
+                            <tr>
+                                <td>
+                                    <img src="{{ post.coverImage.url }}" alt="">
+                                </td>
+                                <td>
+                                    <p>{{ post.title }}</p>
+                                </td>
+                                <td>
+                                    <p>{{ post.category.name }}</p>
+                                </td>
+                                <td>
+                                    <p>
+                                        {{ post.briefDescription }}
+                                    </p>
+                                </td>
+                                <td>
+                                    <div class="action">
+                                        <button type="submit" class="btn" name="update"><a href="{% url 'postEdit' post.id %}">Update</a></button>
+                                        <button type="submit" class="btn" name="delete"><a class="delete" href="{% url 'postDelete' post.id %}">Delete</a></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}                            
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- Javascript  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('.btn a.delete').click(function(){return confirm("Are you sure to delete this post?");});
+        });
+    </script>
+    <script>
+
+    </script>
+
+</body>
+</html>

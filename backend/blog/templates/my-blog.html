@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Home</title>
+
+        <!-- Font awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        />
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="{% static './css/home.css' %}" />
+    </head>
+
+    <body>
+        <!--  header  -->
+        {% include "components/navbar.html" %}
+
+        <!-- banner  -->
+        <section class="banner" id="banner">
+            <div class="content">
+                <h3>Welcome</h3>
+                <p>{{ request.user.email }} blogs</p>
+            </div>
+        </section>
+
+        <!-- Main content  -->
+        <section class="container" id="posts">
+            <!-- Posts container -->
+            {% include "components/postsContainer.html" %}
+
+            <!-- sidebar -->
+            <div class="sidebar">
+                <!-- User box -->
+                {% include "components/user-box.html" %}
+
+                <!-- categories -->
+                {% include "components/categories.html" %}
+
+                <!-- Popular posts -->
+                <div class="box">
+                    {% if request.user == blogger %}
+                    <h3 class="title">My popular posts</h3>
+                    {% else %}
+                    <h3 class="title">popular posts from <span style="font-style: normal;">{{ post.author }}</span> </h3>
+                    {% endif %}
+
+                    <div class="p-post">
+                        {% for post in popularPosts %}
+                        <a href="{% url 'postDetail' post.id %}">
+                            <h3>{{ forloop.counter }}. {{ post.title }}</h3>
+                            <span>
+                                <i class="far fa-clock"></i>
+                                {{ post.dateCreated }}
+                            </span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- contact  -->
+        <section class="contact" id="contact">
+            <form action="">
+                <h3>contact me</h3>
+                <div class="inputBox">
+                    <input type="email" placeholder="Your email" />
+                </div>
+                <input type="submit" value="Send" class="btn" />
+            </form>
+        </section>
+
+        <!-- footer -->
+        <section class="footer">
+            <div class="follow">
+                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-youtube"></a>
+            </div>
+
+            <div class="credit">All rights reserved</div>
+        </section>
+
+        <!-- custom js file link  -->
+        <!-- <script src="js/script.js"></script>    -->
+        <script src="{% static './js/dropdown.js' %}"></script>
+    </body>
+</html>
