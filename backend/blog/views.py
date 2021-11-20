@@ -228,15 +228,16 @@ def uploadAdapter(request):
 
     try:
         uploadImg = request.FILES.get("upload")
+        newImg = None
+
         if uploadImg:
             with Image.open(uploadImg.file.name) as image:
                 imgId = shortuuid.ShortUUID().random(length=5)
-                savePath = os.path.join(path, uploadImg.name + imgId)
+                newImg = f"{imgId}_{uploadImg.name}"
+                savePath = os.path.join(path, newImg)
                 image.save(savePath, format=image.format)
 
-        url = request.build_absolute_uri(
-            f"{settings.MEDIA_URL}/contents/{uploadImg.name}"
-        )
+        url = request.build_absolute_uri(f"{settings.MEDIA_URL}contents/{newImg}")
         return JsonResponse(data={"message": "success", "url": url}, status=200)
 
     except Exception as e:
