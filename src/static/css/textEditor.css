@@ -38,12 +38,10 @@
 
 .container .posts-container .post .text .image {
     max-width: 100%;
-    max-height: 800px;
-    display: flex;
-    justify-content: center;
 }
 
 .container .posts-container .post .text .image img {
-    width: auto;
-    height: auto;
+    image-rendering: -webkit-optimize-contrast;
+    max-width: 100%;
+    max-height: 100%;
 }
