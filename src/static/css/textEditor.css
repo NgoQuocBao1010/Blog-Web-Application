@@ -15,20 +15,24 @@
 
 
 .container .posts-container .post .text h1 {
+    font-weight: bold;
     font-size: 4rem;
 }
 
 .container .posts-container .post .text h2 {
+    font-weight: bold;
     font-size: 3rem;
 }
 
 
 .container .posts-container .post .text h3 {
     font-size: 2.2rem;
+    font-weight: bold;
 }
 
 .container .posts-container .post .text p,
-.container .posts-container .post .text ul {
+.container .posts-container .post .text ul,
+.container .posts-container .post .text li {
     font-size: 2rem !important;
 }
 
@@ -38,6 +42,10 @@
 
 .container .posts-container .post .text .image {
     max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .container .posts-container .post .text .image img {

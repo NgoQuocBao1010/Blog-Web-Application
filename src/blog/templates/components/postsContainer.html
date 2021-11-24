@@ -78,7 +78,7 @@
     {% endfor %}
 
     <!-- Pagination -->
-    
+    {% if posts|length > 0 %}
     <div class="posts-indicators">
         <!-- Previous/Back buttons -->
         {% if posts.has_previous %}
@@ -101,6 +101,7 @@
         {% endif %}
 
     </div>
+    {% endif %}
 
     <!-- {{ request.build_absolute_uri }} -->
 </div>
