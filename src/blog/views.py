@@ -296,15 +296,12 @@ def filterPosts(request, posts):
 
 def getRelatedPost(post):
     """Get 6 posts that related to the post arg in terms of author or category"""
-    authorRelatedPosts = Post.objects.filter(author=post.author).exclude(id=post.id)[:3]
-    categoryRelatedPosts = Post.objects.filter(category=post.category).exclude(
-        Q(id=post.id) | Q(author=post.author)
-    )[:3]
+    authorRelatedPosts = Post.objects.filter(author=post.author).exclude(id=post.id)[:6]
+    # categoryRelatedPosts = Post.objects.filter(category=post.category).exclude(
+    #     Q(id=post.id) | Q(author=post.author)
+    # )[:3]
 
-    return {
-        "author": authorRelatedPosts,
-        "category": categoryRelatedPosts,
-    }
+    return authorRelatedPosts
 
 
 def commentResponseData(newComment, request):

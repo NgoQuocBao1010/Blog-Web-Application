@@ -1,0 +1,57 @@
+{% load static %}
+<link rel="stylesheet" href="{% static './css/post.css' %}" />
+
+<!-- posts have same category  -->
+<section class="multi-posts" id="multi-posts">
+    <h3 class="title">RELATED POSTS</h3>
+
+    <!-- 1 slide has 3 posts -->
+    <!-- 1st slide -->
+    {% if relatedPosts|length > 3 %}
+    <div class="single_post">
+        <table cellspacing="7">
+            <tr>
+                {% for post in relatedPosts|slice:":3" %}
+                <td>
+                    <a href="{% url 'postDetail' post.id %}">
+                        <img
+                            src="{{ post.coverImage.url }}"
+                        />
+                    </a>
+                    <h3>{{ post.title }}</h3>
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    {% endif %}
+
+    <!-- 2nd slide -->
+    {% if relatedPosts|length >= 6 %}
+    <div class="single_post">
+        <table cellspacing="7">
+            <tr>
+                {% for post in relatedPosts|slice:"3:6" %}
+                <td>
+                    <a href="{% url 'postDetail' post.id %}">
+                        <img
+                            src="{{ post.coverImage.url }}"
+                        />
+                    </a>
+                    <h3>{{ post.title }}</h3>
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+
+    <button id="left" onclick="plusDivs(-1)">
+        <i class="fas fa-chevron-left fa-2x"></i>
+    </button>
+    <button id="right" onclick="plusDivs(1)">
+        <i class="fas fa-chevron-right fa-2x"></i>
+    </button>
+    {% endif %}
+</section>
+
+<script src="{% static './js/slideshow.js' %}"></script>
