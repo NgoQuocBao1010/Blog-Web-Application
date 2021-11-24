@@ -284,6 +284,8 @@ def filterPosts(request, posts):
             | Q(description__icontains=search)
             | Q(title__icontains=search)
             | Q(category__name__icontains=search)
+            | Q(author__profile__name__icontains=search)
+            | Q(author__email__icontains=search)
         )
         tags.append({"query": "search", "value": f"'{search}'"})
         queryPath = (
