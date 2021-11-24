@@ -54,6 +54,19 @@ section {
     overflow: hidden;
 }
 
+.individual .content {
+    max-width: 50rem;
+}
+
+.banner .banner-name {
+    color: #333333;
+}
+
+.banner .banner-name span {
+    color: var(--light-green);
+    font-weight: 600;
+}
+
 .banner .content h3 {
     font-size: 3rem;
     color: var(--black);

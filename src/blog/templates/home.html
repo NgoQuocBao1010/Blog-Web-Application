@@ -5,7 +5,8 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Home</title>
+        <link rel="shortcut icon" href="{% static 'images/logo.jpg' %}"/>
+        <title>Blogger</title>
 
         <!-- Font awesome -->
         <link
@@ -24,8 +25,11 @@
         <!-- banner  -->
         <section class="banner" id="banner">
             <div class="content">
-                <h3>Welcome</h3>
-                <p>{{ request.user.email }} blogs</p>
+                {% if request.user.is_authenticated %}
+                <h3> <span class="banner-name"> <span>Blog</span>ger</span> Community</h3>
+                {% else %}
+                <h3>Welcome to <span class="banner-name"> <span>Blog</span>ger</span> </h3>
+                {% endif %}
             </div>
         </section>
 
@@ -36,20 +40,12 @@
 
             <!-- sidebar -->
             <div class="sidebar">
-                <!-- User box -->
-                {% include "components/user-box.html" %}
-
                 <!-- categories -->
                 {% include "components/categories.html" %}
 
                 <!-- Popular posts -->
                 <div class="box">
-                    {% if request.user == blogger %}
-                    <h3 class="title">My popular posts</h3>
-                    {% else %}
-                    <h3 class="title">popular posts from <span style="font-style: normal;">{{ post.author }}</span> </h3>
-                    {% endif %}
-
+                    <h3 class="title">popular posts</h3>
                     <div class="p-post">
                         {% for post in popularPosts %}
                         <a href="{% url 'postDetail' post.id %}">

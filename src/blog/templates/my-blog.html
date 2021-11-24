@@ -5,7 +5,8 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Home</title>
+        <link rel="shortcut icon" href="{% static 'images/logo.jpg' %}"/>
+        <title>{{ blogger.email }} blogs</title>
 
         <!-- Font awesome -->
         <link
@@ -15,6 +16,13 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="{% static './css/home.css' %}" />
+        <style>
+            .blogger {
+                font-size: 2rem;
+                font-weight: bold;
+                color: rgb(147, 192, 187);
+            }
+        </style>
     </head>
 
     <body>
@@ -22,13 +30,10 @@
         {% include "components/navbar.html" %}
 
         <!-- banner  -->
-        <section class="banner" id="banner">
+        <section class="banner individual" id="banner">
             <div class="content">
-                {% if request.user.is_authenticated %}
-                <h3>Blogger Community</h3>
-                {% else %}
-                <h3>Welcome to Blogger</h3>
-                {% endif %}
+                <h3>Welcome</h3>
+                <p> <span class="blogger">{{ blogger.email }}</span>  blogs</p>
             </div>
         </section>
 
@@ -39,12 +44,20 @@
 
             <!-- sidebar -->
             <div class="sidebar">
+                <!-- User box -->
+                {% include "components/user-box.html" %}
+
                 <!-- categories -->
                 {% include "components/categories.html" %}
 
                 <!-- Popular posts -->
                 <div class="box">
-                    <h3 class="title">popular posts</h3>
+                    {% if request.user == blogger %}
+                    <h3 class="title">My popular posts</h3>
+                    {% else %}
+                    <h3 class="title">popular posts from <span style="font-style: normal;">{{ post.author }}</span> </h3>
+                    {% endif %}
+
                     <div class="p-post">
                         {% for post in popularPosts %}
                         <a href="{% url 'postDetail' post.id %}">

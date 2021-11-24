@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Post</title>
+    <link rel="shortcut icon" href="{% static 'images/logo.jpg' %}"/>
+    <title>Blogger | Create Post</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -28,9 +29,9 @@
             <div class="banner">
                 <span class="ml-5">
                     <!-- <h4 class="font-weight-light">Home / Posts</h4> -->
-                    <a title="other_path" href=""><i class="fas fa-home"></i> Home </a>\
+                    <a title="other_path" href="{% url 'bloggerHome' request.user.email %}"><i class="fas fa-home"></i> Home </a>\
                     <a title="other_path" href="{% url 'postCustomize' %}"> Post </a>\
-                    <a  title="current_path" href="{% url 'postCreate' %}">Update Post</a>
+                    <a  title="current_path" href="{% url 'postCreate' %}">Add Post</a>
                 </span>
                 <span class="mr-5">
                     <a href=""><i class="fas fa-sign-out-alt"></i> Sign Out</a>
@@ -46,19 +47,19 @@
                         <input type="file" id="file" name="coverImage" hidden onchange="imageUploaded(event)"/>
                         <label type="file" for="file" class="col-3">Choose image <i class="fas fa-pencil-alt"></i></label>
                         <!-- <input type="button" class="button" value="Upload" id="but_upload"> -->
-                        <img src="{{ post.coverImage.url }}" id="post-img" alt="Image of post"  >
+                        <img src="#" id="post-img" alt="Image of post" style="display:none" >
                     </div>
 
                     <!-- Title -->
                     <div class="form-group row">
                         <label for="title" class="col-2">Title :</label>
-                        <input name="title" class="col-3" class="form-control" id="title" value="{{ post.title }}">
+                        <input name="title" class="col-3" class="form-control" id="title">
                     </div>
 
                     <!-- Description -->
                     <div class="form-group row">
                         <label for="description" class="col-2">Description :</label>
-                        <textarea name="description" id="description" class="col-5" style="font-weight: 500" >{{ post.description }}</textarea>
+                        <textarea name="description" id="description" class="col-5" ></textarea>
                     </div>
 
                     <!-- Category -->
@@ -67,18 +68,9 @@
                         <input name="new-category" class="col-3" class="form-control" id="new-category">
                         <label class="col-3 text-center" for="post-Select">Or existed category :</label>
                         <select class="custom-select col-3" id="category" style="font-weight: 600">
-                            <option value="">
-                                <strong>No selection</strong>
-                            </option>
-                            
+                            <option selected value="">Choose a category for your post</option>
                             {% for category in categories %}
-                            
-                            {% if category == post.category %}
-                            <option value="{{ category.name }}" selected>{{ category.name }}</option>
-                            {% else %}
                             <option value="{{ category.name }}">{{ category.name }}</option>
-                            {% endif %}
-
                             {% endfor %}
                         </select>
                     </div>
@@ -87,11 +79,9 @@
                     <label class="">Content :</label>
                     <textarea name="content" id="editor">
                         <!-- Post's content located here -->
-                        {% autoescape off %} 
-                        {{ post.content }}
-                        {% endautoescape %}
                     </textarea>
-                    <button type="submit" class="btn btn-primary mt-4 mb-4" id="addPost-submit">Update post</button>
+
+                    <button type="submit" class="btn btn-primary mt-4 mb-4" id="addPost-submit">Add post</button>
                 </form>
             </div>
            
@@ -100,20 +90,19 @@
     </div>
     
     <!-- Javascript  -->
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- CK Editor  -->
     <script src="{% static './js/UploadAdapter.js' %}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
     <!-- Rich text editor initialize -->
     <script>
-       function MyCustomUploadAdapterPlugin( editor ) {
-           editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
-               return new MyUploadAdapter( loader );
-           };
-       }
+        function MyCustomUploadAdapterPlugin( editor ) {
+            editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+                return new MyUploadAdapter( loader );
+            };
+        }
 
-       $(document).ready(function(){            
+        $(document).ready(function(){            
             let editor = null;
 
             // initialize editor
@@ -141,8 +130,8 @@
                     return true;
                 });
             } );
-           
-       });
+            
+        });
     </script>
     <!-- Cover image upload handler -->
     <script>
@@ -160,8 +149,8 @@
             };
 
             reader.readAsDataURL(imgFile);
-       }
-   </script>
+        }
+    </script>
 
 </body>
 </html>

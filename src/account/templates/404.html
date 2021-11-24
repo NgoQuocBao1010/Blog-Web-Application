@@ -4,9 +4,10 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Unauthorized</title>
+        <link rel="shortcut icon" href="{% static 'images/logo.jpg' %}"/>
+        <title>Unauthorized page</title>
     </head>
     <body>
-        <h1>You are not authorized for this action</h1>
+        <h1>Oops! This page is invalid! Go back to <a href="{% url 'home' %}">Blogger Community</a></h1>
     </body>
 </html>
