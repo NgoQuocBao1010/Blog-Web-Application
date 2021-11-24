@@ -278,6 +278,7 @@ def filterPosts(request, posts):
         queryPath += f"&category={category}"
 
     search = request.GET.get("search")
+    # Search similar expression from title, content, description, category, author of the post
     if search:
         posts = posts.filter(
             Q(content__icontains=search)
@@ -292,7 +293,6 @@ def filterPosts(request, posts):
             f"&search={search}" if not queryPath else queryPath + f"&search={search}"
         )
 
-    print(queryPath)
     return posts, tags, queryPath
 
 
