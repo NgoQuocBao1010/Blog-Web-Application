@@ -108,6 +108,9 @@
             // initialize editor
             ClassicEditor.create( document.querySelector( '#editor' ), {
                 extraPlugins: [ MyCustomUploadAdapterPlugin ],
+                mediaEmbed: {
+                    previewsInData:true
+                },
             } )
             .then( newEditor => {
                 editor = newEditor;
