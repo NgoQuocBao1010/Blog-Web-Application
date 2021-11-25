@@ -40,8 +40,7 @@ def register(request):
             name = request.POST.get("name")
             Profile.objects.create(user=user, name=name)
 
-            login(request, user)
-            return redirect("bloggerHome", user.email)
+            return redirect("login")
 
         else:
             print(form.errors.as_text())
