@@ -274,6 +274,7 @@ section {
     margin-top: 1.3rem;
     border: 0.1rem var(--grey) solid;
     width: 100%;
+    font-size: 1.5rem;
     height: 10rem;
     padding: 0.6rem;
 }
