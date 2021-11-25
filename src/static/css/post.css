@@ -160,6 +160,13 @@ section {
     font-weight: bold;
 }
 
+.container .posts-container .post .path span i {
+    margin-left: 1rem;
+    color: #747474;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
 .container .posts-container .post .path span[title="home_path"] {
     color: #747474;
     font-weight: bold;

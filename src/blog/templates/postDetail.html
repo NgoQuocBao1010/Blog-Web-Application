@@ -35,7 +35,13 @@
                         <a href="{% url 'home' %}?category={{ post.category.name }}">
                             <span title="home_path">{{ post.category }} /</span>
                         </a>
-                        <span>{{ post.title }}</span>
+                        <span>
+                            {{ post.title }} 
+
+                            {% if request.user == post.author %}
+                            <a href="{% url 'postEdit' post.id %}"><i class="fas fa-edit"></i></a> 
+                            {% endif %}
+                        </span>
                     </p>
 
                     <!-- post block -->
