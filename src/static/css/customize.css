@@ -158,7 +158,6 @@ button.update-profile{
     border: var(--light-green) solid .1rem;
     color: white;
     border-radius: .6rem;
-    /* width: 5.5rem; */
     margin-left: 41%;
 }
 
@@ -194,10 +193,18 @@ button.update-profile:hover{
 div table[title="postPage"] td div.action{
     /* width: 10rem; */
     width: 100%;
-    /* ! new */
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+}
+
+
+div table[title="postPage"] td button {
+    font-size: 0.8rem;
+}
+
+div table[title="postPage"] td button:last-child {
+    margin-left: 0.5rem;
 }
 
 
