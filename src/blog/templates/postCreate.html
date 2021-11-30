@@ -44,7 +44,7 @@
                     {% csrf_token %}
                     <!-- Image -->
                     <div class="form-group row post-img">                            
-                        <input type="file" id="file" name="coverImage" hidden onchange="imageUploaded(event)"/>
+                        <input type="file" id="file" name="coverImage" accept="image/*" hidden onchange="imageUploaded(event)"/>
                         <label type="file" for="file" class="col-3">Choose image <i class="fas fa-pencil-alt"></i></label>
                         <!-- <input type="button" class="button" value="Upload" id="but_upload"> -->
                         <img src="#" id="post-img" alt="Image of post" style="display:none" >
@@ -68,7 +68,7 @@
                         <input name="new-category" class="col-3" class="form-control" id="new-category">
                         <label class="col-3 text-center" for="post-Select">Or existed category :</label>
                         <select class="custom-select col-3" id="category" style="font-weight: 600">
-                            <option selected value="">Choose a category for your post</option>
+                            <option selected value="">Choose a category</option>
                             {% for category in categories %}
                             <option value="{{ category.name }}">{{ category.name }}</option>
                             {% endfor %}
